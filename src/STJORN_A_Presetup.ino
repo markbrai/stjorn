@@ -11,11 +11,12 @@
 
 
 // *** REQUIRED LIBRARIES ***
+#include <SPI.h>                                    // required for PlatformIO build...
 #include "SparkFun_Qwiic_Twist_Arduino_Library.h" // for rotary encoder
 #include <WS2812Serial.h>                         // for neoPixels
 #include <Wire.h>                                 // for i2c comms
 #include <Adafruit_GFX.h>                         // for quad alphanumeric
-#include "Adafruit_LEDBackpack.h"                 // for quad alphanumeric
+#include "Adafruit_LEDBackpack.h"               // for quad alphanumeric
 #include <Bounce2.h>                              // for button debounce
 #include "Adafruit_VCNL4010.h"                    // for proximity sensor
  
