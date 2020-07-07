@@ -12,19 +12,24 @@
 
 // *** REQUIRED LIBRARIES ***
 #include <SPI.h>                                    // required for PlatformIO build...
-#include "SparkFun_Qwiic_Twist_Arduino_Library.h" // for rotary encoder
-#include <WS2812Serial.h>                         // for neoPixels
-#include <Wire.h>                                 // for i2c comms
-#include <Adafruit_GFX.h>                         // for quad alphanumeric
-#include "Adafruit_LEDBackpack.h"               // for quad alphanumeric
-#include <Bounce2.h>                              // for button debounce
-#include "Adafruit_VCNL4010.h"                    // for proximity sensor
+#include "SparkFun_Qwiic_Twist_Arduino_Library.h"   // for rotary encoder
+#include <WS2812Serial.h>                           // for neoPixels
+#include <Wire.h>                                   // for i2c comms
+#include <Adafruit_GFX.h>                           // for quad alphanumeric
+#include "Adafruit_LEDBackpack.h"                   // for quad alphanumeric
+#include <Bounce2.h>                                // for button debounce
+#include "Adafruit_VCNL4010.h"                      // for proximity sensor
  
 
 // *** DEVICE INSTANTIATION & DEFINITIONS ***
 
 // Instantiate encoder
 TWIST twist;
+
+// Instantiate displays
+Adafruit_AlphaNum4 display1 = Adafruit_AlphaNum4();     // left display
+Adafruit_AlphaNum4 display2 = Adafruit_AlphaNum4();     // centre display
+Adafruit_AlphaNum4 display3 = Adafruit_AlphaNum4();     // right display
 
 // Instantiate WS2812Serial 
 #define NUM_LEDS 14       // number of WS2812 LEDs on controller
@@ -56,3 +61,15 @@ Adafruit_VCNL4010 vcnl;
 
 // define expression pedal input pin
 #define PIN_EXP 29
+
+// define some colours and brightness
+
+#define RED 0xFF0000
+#define BLUE 0x0000FF
+#define GREEN 0x00FF00
+#define DARK 0x000000
+#define LED_DIM 32
+#define LED_BRT 64
+
+#define SCRN_DIM 4
+#define SCRN_BRT 6
