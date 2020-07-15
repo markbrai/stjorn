@@ -15,7 +15,6 @@
 #include "definitions.h"    // holds all STJORN definitions
 #include "devices.h"        // holds instances of all STJORN devices
 
-#pragma region regionSETUP
 void setup() {
 
 // TURN POWER LED ON
@@ -62,7 +61,6 @@ void setup() {
   pinMode(PIN_RELAY, OUTPUT);
     
 }
-#pragma endregion regionSETUP
 
 
 void loop() {
