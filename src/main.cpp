@@ -18,7 +18,6 @@
 #pragma region regionSETUP
 void setup() {
 
-
 // TURN POWER LED ON
   pinMode(PIN_PWRLED, OUTPUT);
   digitalWrite(PIN_PWRLED, HIGH);
