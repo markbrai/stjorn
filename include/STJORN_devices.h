@@ -13,12 +13,12 @@
  * Instantiates devices used in STJORN
    ------------------------------------ */
 
-#ifndef PRESETUP_H
-#define PRESETUP_H
+#ifndef STJORN_DEVICES_H
+#define STJORN_DEVICES_H
 
 // *** REQUIRED LIBRARIES ***
 
-#include "definitions.h"
+#include "STJORN_definitions.h"
 //#include <SPI.h>                                    // required for PlatformIO build...
 #include "SparkFun_Qwiic_Twist_Arduino_Library.h"   // for rotary encoder
 #include <Adafruit_GFX.h>                           // for quad alphanumeric

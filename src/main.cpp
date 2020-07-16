@@ -12,8 +12,8 @@
  */
 
 #include <Arduino.h>
-#include "definitions.h"    // holds all STJORN definitions
-#include "devices.h"        // holds instances of all STJORN devices
+#include "STJORN_definitions.h"    // holds all STJORN definitions
+#include "STJORN_devices.h"        // holds instances of all STJORN devices
 
 void setup() {
 

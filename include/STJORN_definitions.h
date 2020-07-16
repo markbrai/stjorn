@@ -1,3 +1,20 @@
+/* ------------ STJORN controller --------------
+ *  Code written for Teensy 3.2 micro-controller
+ *  Teensy USB Type should be set to 'MIDI' 
+ * 
+ * https://github.com/markbrai/stjorn 
+ * https://hackaday.io/project/162616-stjrn
+ * 
+ * https://www.gigperformer.com
+ * 
+ */
+
+/* ------------ PRESETUP --------------
+ * Instantiates devices used in STJORN
+   ------------------------------------ */
+
+#ifndef STJORN_DEFINITIONS_H
+#define STJORN_DEFINITIONS_H
 
 // define LEDs 
 #define NUM_LEDS 14       // number of WS2812 LEDs on controller
@@ -26,3 +43,6 @@
 
 #define SCRN_DIM 4
 #define SCRN_BRT 6
+
+
+#endif
