@@ -22,6 +22,7 @@
 #include <Wire.h>                                   // for i2c comms
 #include <Bounce2.h>                                // for button debounce
 #include "Adafruit_VCNL4010.h"                      // for proximity sensor
+#include "ledControl.h"
 
 // Instantiate encoder
 TWIST twist;
@@ -123,6 +124,8 @@ void loop() {
       leds.setPixel(i,DARK);
   }
   leds.show();
+
+  controlAnLed();
 
 
 }
