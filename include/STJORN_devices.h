@@ -18,8 +18,9 @@
 
 // *** REQUIRED LIBRARIES ***
 
+#include <Arduino.h>
 #include "STJORN_definitions.h"
-//#include <SPI.h>                                    // required for PlatformIO build...
+#include <SPI.h>                                    // required for PlatformIO build...
 #include "SparkFun_Qwiic_Twist_Arduino_Library.h"   // for rotary encoder
 #include <Adafruit_GFX.h>                           // for quad alphanumeric
 #include "Adafruit_LEDBackpack.h"                   // for quad alphanumeric
