@@ -73,9 +73,9 @@ void loop() {
    * Process inputs (aggregate MIDI and FS values and determine priority)
    * Check if relay or OnSong buttons pressed (global actions, not tied to a particular state)
    * Check current state (mode)
-   * Run function for current state
+   * Run function for current state --> Always run current function (and react internally to no input)? Or skip if no input on this cycle?
    * - Process MIDI &/or footswitch messages
-   * - Determine next action &/or state
+   * - Determine next action &/or state (if any)
    * - Determine any MIDI to be sent out
    * - Determine any update to LEDs
    * - Determine any update to screens
