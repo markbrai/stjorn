@@ -65,4 +65,24 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+
+  /* Functions to run (not explicitly in order)
+   * Read incoming MIDI
+   * Process MIDI (determine type, number, value, etc)
+   * Read footswitches
+   * Process inputs (aggregate MIDI and FS values and determine priority)
+   * Check if relay or OnSong buttons pressed (global actions, not tied to a particular state)
+   * Check current state (mode)
+   * Run function for current state
+   * - Process MIDI &/or footswitch messages
+   * - Determine next action &/or state
+   * - Determine any MIDI to be sent out
+   * - Determine any update to LEDs
+   * - Determine any update to screens
+   * Send out MIDI as required
+   * Update LEDs as required
+   * Update screens as required
+   * Update current state
+   */
+
 }
