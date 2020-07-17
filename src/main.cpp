@@ -125,7 +125,9 @@ void loop() {
   }
   leds.show();
 
+// pass leds object in here
   controlAnLed();
+  
 
 
 }
