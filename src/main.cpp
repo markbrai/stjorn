@@ -13,6 +13,7 @@
 
 #include <Arduino.h>
 #include "STJORN_definitions.h"    // holds all STJORN definitions
+#include "ledControl.h"
 //#include "STJORN_devices.h"        // holds instances of all STJORN devices
 #include <SPI.h>                                    // required for PlatformIO build...
 #include "SparkFun_Qwiic_Twist_Arduino_Library.h"   // for rotary encoder
@@ -22,7 +23,7 @@
 #include <Wire.h>                                   // for i2c comms
 #include <Bounce2.h>                                // for button debounce
 #include "Adafruit_VCNL4010.h"                      // for proximity sensor
-#include "ledControl.h"
+
 
 // Instantiate encoder
 TWIST twist;
@@ -126,8 +127,6 @@ void loop() {
   leds.show();
 
 // pass leds object in here
-  controlAnLed();
+  controlAnLed(&leds);
   
-
-
 }
