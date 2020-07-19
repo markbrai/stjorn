@@ -92,6 +92,13 @@ void setup() {
   pinMode(PIN_RELAY, OUTPUT);
 
 
+// SETUP FOOTSWITCHES
+  for (int i = 0; i < NUM_BUTTONS; i++) {
+    buttons[i].attach( BUTTON_PINS[i] , INPUT_PULLUP  );       //setup the bounce instance for the current button
+    buttons[i].interval(10);              // interval in ms
+  }
+
+
 delay(5000);    // keep STJORN 'splash' on screen for a few seconds
 
   for(int i = 0; i < NUM_LEDS; i++) {
@@ -113,11 +120,11 @@ void loop() {
    */
 
   /* Functions to run:
-   * Read incoming MIDI
+   X Read incoming MIDI             
    * Read footswitches
    * Read expression pedal
    * Read encoder
-   * Process MIDI (determine channel, type, number, value)
+   / Process MIDI (determine channel, type, number, value)
    * Process footswitches (from current state, what is FS action)
    * - Also includes priority check if MIDI and FS 'clash'
    * Process expression pedal
@@ -171,7 +178,7 @@ void loop() {
     MidiInProcess(&midiType, &midiChan, &midiNum, &MidiVal);
   }
 
-
+// read footswitches
 
 
 
