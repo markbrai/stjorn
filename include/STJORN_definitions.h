@@ -54,6 +54,9 @@ enum MidiType {
   MIDI_CC,       // 4. Control Change
 };
 
+#define MIDI_CH_LIVE 16
+#define MIDI_CH_GP 15
+#define MIDI_CH_OS 14
 
 
 

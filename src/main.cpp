@@ -157,10 +157,11 @@ void loop() {
 
 
   // Read incoming MIDI and get parameters
-  MidiType midiType = MIDI_NONE;
-  int midiChan = -1;
-  int midiNum = -1;
-  int MidiVal = -1;
+    // initialise parameters
+    MidiType midiType = MIDI_NONE;
+    int midiChan = -1;
+    int midiNum = -1;
+    int MidiVal = -1;
 
 
   if (usbMIDI.read()){

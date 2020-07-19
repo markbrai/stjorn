@@ -18,15 +18,17 @@
 #define STJORN_USBMIDI_H
 
 #include "STJORN_definitions.h"
+#include <Arduino.h>
 
 void MidiInProcess(MidiType *midiType, int *midiChan, int *midiNum, int *midiVal);
 
- MidiType MidiInGetType();
- int MidiInGetChan();
- int MidiInGetNum();
- int MidiInGetVal();
+MidiType MidiInGetType();   // Parse type of incoming MIDI message
 
+int MidiInGetChan();        // Parse the channel of the incoming MIDI message
 
+int MidiInGetNum();         // Parse the parameter number of the incoming MIDI message
+
+int MidiInGetVal();         // Pase the parameter value of the incoming MIDI message
 
 
 #endif
