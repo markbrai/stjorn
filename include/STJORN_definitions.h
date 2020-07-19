@@ -52,6 +52,10 @@ enum MidiType {
   MIDI_NOTEON,   // 2. Note On
   MIDI_NOTEOFF,  // 3. Note Off
   MIDI_CC,       // 4. Control Change
+  MIDI_START,
+  MIDI_STOP,
+  MIDI_CONTINUE,
+  MIDI_CLOCK,
 };
 
 #define MIDI_CH_LIVE 16
