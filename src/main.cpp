@@ -142,6 +142,8 @@ void loop() {
    * Update overall state (was mode changed by Footswitch)
    */
 
+
+
   /* What needs to be updated in the background, no matter the state:
    * Song state/transport sync with Live  --> Updated via MIDI from Live
    * - Sets screen text for song sections
@@ -153,40 +155,33 @@ void loop() {
    * - Sets screen text for song part
    */
 
-// Read incoming MIDI and get parameters
-  // initialise parameters
-  MidiType midiType = MIDI_NONE;
-  int midiChan = -1;
-  int midiNum = -1;
-  int MidiVal = -1;
-  bool newMidi = false;
 
-  // read incoming MIDI
+  // Read incoming MIDI and get parameters
+    // initialise parameters
+    MidiType midiType = MIDI_NONE;
+    int midiChan = -1;
+    int midiNum = -1;
+    int MidiVal = -1;
+
+
   if (usbMIDI.read()){
-    newMidi = true;
     // Process incming MIDI and 'return' type, channel, number, and value params
     MidiInProcess(&midiType, &midiChan, &midiNum, &MidiVal);
-
-    switch(midiType){
-      case MIDI_PROG:
-      
-        break;
-      case MIDI_NOTEOFF:
-      case MIDI_NOTEON:
-
-        break;
-
-      case MIDI_CC:
-
-        break;
-
-      default:
-        break;
-    }
-
   }
 
-
+  
+  switch(midiType){
+    case MIDI_NOTEOFF:
+      leds.setPixel(1,RED);
+      break;
+    case MIDI_CC:
+      leds.setPixel(1,GREEN);
+      break;
+    default:
+      break;
+  }
+  
+  leds.show();
 
 
 
