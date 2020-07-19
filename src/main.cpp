@@ -95,6 +95,14 @@ void setup() {
 
 delay(5000);
 
+  for(int i = 0; i < NUM_LEDS; i++) {
+      leds.setPixel(i,DARK);
+  }
+  leds.show();
+
+// pass leds object in here
+  controlAnLed(&leds);
+
 
 }
 
@@ -121,12 +129,6 @@ void loop() {
    * Update current state
    */
 
-  for(int i = 0; i < NUM_LEDS; i++) {
-      leds.setPixel(i,DARK);
-  }
-  leds.show();
 
-// pass leds object in here
-  controlAnLed(&leds);
   
 }
