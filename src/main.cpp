@@ -13,8 +13,7 @@
 
 #include <Arduino.h>
 #include "STJORN_definitions.h"    // holds all STJORN definitions
-#include "ledControl.h"
-//#include "STJORN_devices.h"        // holds instances of all STJORN devices
+#include "STJORN_usbMIDI.h"
 #include <SPI.h>                                    // required for PlatformIO build...
 #include "SparkFun_Qwiic_Twist_Arduino_Library.h"   // for rotary encoder
 #include <Adafruit_GFX.h>                           // for quad alphanumeric
@@ -100,9 +99,6 @@ delay(5000);    // keep STJORN 'splash' on screen for a few seconds
   }
   leds.show();
 
-// pass leds object in here
-  controlAnLed(&leds);
-
 
 }
 
@@ -120,6 +116,7 @@ void loop() {
    * Read incoming MIDI
    * Read footswitches
    * Read expression pedal
+   * Read encoder
    * Process MIDI (determine channel, type, number, value)
    * Process footswitches (from current state, what is FS action)
    * - Also includes priority check if MIDI and FS 'clash'
@@ -137,6 +134,7 @@ void loop() {
    * Update pads state machine as required
    * - What LEDs to light (bypass if not in Pads mode currently)
    * - What screen updates (bypass if not in Pads mode currently)
+   * Update Menu
    * Set relay as required
    * Send out MIDI as required
    * Update LEDs as required
@@ -155,9 +153,38 @@ void loop() {
    * - Sets MIDI prog.ch. to send out on 'next song' button press
    * Current Song Part --> updated from MIDI from GP
    * - Sets screen text for song part
-   * 
-   * 
    */
+
+
+  // Read incoming MIDI and get parameters
+  MidiType midiType = MIDI_NONE;
+  int midiChan = -1;
+  int midiNum = -1;
+  int MidiVal = -1;
+
+
+  if (usbMIDI.read()){
+    // Process incming MIDI and 'return' type, channel, number, and value params
+    MidiInProcess(&midiType, &midiChan, &midiNum, &MidiVal);
+  }
+
+  
+  switch(midiType){
+    case MIDI_NOTEOFF:
+      leds.setPixel(1,RED);
+      break;
+    case MIDI_CC:
+      leds.setPixel(1,GREEN);
+      break;
+    default:
+      break;
+  }
+  
+  leds.show();
+
+
+
+
 
   
 }

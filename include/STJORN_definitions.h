@@ -10,7 +10,7 @@
  */
 
 /* ------------ PRESETUP --------------
- * Instantiates devices used in STJORN
+ * Definitions, enums, etc used in STJORN
    ------------------------------------ */
 
 #ifndef STJORN_DEFINITIONS_H
@@ -43,6 +43,18 @@
 
 #define SCRN_DIM 4
 #define SCRN_BRT 6
+
+// define some MIDI parameters
+
+enum MidiType {
+  MIDI_NONE,     // 0. Init value, or no new MIDI message
+  MIDI_PROG,     // 1. Program Change
+  MIDI_NOTEON,   // 2. Note On
+  MIDI_NOTEOFF,  // 3. Note Off
+  MIDI_CC,       // 4. Control Change
+};
+
+
 
 
 #endif
