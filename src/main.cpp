@@ -108,27 +108,56 @@ delay(5000);
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
-  /* Functions to run (not explicitly in order)
-   * Read incoming MIDI
-   * Process MIDI (determine type, number, value, etc)
-   * Read footswitches
-   * Process inputs (aggregate MIDI and FS values and determine priority)
-   * Check if relay or OnSong buttons pressed (global actions, not tied to a particular state)
-   * Check current state (mode)
-   * Run function for current state --> Always run current function (and react internally to no input)? Or skip if no input on this cycle?
-   * - Process MIDI &/or footswitch messages
-   * - Determine next action &/or state (if any)
-   * - Determine any MIDI to be sent out
-   * - Determine any update to LEDs
-   * - Determine any update to screens
-   * Send out MIDI as required
-   * Update LEDs as required
-   * Update screens as required
-   * Update current state
+ 
+  /* Control methodology
+   * Controller sends out MIDI - or sets internal mode - on footswitch press
+   * LEDs and Screens are set by MIDI feedback from Live/Gp
+   * - e.g. FX LEDs set on feedback from GP, transport set on feedback from Live
+   * 
    */
 
+  /* Functions to run:
+   * Read incoming MIDI
+   * Read footswitches
+   * Read expression pedal
+   * Process MIDI (determine channel, type, number, value)
+   * Process footswitches (from current state, what is FS action)
+   * - Also includes priority check if MIDI and FS 'clash'
+   * Process expression pedal
+   * - MIDI channel and CC depending on current state
+   * Update transport state machine as required
+   * - What LEDs to light (bypass if not in Song mode currently)
+   * - What screen updates
+   * Update rig state machine as required
+   * - What LEDs to light (bypass if not in Rig mode currently)
+   * - What screen updates
+   * Update looper state machine as required
+   * - What LEDs to light (bypass if not in Song mode currently)
+   * - What screen updates (bypass if not in looper mode currently)
+   * Update pads state machine as required
+   * - What LEDs to light (bypass if not in Pads mode currently)
+   * - What screen updates (bypass if not in Pads mode currently)
+   * Set relay as required
+   * Send out MIDI as required
+   * Update LEDs as required
+   * Update Screens as required
+   * Update overall state (was mode changed by Footswitch)
+   */
+
+
+
+  /* What needs to be updated in the background, no matter the state:
+   * Song state/transport sync with Live  --> Updated via MIDI from Live
+   * - Sets screen text for song sections
+   * - Sets colour of transport LED
+   * Current song   --> Updated from Prog.Ch from either GP or Live
+   * - Sets screen text for song num
+   * - Sets MIDI prog.ch. to send out on 'next song' button press
+   * Current Song Part --> updated from MIDI from GP
+   * - Sets screen text for song part
+   * 
+   * 
+   */
 
   
 }
