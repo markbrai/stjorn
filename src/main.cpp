@@ -93,10 +93,10 @@ void setup() {
   pinMode(PIN_RELAY, OUTPUT);
 
 
-delay(5000);
+delay(5000);    // keep STJORN 'splash' on screen for a few seconds
 
   for(int i = 0; i < NUM_LEDS; i++) {
-      leds.setPixel(i,DARK);
+      leds.setPixel(i,DARK);              // turn all LEDs 'off'
   }
   leds.show();
 
