@@ -160,35 +160,46 @@ void loop() {
   int midiNum = -1;
   int MidiVal = -1;
   bool newMidi = false;
+  int paramTgt = TGT_NONE;
 
   byte newSongNum = -1;  // initialise newSongNum to -1 in case no new song Prog Ch is read
 
-  // read incoming MIDI
+  // read incoming MIDI and get parameters
   if (usbMIDI.read()){
     newMidi = true;
     // Process incming MIDI and 'return' type, channel, number, and value params
     MidiInProcess(&midiType, &midiChan, &midiNum, &MidiVal);
-
-    switch(midiType){
-
-      case MIDI_PROG:
-          newSongNum = MidiProcessProgCh(midiChan, midiNum);
-          break;         
-
-      case MIDI_NOTEOFF:
-      case MIDI_NOTEON:
-
-        break;
-
-      case MIDI_CC:
-
-        break;
-
-      default:
-        break;
-    }
-
   }
+
+
+
+
+
+// process MIDI
+  switch(midiType){
+
+    case MIDI_PROG:
+      newSongNum = MidiProcessProgCh(midiChan, midiNum);   // returns the new song number from program change
+      break;         
+
+    case MIDI_NOTEOFF:
+    case MIDI_NOTEON:
+      paramTgt = MidiProcessTgt(midiChan, midiNum);       // returns target of message
+
+      break;
+
+    case MIDI_CC:
+      paramTgt = MidiProcessTgt(midiChan, midiNum);       // returns target of message
+      break;
+
+    default:
+      break;
+  }
+
+
+
+
+
 
 
 

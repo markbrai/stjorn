@@ -103,19 +103,63 @@
 
 
 byte MidiProcessProgCh(int midiChan, int midiNum){
+// parse the channel number and return the message number (data1) as a new song number
     byte newSongNum;
 
     if (midiChan == MIDI_CH_OS){
         newSongNum = -1;            // currently we don't do anything with prog changes received on OnSong channel
     } else {
-        newSongNum = (byte) midiNum;
+        if (midiNum <= MAX_SONGS) { // check if message number is > max allowed songs
+            newSongNum = (byte) midiNum;
+        } else {
+            newSongNum = -1;        // if message num is > max allowed return no new song
+        }
     }
 
     return newSongNum;
+}
+
+ParamTgt MidiProcessTgt(int midiChan, int midiNum){
+/* parse an incoming message to determine it's target
+ * midiChan: What mode is the target parameter for
+ */
+
+ParamTgt paramTgt = TGT_NONE;
+
+    switch (midiChan){
+        case MIDI_CH_LIVE:        // determine which mode the message belongs to
+            if ((midiNum > LIVE_NONE && midiNum <= LIVE_TRAXVOL) || (midiNum >= LIVE_VERSE && midiNum <= LIVE_CYCLEOK)){
+                paramTgt = TGT_SONG;
+            } else if (midiNum == LIVE_LOOPVOL){
+                paramTgt = TGT_LOOP;
+            } else if (midiNum == LIVE_PADVOL){
+                paramTgt = TGT_PADS;
+            } else {
+                paramTgt = TGT_NONE;
+            }
+            break;
+
+        case MIDI_CH_OS:          // we don't currently do anything with messages from OnSong
+
+            paramTgt = TGT_NONE;
+            break;
+        
+        case MIDI_CH_GP:
+
+            paramTgt = TGT_RIG;     // send all messages from GP to Rig functions
+            break;
+
+        default:
+            break;
+    }
+
+    return paramTgt;
 
 }
 
-void MidiProcessNote(){
+
+
+void MidiProcessGPNote(int midiNum, int midiVal) {
 
 }
 

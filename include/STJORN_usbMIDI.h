@@ -34,6 +34,8 @@ int MidiInGetVal();         // Pase the parameter value of the incoming MIDI mes
 
 // ********************************** PARAMETER PARSING FUNCTIONS ********************
 
-byte MidiProcessProgCh(int midiChan, int midiNum);
+byte MidiProcessProgCh(int midiChan, int midiNum);    // Process program change and output new song number
+
+ParamTgt MidiProcessTgt(int midiChan, int midiNum);            // determine target of message
 
 #endif
