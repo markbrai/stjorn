@@ -161,6 +161,8 @@ void loop() {
   int MidiVal = -1;
   bool newMidi = false;
 
+  byte newSongNum = -1;  // initialise newSongNum to -1 in case no new song Prog Ch is read
+
   // read incoming MIDI
   if (usbMIDI.read()){
     newMidi = true;
@@ -168,9 +170,11 @@ void loop() {
     MidiInProcess(&midiType, &midiChan, &midiNum, &MidiVal);
 
     switch(midiType){
+
       case MIDI_PROG:
-      
-        break;
+          newSongNum = MidiProcessProgCh(midiChan, midiNum);
+          break;         
+
       case MIDI_NOTEOFF:
       case MIDI_NOTEON:
 

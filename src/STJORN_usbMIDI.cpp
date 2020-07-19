@@ -102,7 +102,16 @@
 // These functions further process the incoming MIDI messages based on it's type
 
 
-void MidiProcessProgCh(){
+byte MidiProcessProgCh(int midiChan, int midiNum){
+    byte newSongNum;
+
+    if (midiChan == MIDI_CH_OS){
+        newSongNum = -1;            // currently we don't do anything with prog changes received on OnSong channel
+    } else {
+        newSongNum = (byte) midiNum;
+    }
+
+    return newSongNum;
 
 }
 

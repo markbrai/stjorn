@@ -20,6 +20,8 @@
 #include "STJORN_definitions.h"
 #include <Arduino.h>
 
+// ************************* INPUT PROCESSING FUNCTIONS *********************************************
+
 void MidiInProcess(MidiType *midiType, int *midiChan, int *midiNum, int *midiVal);
 
 MidiType MidiInGetType();   // Parse type of incoming MIDI message
@@ -30,5 +32,8 @@ int MidiInGetNum();         // Parse the parameter number of the incoming MIDI m
 
 int MidiInGetVal();         // Pase the parameter value of the incoming MIDI message
 
+// ********************************** PARAMETER PARSING FUNCTIONS ********************
+
+byte MidiProcessProgCh(int midiChan, int midiNum);
 
 #endif
