@@ -19,18 +19,31 @@
    #include "STJORN_usbMIDI.h"
 
    void MidiInProcess(MidiType *midiType, int *midiChan, int *midiNum, int *midiVal) {
-       
-       *midiType = MidiInGetType();
-       *midiChan = MidiInGetChan();
+
+    *midiChan = MidiInGetChan();
+    if (*midiChan < MIDI_CH_OS){
+           return;                  // if channel is not from Live, GP, or OnSong then exit
+       }  
+
+    *midiType = MidiInGetType();
+    if (*midiType == MIDI_PROG){
+        return;
+    }
+
+    *midiNum = MidiInGetNum();
+
+    *midiVal = MidiInGetVal();
+
+
 
 
    }
 
    MidiType MidiInGetType(){
-       byte type;
+       int type;
        MidiType midiTypeTemp;
 
-       type = usbMIDI.getType();
+       type = (int) usbMIDI.getType();
 
        switch(type) {
             case usbMIDI.NoteOff:   // 0x80
@@ -54,13 +67,32 @@
    }
 
    int MidiInGetChan(){
+       int midiChanTmp;
+
+       midiChanTmp =  (int) usbMIDI.getChannel();
+
+       if (midiChanTmp < MIDI_CH_OS || midiChanTmp > MIDI_CH_LIVE){
+           midiChanTmp = -1;
+       } 
+
+       return midiChanTmp;
 
    }
 
    int MidiInGetNum(){
+       int midiNumTmp;
+
+       midiNumTmp = (int) usbMIDI.getData1();
+
+       return midiNumTmp;
 
    }
 
    int MidiInGetVal(){
-       
+       int midiValTmp;
+
+       midiValTmp = (int) usbMIDI.getData2();
+
+       return midiValTmp;
+
    }
