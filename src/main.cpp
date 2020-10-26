@@ -13,7 +13,6 @@
 
 #include <Arduino.h>
 #include "STJORN_definitions.h"    // holds all STJORN definitions
-#include "STJORN_usbMIDI.h"
 #include <SPI.h>                                    // required for PlatformIO build...
 #include "SparkFun_Qwiic_Twist_Arduino_Library.h"   // for rotary encoder
 #include <Adafruit_GFX.h>                           // for quad alphanumeric
@@ -120,11 +119,11 @@ void loop() {
    */
 
   /* Functions to run:
-   X Read incoming MIDI             
+   * Read incoming MIDI             
    * Read footswitches
    * Read expression pedal
    * Read encoder
-   / Process MIDI (determine channel, type, number, value)
+   * Process MIDI (determine channel, type, number, value)
    * Process footswitches (from current state, what is FS action)
    * - Also includes priority check if MIDI and FS 'clash'
    * Process expression pedal
@@ -159,55 +158,6 @@ void loop() {
    * Current Song Part --> updated from MIDI from GP
    * - Sets screen text for song part
    */
-
-// Read incoming MIDI and get parameters
-  // initialise parameters
-  MidiType midiType = MIDI_NONE;
-  int midiChan = -1;
-  int midiNum = -1;
-  int MidiVal = -1;
-  bool newMidi = false;
-  int paramTgt = TGT_NONE;
-
-  byte newSongNum = -1;  // initialise newSongNum to -1 in case no new song Prog Ch is read
-
-  // read incoming MIDI and get parameters
-  if (usbMIDI.read()){
-    newMidi = true;
-    // Process incming MIDI and 'return' type, channel, number, and value params
-    MidiInProcess(&midiType, &midiChan, &midiNum, &MidiVal);
-  }
-
-// read footswitches
-
-
-
-// process MIDI
-  switch(midiType){
-
-    case MIDI_PROG:
-      newSongNum = MidiProcessProgCh(midiChan, midiNum);   // returns the new song number from program change
-      break;         
-
-    case MIDI_NOTEOFF:
-    case MIDI_NOTEON:
-      paramTgt = MidiProcessTgt(midiChan, midiNum);       // returns target of message
-
-      break;
-
-    case MIDI_CC:
-      paramTgt = MidiProcessTgt(midiChan, midiNum);       // returns target of message
-      break;
-
-    default:
-      break;
-  }
-
-
-
-
-
-
 
 
 
