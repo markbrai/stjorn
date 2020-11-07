@@ -160,6 +160,15 @@ void loop() {
    */
 
 
+ // Check footswitches
+
+  for (int i = 0; i < NUM_BUTTONS; i++) {
+    buttons[i].update();    // update each button instance
+
+    if (buttons[i].fell()){
+      
+    }
+  }
 
 
 
