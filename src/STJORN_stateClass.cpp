@@ -1,13 +1,14 @@
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
+#include "STJORN_definitions.h"
 
 // CONSTRUCTOR *********************
 
 Stjorn::Stjorn()
 {
     // initialise both states to 0
-    m_stCurr = 0;
-    m_stPrev = 0;
+    m_stCurr = ST_PATCH;        
+    m_stPrev = ST_PATCH;
 }
 
 // SET FUNCTIONS *********************
