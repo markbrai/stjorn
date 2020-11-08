@@ -94,7 +94,7 @@ void setup() {
 // SETUP FOOTSWITCHES
   for (int i = 0; i < NUM_FS; i++) {
     fs[i].attach( FS_PINS[i] , INPUT_PULLUP  );       //setup the bounce instance for the current button
-    fs[i].interval(10);              // interval in ms
+    fs[i].interval(5);                               // interval in ms
   }
 
 
