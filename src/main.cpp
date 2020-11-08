@@ -12,7 +12,7 @@
  */
 
 #include <Arduino.h>
-#include "STJORN_definitions.h"    // holds all STJORN definitions
+#include "STJORN_definitions.h"                     // holds all STJORN definitions
 #include <SPI.h>                                    // required for PlatformIO build...
 #include "SparkFun_Qwiic_Twist_Arduino_Library.h"   // for rotary encoder
 #include <Adafruit_GFX.h>                           // for quad alphanumeric
@@ -21,6 +21,7 @@
 #include <Wire.h>                                   // for i2c comms
 #include <Bounce2.h>                                // for button debounce
 #include "Adafruit_VCNL4010.h"                      // for proximity sensor
+#include "STJORN_footswitches.h"                    // STJORN Footswitch functions
 
 
 // Instantiate encoder
@@ -38,8 +39,13 @@ DMAMEM byte displayMemory[NUM_LEDS*12];
 WS2812Serial leds(NUM_LEDS, displayMemory, drawingMemory, PIN_WS2812, WS2812_RGB);
 
 // Instantiate button debouncers
+/* Button orders:
+*  
+*/
 const uint8_t FS_PINS[NUM_FS] = {23,22,21,20,17,16,15,14,33,32,31,30,28,27,26};
 Bounce *fs = new Bounce[NUM_FS];
+
+bool g_fsPressed[NUM_FS] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};   // create an array to hold each FS state
 
 // Instantiate proximity sensor
 Adafruit_VCNL4010 vcnl;
@@ -160,14 +166,13 @@ void loop() {
    */
 
 
- // Check footswitches
+// CHECK FOOTSWITCHES
 
   for (int i = 0; i < NUM_FS; i++) {
     fs[i].update();    // update each button instance
 
-    if (fs[i].fell()){
+
       
-    }
   }
 
 
