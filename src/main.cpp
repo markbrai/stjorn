@@ -43,10 +43,8 @@ WS2812Serial leds(NUM_LEDS, displayMemory, drawingMemory, PIN_WS2812, WS2812_RGB
 /* Button orders:
 *  
 */
-const uint8_t FS_PINS[NUM_FS] = {23,22,21,20,17,16,15,14,33,32,31,30,28,27,26};
+const uint8_t FS_PINS[NUM_FS] = {33,32,31,30,20,21,22,23,15,16,17,14,27,28,26};
 Bounce *fs = new Bounce[NUM_FS];
-
-bool g_fsPressed[NUM_FS] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};   // create an array to hold each FS state
 
 // Instantiate proximity sensor
 Adafruit_VCNL4010 vcnl;
