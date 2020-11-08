@@ -38,8 +38,8 @@ DMAMEM byte displayMemory[NUM_LEDS*12];
 WS2812Serial leds(NUM_LEDS, displayMemory, drawingMemory, PIN_WS2812, WS2812_RGB);
 
 // Instantiate button debouncers
-const uint8_t BUTTON_PINS[NUM_BUTTONS] = {23,22,21,20,17,16,15,14,33,32,31,30,28,27,26};
-Bounce *buttons = new Bounce[NUM_BUTTONS];
+const uint8_t FS_PINS[NUM_FS] = {23,22,21,20,17,16,15,14,33,32,31,30,28,27,26};
+Bounce *fs = new Bounce[NUM_FS];
 
 // Instantiate proximity sensor
 Adafruit_VCNL4010 vcnl;
@@ -92,9 +92,9 @@ void setup() {
 
 
 // SETUP FOOTSWITCHES
-  for (int i = 0; i < NUM_BUTTONS; i++) {
-    buttons[i].attach( BUTTON_PINS[i] , INPUT_PULLUP  );       //setup the bounce instance for the current button
-    buttons[i].interval(10);              // interval in ms
+  for (int i = 0; i < NUM_FS; i++) {
+    fs[i].attach( FS_PINS[i] , INPUT_PULLUP  );       //setup the bounce instance for the current button
+    fs[i].interval(10);              // interval in ms
   }
 
 
@@ -162,10 +162,10 @@ void loop() {
 
  // Check footswitches
 
-  for (int i = 0; i < NUM_BUTTONS; i++) {
-    buttons[i].update();    // update each button instance
+  for (int i = 0; i < NUM_FS; i++) {
+    fs[i].update();    // update each button instance
 
-    if (buttons[i].fell()){
+    if (fs[i].fell()){
       
     }
   }
