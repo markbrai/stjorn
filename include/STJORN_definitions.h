@@ -22,6 +22,9 @@
 
 // define footswitches
 #define NUM_FS 15
+#define NOCHANGE 0
+#define FELL 1
+#define ROSE 2
 
 // define relay pin
 #define PIN_RELAY 25

@@ -168,9 +168,15 @@ void loop() {
 
 // CHECK FOOTSWITCHES
 
+  int fsUpdated[NUM_FS];      // variable to hold updated state of each button
+
   for (int i = 0; i < NUM_FS; i++) {
     fs[i].update();    // update each button instance
-
+    if (fs[i].fell() ){
+      fsUpdated[i] = FELL;
+    } else if (fs[i].rose()){
+      fsUpdated[i] = ROSE;
+    }
 
       
   }
