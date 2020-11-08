@@ -22,6 +22,7 @@
 #include <Bounce2.h>                                // for button debounce
 #include "Adafruit_VCNL4010.h"                      // for proximity sensor
 #include "STJORN_footswitches.h"                    // STJORN Footswitch functions
+#include "STJORN_stateClass.h"                      // STJORN main state variables
 
 
 // Instantiate encoder
@@ -49,6 +50,8 @@ bool g_fsPressed[NUM_FS] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};   // create an array
 
 // Instantiate proximity sensor
 Adafruit_VCNL4010 vcnl;
+
+Stjorn storn;
 
 
 void setup() {
