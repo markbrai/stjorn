@@ -21,7 +21,7 @@
 #define PIN_WS2812 1      // WS2812 serial data sent from pin 1
 
 // define footswitches
-#define NUM_BUTTONS 15
+#define NUM_FS 15
 
 // define relay pin
 #define PIN_RELAY 25
