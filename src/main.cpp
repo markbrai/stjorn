@@ -23,6 +23,7 @@
 #include "Adafruit_VCNL4010.h"                      // for proximity sensor
 #include "STJORN_footswitches.h"                    // STJORN Footswitch functions
 #include "STJORN_stateClass.h"                      // STJORN main state variables
+#include "STJORN_statePatch.h"                      // STJORN state functions for PATCH
 
 
 // Instantiate encoder
@@ -192,7 +193,7 @@ void loop() {
       break;
 
     case ST_PATCH:
-
+      statePatch(fs);
       break;
 
     case ST_FX:

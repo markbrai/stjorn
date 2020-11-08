@@ -27,16 +27,16 @@
 #define ROSE 2
 
 #define FS_ACT_MN 0    // start of 'Action' switch range
-#define FS_ACT_MX 8    // end of 'Action' switch range + 1
+#define FS_ACT_MX 7    // end of 'Action' switch range 
 #define FS_ST_MN 8     // start of 'State' switch range
-#define FS_ST_MX 12     // end of 'State' switch range + 1
+#define FS_ST_MX 11     // end of 'State' switch range
 #define FS_ST_TRAX 8
 #define FS_ST_FX 9
 #define FS_ST_LOOP 10
 #define FS_ST_SONG 11
 #define FS_RELAY 12     // index of 'Relay' switch
 #define FS_OS_MN 13     // start of 'OnSong' switch range
-#define FS_OS_MX 15     // end of 'OnSong' switch range + 1
+#define FS_OS_MX 14     // end of 'OnSong' switch range
 
 // define relay pin
 #define PIN_RELAY 25

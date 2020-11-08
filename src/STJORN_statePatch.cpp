@@ -9,7 +9,7 @@
 #define L2 3
 #define CL 4
 #define R1 5
-#define D2 6
+#define D1 6
 #define L1 7
 
 
@@ -24,7 +24,8 @@ void statePatch(Bounce *fs){
 
 void procFsPatch(Bounce fs, int fsNum){
 
-    int note;
+    int note = 0;
+    int ch = 0;
 
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
@@ -33,10 +34,11 @@ void procFsPatch(Bounce fs, int fsNum){
 
             if (fs.fell() && !fsPatchAux[fsNum]){
                 note = fsNum + 1;
+                ch = MIDI_CH_GP;
             } else if (fs.fell() && fsPatchAux[fsNum]){
                 note = fsNum + 9;
+                ch = MIDI_CH_GP;
             }
-            usbMIDI.sendNoteOn(note,127,MIDI_CH_GP);
             break;
 
         case FS_ST_TRAX:
@@ -64,5 +66,8 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
     }
 
+    if (note != 0){
+        usbMIDI.sendNoteOn(note,127,ch);
+    }
 
 }

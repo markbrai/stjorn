@@ -31,6 +31,11 @@ void Stjorn::setLed(int led, bool state, int colour)
 
 }
 
+void Stjorn::selectPatch(int patch)
+{
+    m_patchSelected = patch;
+}
+
 // GET FUNCTIONS *********************
 
 bool Stjorn::isPressed(int btn)
