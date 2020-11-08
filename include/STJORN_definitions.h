@@ -47,6 +47,17 @@
 #define SCRN_DIM 4
 #define SCRN_BRT 6
 
+// define STJORN states
+
+enum StjornState {    
+  ST_TRACKS,    // 0
+  ST_SONG,      // 1
+  ST_PATCH,     // 2
+  ST_FX,        // 3
+  ST_LOOP,      // 4
+  ST_PADS,      // 5
+};
+
 // define some general parameters
 
 #define MAX_SONGS 14    // maximum number of songs that can be switched between

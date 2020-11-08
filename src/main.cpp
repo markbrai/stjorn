@@ -168,11 +168,49 @@ void loop() {
    * - Sets screen text for song part
    */
 
+// UPDATE AND PROCESS MIDI
+
 
 // UPDATE FOOTSWITCHES
 
-  for (int i = 0; i < NUM_FS; i++) {
-    fs[i].update();    // update each button instance      
+  updateFootswitches(fs);
+
+// UPDATE EXPRESSION PEDALS
+
+
+// SELECT AND PROCESS STATES
+/* Each state is responsible for handling footswitch and expression actions
+ * plus setting correct displays and leds based on received MIDI or state
+ * changes
+ */
+
+  switch (stjorn.state()){
+    case ST_TRACKS:
+
+      break;
+    
+    case ST_SONG:
+
+      break;
+
+    case ST_PATCH:
+
+      break;
+
+    case ST_FX:
+
+      break;
+
+    case ST_LOOP:
+
+      break;
+
+    case ST_PADS:
+
+      break;
+
+    default:
+      break;
   }
 
 
