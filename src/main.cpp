@@ -50,7 +50,7 @@ Bounce *fs = new Bounce[NUM_FS];
 // Instantiate proximity sensor
 Adafruit_VCNL4010 vcnl;
 
-Stjorn storn;
+Stjorn stjorn;
 
 
 void setup() {

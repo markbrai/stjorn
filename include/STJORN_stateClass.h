@@ -12,7 +12,7 @@ class Stjorn
         bool m_pressed[NUM_FS];
         bool m_ledState[NUM_LEDS];
         int m_ledColour[NUM_LEDS];
-        int m_patchSelected{};
+        int m_patchSelected{-1};
 
     public:
         // constructor

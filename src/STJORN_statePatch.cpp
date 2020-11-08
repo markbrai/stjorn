@@ -30,12 +30,10 @@ void procFsPatch(Bounce fs, int fsNum){
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
 
-            static bool fsPatchAux[FS_ACT_MX+1];
-
-            if (fs.fell() && !fsPatchAux[fsNum]){
+            if (fs.fell() && stjorn.patch() != fsNum){
                 note = fsNum + 1;
                 ch = MIDI_CH_GP;
-            } else if (fs.fell() && fsPatchAux[fsNum]){
+            } else if (fs.fell() && stjorn.patch() == fsNum){
                 note = fsNum + 9;
                 ch = MIDI_CH_GP;
             }
