@@ -20,7 +20,8 @@
 
 #include <Bounce2.h>
 
-
+void updateFootswitches(Bounce *fs);
+ 
 
 
 #endif 
