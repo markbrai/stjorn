@@ -24,18 +24,17 @@ void statePatch(Bounce *fs){
 
 void procFsPatch(Bounce fs, int fsNum){
 
-    int note = 0;
-    int ch = 0;
+    int note = -1;
+    int ch = 1;
 
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
-
+    
+            ch = MIDI_CH_GP;
             if (fs.fell() && stjorn.patch() != fsNum){
                 note = fsNum + 1;
-                ch = MIDI_CH_GP;
             } else if (fs.fell() && stjorn.patch() == fsNum){
                 note = fsNum + 9;
-                ch = MIDI_CH_GP;
             }
             break;
 
@@ -64,7 +63,7 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
     }
 
-    if (note != 0){
+    if (note != -1){
         usbMIDI.sendNoteOn(note,127,ch);
     }
 
