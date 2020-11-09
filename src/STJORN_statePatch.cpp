@@ -61,7 +61,7 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
 
         case FS_ST_TRAX:
-            processRelay(fs);
+
             break;
 
         case FS_ST_FX:
