@@ -12,8 +12,46 @@
  */
 
 #include <Arduino.h>
-#include "definitions.h"    // holds all STJORN definitions
-#include "devices.h"        // holds instances of all STJORN devices
+#include "STJORN_definitions.h"                     // holds all STJORN definitions
+#include <SPI.h>                                    // required for PlatformIO build...
+#include "SparkFun_Qwiic_Twist_Arduino_Library.h"   // for rotary encoder
+#include <Adafruit_GFX.h>                           // for quad alphanumeric
+#include "Adafruit_LEDBackpack.h"                   // for quad alphanumeric
+#include <WS2812Serial.h>                           // for neoPixels
+#include <Wire.h>                                   // for i2c comms
+#include <Bounce2.h>                                // for button debounce
+#include "Adafruit_VCNL4010.h"                      // for proximity sensor
+#include "STJORN_footswitches.h"                    // STJORN Footswitch functions
+#include "STJORN_stateClass.h"                      // STJORN main state variables
+#include "STJORN_statePatch.h"                      // STJORN state functions for PATCH
+
+
+// Instantiate encoder
+TWIST twist;
+
+// Instantiate displays
+Adafruit_AlphaNum4 display1 = Adafruit_AlphaNum4();     // left display
+Adafruit_AlphaNum4 display2 = Adafruit_AlphaNum4();     // centre display
+Adafruit_AlphaNum4 display3 = Adafruit_AlphaNum4();     // right display
+
+// Instantiate WS2812Serial for LEDs
+byte drawingMemory[NUM_LEDS*3];
+DMAMEM byte displayMemory[NUM_LEDS*12];
+
+WS2812Serial leds(NUM_LEDS, displayMemory, drawingMemory, PIN_WS2812, WS2812_RGB);
+
+// Instantiate button debouncers
+/* Button orders:
+*  
+*/
+const uint8_t FS_PINS[NUM_FS] = {33,32,31,30,20,21,22,23,15,16,17,14,27,28,26};
+Bounce *fs = new Bounce[NUM_FS];
+
+// Instantiate proximity sensor
+Adafruit_VCNL4010 vcnl;
+
+Stjorn stjorn;
+
 
 void setup() {
 
@@ -53,36 +91,130 @@ void setup() {
   leds.begin();
   leds.setBrightness(LED_DIM);
   for(int i = 0; i < NUM_LEDS; i++) {
-      leds.setPixel(i,BLUE);
+      leds.setPixel(i,RED);
   }
   leds.show();
 
 // SETUP RELAY
   pinMode(PIN_RELAY, OUTPUT);
-    
+
+
+// SETUP FOOTSWITCHES
+  for (int i = 0; i < NUM_FS; i++) {
+    fs[i].attach( FS_PINS[i] , INPUT_PULLUP  );       //setup the bounce instance for the current button
+    fs[i].interval(5);                               // interval in ms
+  }
+
+
+delay(5000);    // keep STJORN 'splash' on screen for a few seconds
+
+  for(int i = 0; i < NUM_LEDS; i++) {
+      leds.setPixel(i,DARK);              // turn all LEDs 'off'
+  }
+  leds.show();
+
+
 }
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
-  /* Functions to run (not explicitly in order)
-   * Read incoming MIDI
-   * Process MIDI (determine type, number, value, etc)
-   * Read footswitches
-   * Process inputs (aggregate MIDI and FS values and determine priority)
-   * Check if relay or OnSong buttons pressed (global actions, not tied to a particular state)
-   * Check current state (mode)
-   * Run function for current state --> Always run current function (and react internally to no input)? Or skip if no input on this cycle?
-   * - Process MIDI &/or footswitch messages
-   * - Determine next action &/or state (if any)
-   * - Determine any MIDI to be sent out
-   * - Determine any update to LEDs
-   * - Determine any update to screens
-   * Send out MIDI as required
-   * Update LEDs as required
-   * Update screens as required
-   * Update current state
+ 
+  /* Control methodology
+   * Controller sends out MIDI - or sets internal mode - on footswitch press
+   * LEDs and Screens are set by MIDI feedback from Live/Gp
+   * - e.g. FX LEDs set on feedback from GP, transport set on feedback from Live
+   * 
    */
 
+  /* Functions to run:
+   * Read incoming MIDI             
+   * Read footswitches
+   * Read expression pedal
+   * Read encoder
+   * Process MIDI (determine channel, type, number, value)
+   * Process footswitches (from current state, what is FS action)
+   * - Also includes priority check if MIDI and FS 'clash'
+   * Process expression pedal
+   * - MIDI channel and CC depending on current state
+   * Update transport state machine as required
+   * - What LEDs to light (bypass if not in Song mode currently)
+   * - What screen updates
+   * Update rig state machine as required
+   * - What LEDs to light (bypass if not in Rig mode currently)
+   * - What screen updates
+   * Update looper state machine as required
+   * - What LEDs to light (bypass if not in Song mode currently)
+   * - What screen updates (bypass if not in looper mode currently)
+   * Update pads state machine as required
+   * - What LEDs to light (bypass if not in Pads mode currently)
+   * - What screen updates (bypass if not in Pads mode currently)
+   * Update Menu
+   * Set relay as required
+   * Send out MIDI as required
+   * Update LEDs as required
+   * Update Screens as required
+   * Update overall state (was mode changed by Footswitch)
+   */
+
+  /* What needs to be updated in the background, no matter the state:
+   * Song state/transport sync with Live  --> Updated via MIDI from Live
+   * - Sets screen text for song sections
+   * - Sets colour of transport LED
+   * Current song   --> Updated from Prog.Ch from either GP or Live
+   * - Sets screen text for song num
+   * - Sets MIDI prog.ch. to send out on 'next song' button press
+   * Current Song Part --> updated from MIDI from GP
+   * - Sets screen text for song part
+   */
+
+// UPDATE AND PROCESS MIDI
+
+
+// UPDATE FOOTSWITCHES
+
+  updateFootswitches(fs);
+
+// UPDATE EXPRESSION PEDALS
+
+
+// SELECT AND PROCESS STATES
+/* Each state is responsible for handling footswitch and expression actions
+ * plus setting correct displays and leds based on received MIDI or state
+ * changes
+ */
+
+  switch (stjorn.state()){
+    case ST_TRACKS:
+
+      break;
+    
+    case ST_SONG:
+
+      break;
+
+    case ST_PATCH:
+      statePatch(fs);
+      break;
+
+    case ST_FX:
+
+      break;
+
+    case ST_LOOP:
+
+      break;
+
+    case ST_PADS:
+
+      break;
+
+    default:
+      break;
+  }
+
+
+
+
+
+  
 }
