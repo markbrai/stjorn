@@ -38,6 +38,11 @@
 #define FS_OS_MN 13     // start of 'OnSong' switch range
 #define FS_OS_MX 14     // end of 'OnSong' switch range
 
+#define PRESSED 1
+#define NOT_PRESSED 0
+
+#define LONGPRESS 500     // longpress is > 500ms pressed state
+
 // define relay pin
 #define PIN_RELAY 25
 

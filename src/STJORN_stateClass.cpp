@@ -1,3 +1,20 @@
+/* ------------ STJORN controller --------------
+ *  Code written for Teensy 3.2 micro-controller
+ *  Teensy USB Type should be set to 'MIDI' 
+ * 
+ * https://github.com/markbrai/stjorn 
+ * https://hackaday.io/project/162616-stjrn
+ * 
+ * https://www.gigperformer.com
+ * 
+ * Mark Braithwaite, 2020
+ * 
+ */
+
+/* ------------ STATE CLASS --------------
+*  Main class to hold all STJORN data to pass between states
+*  ---------------------------------------- */
+
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
 #include "STJORN_definitions.h"
