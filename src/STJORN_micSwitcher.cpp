@@ -20,51 +20,44 @@
 #include "STJORN_stateClass.h"
 #include "STJORN_micSwitcher.h"
 
-#define MIC_PRESS 250      // time after which relay is triggered
-#define DBL_PRESS 2000      // time within which 2 presses can be made
-#define OPEN 0
-#define MOMENTARY 1
-#define LATCHED 2
-#define WAIT 3
+
 
 void processRelay(Bounce fs){
 
-    static int relayState = OPEN;
-
     if(fs.fell() ){
-        if(stjorn.isPressed(FS_RELAY) && relayState == WAIT && fs.previousDuration() < DBL_PRESS){ // double press latches
-            //usbMIDI.sendNoteOn(1,127,MIDI_CH_OS);         // for debugging
+        if(stjorn.isPressed(FS_RELAY) && stjorn.relay() == WAIT && fs.previousDuration() < DBL_PRESS){ // double press latches
+            usbMIDI.sendNoteOn(1,127,MIDI_CH_OS);         // for debugging
             triggerRelay(true);
-            relayState = LATCHED;
+            stjorn.setRelay(LATCHED);
         } else {
-            if (relayState == LATCHED){     // single press to release latch
+            if (stjorn.relay() == LATCHED){     // single press to release latch
                 triggerRelay(false);
                 stjorn.setPressed(FS_RELAY,NOT_PRESSED);
-            } else if (relayState == OPEN){             // first press
+            } else if (stjorn.relay() == OPEN){             // first press
                 stjorn.setPressed(FS_RELAY,PRESSED);
             }
         }
     } else if (fs.rose()){
-        if (relayState == MOMENTARY){                   // release relay after continuous press
+        if (stjorn.relay() == MOMENTARY){                   // release relay after continuous press
             stjorn.setPressed(FS_RELAY,NOT_PRESSED);
             triggerRelay(false);
-            relayState = OPEN;
-        } else if (relayState == OPEN){                 // wait for 2nd press to latch
-            relayState = WAIT;
-        } else if (relayState == LATCHED && !stjorn.isPressed(FS_RELAY)){   //release after cancelling latch
-            relayState = OPEN;
+            stjorn.setRelay(OPEN);
+        } else if (stjorn.relay() == OPEN){                 // wait for 2nd press to latch
+            stjorn.setRelay(WAIT);
+        } else if (stjorn.relay() == LATCHED && !stjorn.isPressed(FS_RELAY)){   //release after cancelling latch
+            stjorn.setRelay(OPEN);
         }
 
     }
 
-    if (stjorn.isPressed(FS_RELAY) && relayState == OPEN){              // latch relay on continuous press
+    if (stjorn.isPressed(FS_RELAY) && stjorn.relay() == OPEN){              // latch relay on continuous press
         if (fs.duration() >= MIC_PRESS){
             triggerRelay(true);
-            relayState = MOMENTARY;
+            stjorn.setRelay(MOMENTARY);
         }
-    } else if (relayState == WAIT && fs.duration() > DBL_PRESS){        // timeout after single short press
+    } else if (stjorn.relay() == WAIT && fs.duration() > DBL_PRESS){        // timeout after single short press
         stjorn.setPressed(FS_RELAY, NOT_PRESSED);
-        relayState = OPEN;
+        stjorn.setRelay(OPEN);
     }
 
 }

@@ -30,10 +30,10 @@
 #define FS_ACT_MX 7    // end of 'Action' switch range 
 #define FS_ST_MN 8     // start of 'State' switch range
 #define FS_ST_MX 11     // end of 'State' switch range
-#define FS_ST_TRAX 8
-#define FS_ST_FX 9
+#define FS_ST_SONG 8
+#define FS_ST_RIG 9
 #define FS_ST_LOOP 10
-#define FS_ST_SONG 11
+#define FS_ST_NEXT 11
 #define FS_RELAY 12     // index of 'Relay' switch
 #define FS_OS_MN 13     // start of 'OnSong' switch range
 #define FS_OS_MX 14     // end of 'OnSong' switch range
@@ -45,6 +45,13 @@
 
 // define relay pin
 #define PIN_RELAY 25
+
+#define MIC_PRESS 250      // time after which relay is triggered
+#define DBL_PRESS 2000      // time within which 2 presses can be made
+#define OPEN 0
+#define MOMENTARY 1
+#define LATCHED 2
+#define WAIT 3
 
 // define power LED pin
 #define PIN_PWRLED 13

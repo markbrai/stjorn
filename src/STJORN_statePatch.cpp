@@ -60,24 +60,24 @@ void procFsPatch(Bounce fs, int fsNum){
             }
             break;
 
-        case FS_ST_TRAX:
-
-            break;
-
-        case FS_ST_FX:
-
-            break;
-
-        case FS_ST_LOOP:
-
-            break;
-
         case FS_ST_SONG:
 
             break;
 
-        case FS_RELAY:
+        case FS_ST_RIG:
+
+            break;
+
+        case FS_ST_LOOP:
             processRelay(fs);
+
+            break;
+
+        case FS_ST_NEXT:
+
+            break;
+
+        case FS_RELAY:
             break;
         
         case FS_OS_MN:

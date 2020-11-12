@@ -53,6 +53,11 @@ void Stjorn::selectPatch(int patch)
     m_patchSelected = patch;
 }
 
+void Stjorn::setRelay(int state)
+{
+    m_relayState = state;
+}
+
 // GET FUNCTIONS *********************
 
 bool Stjorn::isPressed(int btn)
