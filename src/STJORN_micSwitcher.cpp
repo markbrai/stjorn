@@ -33,7 +33,7 @@ void processRelay(Bounce fs){
 
     if(fs.fell() ){
         if(stjorn.isPressed(FS_RELAY) && relayState == WAIT && fs.previousDuration() < DBL_PRESS){ // double press latches
-            usbMIDI.sendNoteOn(1,127,MIDI_CH_OS);
+            //usbMIDI.sendNoteOn(1,127,MIDI_CH_OS);         // for debugging
             triggerRelay(true);
             relayState = LATCHED;
         } else {
