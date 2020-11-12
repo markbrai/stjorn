@@ -31,6 +31,7 @@ class Stjorn
         int m_ledColour[NUM_LEDS];
         int m_patchSelected{-1};
         int m_relayState{OPEN};
+        bool m_fx[7];
 
     public:
         // constructor
@@ -42,6 +43,7 @@ class Stjorn
         void setLed(int led, bool state, int colour);
         void selectPatch(int patch);
         void setRelay(int state);
+        void setFX(int fx, bool state);
 
         // Get functions
         int state() {return m_stCurr;}
@@ -51,6 +53,7 @@ class Stjorn
         int isColour(int led);
         int patch() {return m_patchSelected;}
         int relay() {return m_relayState;}
+        bool fx(int fx);
 };
 
 

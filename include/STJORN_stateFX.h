@@ -11,19 +11,20 @@
  * 
  */
 
-/* ------------ FOOTSWITCHES --------------
-*  Functions for processing footswitches
+/* ------------ STATE - PATCH --------------
+*  Functions for selecting patches and controlling state
 *  ---------------------------------------- */
 
-#ifndef STJORN_FOOTSWITCHES_H
-#define STJORN_FOOTSWITCHES_H
+#ifndef STJORN_STATEFX_H
+#define STJORN_STATEFX_H
 
+#include <Arduino.h>
 #include <Bounce2.h>
+#include "STJORN_definitions.h"
 
-void updateFootswitches(Bounce *fs);
+void stateFX(Bounce *fs);
 
-int fsShortLong(Bounce fs, int fsNum);
+void procFsFX(Bounce fs, int fsNum);
 
 
-#endif 
-
+#endif

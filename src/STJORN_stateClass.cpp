@@ -58,6 +58,11 @@ void Stjorn::setRelay(int state)
     m_relayState = state;
 }
 
+void Stjorn::setFX(int fx, bool state)
+{
+    m_fx[fx] = state;
+}
+
 // GET FUNCTIONS *********************
 
 bool Stjorn::isPressed(int btn)
@@ -73,4 +78,9 @@ bool Stjorn::isLit(int led)
 int Stjorn::isColour(int led)
 {
     return m_ledColour[led];
+}
+
+bool Stjorn::fx(int fx)
+{
+    return m_fx[fx];
 }

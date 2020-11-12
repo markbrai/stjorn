@@ -42,12 +42,14 @@
 #define NOT_PRESSED 0
 
 #define LONGPRESS 500     // longpress is > 500ms pressed state
+#define PRESS_SHORT 1
+#define PRESS_LONG 2
 
 // define relay pin
 #define PIN_RELAY 25
 
 #define MIC_PRESS 250      // time after which relay is triggered
-#define DBL_PRESS 2000      // time within which 2 presses can be made
+#define DBL_PRESS 1000      // time within which 2 presses can be made
 #define OPEN 0
 #define MOMENTARY 1
 #define LATCHED 2

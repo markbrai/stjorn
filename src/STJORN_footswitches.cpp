@@ -17,10 +17,31 @@
 
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
+#include "STJORN_stateClass.h"
 
 void updateFootswitches(Bounce *fs){
 
     for (int i=0; i < NUM_FS; i++){
         fs[i].update();
     }
+}
+
+int fsShortLong(Bounce fs, int fsNum){
+
+    if (fs.fell() ){
+        stjorn.setPressed(fsNum,PRESSED);
+    } else if (fs.rose() && stjorn.isPressed(fsNum) ){
+        stjorn.setPressed(fsNum, NOT_PRESSED);
+        return PRESS_SHORT;
+    }
+
+    if (stjorn.isPressed(fsNum) ){
+        if (fs.duration() >= LONGPRESS){
+            stjorn.setPressed(fsNum,NOT_PRESSED);
+            return PRESS_LONG;
+        }
+    }
+
+    return 0;
+
 }
