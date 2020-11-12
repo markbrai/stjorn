@@ -44,6 +44,8 @@ class Stjorn
         void selectPatch(int patch);
         void setRelay(int state);
         void setFX(int fx, bool state);
+        void sendTap();
+        void saveSongVar();
 
         // Get functions
         int state() {return m_stCurr;}

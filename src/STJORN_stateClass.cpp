@@ -15,6 +15,7 @@
 *  Main class to hold all STJORN data to pass between states
 *  ---------------------------------------- */
 
+#include <Arduino.h>
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
 #include "STJORN_definitions.h"
@@ -61,6 +62,16 @@ void Stjorn::setRelay(int state)
 void Stjorn::setFX(int fx, bool state)
 {
     m_fx[fx] = state;
+}
+
+void Stjorn::sendTap()
+{
+    usbMIDI.sendControlChange(LIVE_TAP,127,MIDI_CH_LIVE);
+}
+
+void Stjorn::saveSongVar()
+{
+    usbMIDI.sendControlChange(1,127,MIDI_CH_GP);
 }
 
 // GET FUNCTIONS *********************

@@ -71,7 +71,7 @@ void procFsPatch(Bounce fs, int fsNum){
             if (press == PRESS_SHORT){
                 stjorn.setState(ST_FX);
             } else if (press == PRESS_LONG){
-
+                stjorn.saveSongVar();
             }
             break;
 

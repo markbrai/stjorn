@@ -53,7 +53,7 @@ void procFsFX(Bounce fs, int fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
             if (fs.fell() ){
                 if (fsNum == FX_TAP) {
-                    usbMIDI.sendControlChange(LIVE_TAP,127,MIDI_CH_LIVE);
+                    stjorn.sendTap();
                 } else {
                     ch = MIDI_CH_GP;
                     note = fsNum + 17;
@@ -71,7 +71,7 @@ void procFsFX(Bounce fs, int fsNum){
             if (press == PRESS_SHORT){
                 stjorn.setState(ST_PATCH);
             } else if (press == PRESS_LONG){
-
+                stjorn.saveSongVar();
             }
 
             break;
