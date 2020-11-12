@@ -62,7 +62,9 @@ void procFsFX(Bounce fs, int fsNum){
             break;
 
         case FS_ST_SONG:
-
+            if (fs.fell() ){
+                stjorn.setState(ST_TRACKS);
+            }
             break;
 
         case FS_ST_RIG:
@@ -71,13 +73,15 @@ void procFsFX(Bounce fs, int fsNum){
             if (press == PRESS_SHORT){
                 stjorn.setState(ST_PATCH);
             } else if (press == PRESS_LONG){
-                stjorn.saveSongVar();
+
             }
 
             break;
 
         case FS_ST_LOOP:
-
+            if (fs.fell() ){
+                stjorn.setState(ST_LOOP);
+            }
             break;
 
         case FS_ST_NEXT:

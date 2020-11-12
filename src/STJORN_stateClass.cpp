@@ -74,6 +74,11 @@ void Stjorn::saveSongVar()
     usbMIDI.sendControlChange(1,127,MIDI_CH_GP);
 }
 
+void Stjorn::setSong(int song)
+{
+    m_currSong = song;
+}
+
 void Stjorn::setNext(int press, int song)
 {
     if (song == -1){            // triggered from 'next'

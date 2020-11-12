@@ -49,6 +49,7 @@ class Stjorn
         void setFX(int fx, bool state);
         void sendTap();
         void saveSongVar();
+        void setSong(int song);
         void setNext(int press, int song);
 
         // Get functions

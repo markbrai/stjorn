@@ -86,7 +86,7 @@ enum StjornState {
 
 // define some general parameters
 
-#define MAX_SONGS 14    // maximum number of songs that can be switched between
+#define MAX_SONGS 16    // maximum number of songs that can be switched between
 
 // define some MIDI parameters
 
