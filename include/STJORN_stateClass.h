@@ -32,6 +32,9 @@ class Stjorn
         int m_patchSelected{-1};
         int m_relayState{OPEN};
         bool m_fx[7];
+        int m_currSong{0};
+        bool m_nextSong{-1};
+
 
     public:
         // constructor
@@ -46,6 +49,7 @@ class Stjorn
         void setFX(int fx, bool state);
         void sendTap();
         void saveSongVar();
+        void setNext(int press, int song);
 
         // Get functions
         int state() {return m_stCurr;}
@@ -56,6 +60,7 @@ class Stjorn
         int patch() {return m_patchSelected;}
         int relay() {return m_relayState;}
         bool fx(int fx);
+        bool next() {return m_nextSong;}
 };
 
 

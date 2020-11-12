@@ -74,6 +74,26 @@ void Stjorn::saveSongVar()
     usbMIDI.sendControlChange(1,127,MIDI_CH_GP);
 }
 
+void Stjorn::setNext(int press, int song)
+{
+    if (song == -1){            // triggered from 'next'
+        song = m_currSong + 1;
+    }
+
+    if (press == PRESS_SHORT){
+        if (m_nextSong == false){        // immediate next GP & LIVE
+            usbMIDI.sendProgramChange(song,MIDI_CH_LIVE);
+            usbMIDI.sendProgramChange(song,MIDI_CH_GP);
+        } else {                        // next GP
+            usbMIDI.sendProgramChange(song,MIDI_CH_GP);
+            m_nextSong = false;
+        }
+    } else if (press == PRESS_LONG){    // next LIVE only
+        usbMIDI.sendProgramChange(song,MIDI_CH_LIVE);
+        m_nextSong = true;
+    }
+}
+
 // GET FUNCTIONS *********************
 
 bool Stjorn::isPressed(int btn)

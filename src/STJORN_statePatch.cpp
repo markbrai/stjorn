@@ -80,7 +80,9 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
 
         case FS_ST_NEXT:
-
+            int press = 0;
+            press = fsShortLong(fs, fsNum);
+            stjorn.setNext(press, -1);
             break;
 
         case FS_RELAY:
