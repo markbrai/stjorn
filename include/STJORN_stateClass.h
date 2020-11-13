@@ -33,7 +33,7 @@ class Stjorn
         int m_relayState{OPEN};
         bool m_fx[7];
         int m_currSong{0};
-        bool m_nextSong{-1};
+        bool m_nextSong{false};
 
 
     public:
