@@ -35,6 +35,14 @@ void Stjorn::setState(int stNew)
 {
     m_stPrev = m_stCurr;
     m_stCurr = stNew;
+    m_stChange = true;
+}
+
+void Stjorn::confirmState(int state)
+{
+    if (m_stChange == true && state == m_stCurr){
+        m_stChange = false;
+    }
 }
 
 void Stjorn::setPressed(int btn, bool state)

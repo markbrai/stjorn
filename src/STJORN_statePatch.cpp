@@ -40,6 +40,8 @@ void statePatch(Bounce *fs){
     }
 
 
+    // reset 'changed' state flag if just changed to this state
+    stjorn.confirmState(ST_PATCH);
 
 }
 

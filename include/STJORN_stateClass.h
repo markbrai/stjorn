@@ -26,6 +26,7 @@ class Stjorn
     private:
         int m_stCurr{};
         int m_stPrev{};
+        bool m_stChange{false};
         bool m_pressed[NUM_FS];
         bool m_ledState[NUM_LEDS];
         int m_ledColour[NUM_LEDS];
@@ -42,6 +43,7 @@ class Stjorn
 
         // Set functions
         void setState(int stNew);
+        void confirmState(int state);
         void setPressed(int btn, bool state);
         void setLed(int led, bool state, int colour);
         void selectPatch(int patch);
@@ -55,6 +57,7 @@ class Stjorn
         // Get functions
         int state() {return m_stCurr;}
         int prevState() {return m_stPrev;}
+        bool stateChange() {return m_stChange;}
         bool isPressed(int btn);
         bool isLit(int led);
         int isColour(int led);
@@ -62,6 +65,7 @@ class Stjorn
         int relay() {return m_relayState;}
         bool fx(int fx);
         bool next() {return m_nextSong;}
+        
 };
 
 

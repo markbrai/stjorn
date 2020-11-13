@@ -53,6 +53,10 @@ bool fsTapEngage(Bounce fs, int fsNum){
     #define TAP_TIMEOUT 10000
 
     static bool tapEngage = LOCKED;
+
+    if (stjorn.stateChange()){      // reset tapEngage status when state changes
+        tapEngage = LOCKED; 
+    }
     
     if (fs.fell() ){
         stjorn.setPressed(fsNum,PRESSED);
