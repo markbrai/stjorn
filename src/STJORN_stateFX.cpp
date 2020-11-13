@@ -11,8 +11,8 @@
  * 
  */
 
-/* ------------ STATE - PATCH --------------
-*  Functions for selecting patches and controlling state
+/* ------------ STATE - FX --------------
+*  Functions for selecting FX and controlling state
 *  ---------------------------------------- */
 
 #include <Bounce2.h>
@@ -51,10 +51,13 @@ void procFsFX(Bounce fs, int fsNum){
 
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
-            if (fs.fell() ){
-                if (fsNum == FX_TAP) {
+            if (fsNum == FX_TAP) {
+                bool tapEngage = fsTapEngage(fs,fsNum);
+                if (tapEngage){
                     stjorn.sendTap();
-                } else {
+                }
+            } else {
+                if (fs.fell() ){
                     ch = MIDI_CH_GP;
                     note = fsNum + 17;
                 }

@@ -11,8 +11,8 @@
  * 
  */
 
-/* ------------ STATE - PATCH --------------
-*  Functions for selecting patches and controlling state
+/* ------------ STATE - FX --------------
+*  Functions for selecting FX and controlling state
 *  ---------------------------------------- */
 
 #ifndef STJORN_STATEFX_H

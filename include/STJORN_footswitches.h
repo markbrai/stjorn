@@ -24,6 +24,8 @@ void updateFootswitches(Bounce *fs);
 
 int fsShortLong(Bounce fs, int fsNum);
 
+bool fsTapEngage(Bounce fs, int fsNum);
+
 
 #endif 
 

@@ -45,3 +45,36 @@ int fsShortLong(Bounce fs, int fsNum){
     return 0;
 
 }
+
+bool fsTapEngage(Bounce fs, int fsNum){
+
+    #define ENGAGED 1
+    #define LOCKED 0
+    #define TAP_TIMEOUT 10000
+
+    static bool tapEngage = LOCKED;
+    
+    if (fs.fell() ){
+        stjorn.setPressed(fsNum,PRESSED);
+        if (tapEngage == ENGAGED){
+            return true;
+        }
+    } else if (fs.rose() && stjorn.isPressed(fsNum) ){
+        stjorn.setPressed(fsNum,NOT_PRESSED);
+    }
+
+    if (stjorn.isPressed(fsNum) ){
+        if (fs.duration() >= LONGPRESS){
+            stjorn.setPressed(fsNum,NOT_PRESSED);
+            tapEngage = ENGAGED;
+        }
+    }
+
+    if (!stjorn.isPressed(fsNum) && tapEngage == ENGAGED){
+        if (fs.duration() >= TAP_TIMEOUT){
+            tapEngage = LOCKED;
+        }
+    }
+
+    return false;
+}
