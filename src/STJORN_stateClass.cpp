@@ -47,13 +47,12 @@ void Stjorn::setState(int stNew)
 
 }
 
-bool Stjorn::confirmState(int state)
+void Stjorn::confirmState(int state)
 {
     if (m_stChange == true && state == m_stCurr){
-        m_stChange = false;
-        return true;           // return true to set LED
+        m_stChange = false;          // return true to set LED
     }
-    return false;
+
 }
 
 void Stjorn::setPressed(int btn, bool state)
@@ -63,7 +62,7 @@ void Stjorn::setPressed(int btn, bool state)
 
 void Stjorn::setLed(int type, int num, bool state, int colour)
 {
-    int led;
+    int led = -1;
 
     switch (type){
         case ACTION:
@@ -141,6 +140,26 @@ void Stjorn::setNext(int press, int song)
     }
 }
 
+void Stjorn::setDisplay(int block, int digit, char ascii)
+{
+    switch (block){
+        case BLK_SONG:
+            m_dispSong[digit] = ascii;
+            break;
+        case BLK_CURR:
+            m_dispCurr[digit] = ascii;
+            break;
+        case BLK_NEXT:
+            m_dispNext[digit] = ascii;
+            break;
+        case BLK_RIG:
+            m_dispRig[digit] = ascii;
+            break;
+        default:
+            break;
+    }
+}
+
 // GET FUNCTIONS *********************
 
 bool Stjorn::isPressed(int btn)
@@ -161,6 +180,30 @@ int Stjorn::isColour(int led)
 bool Stjorn::fx(int fx)
 {
     return m_fx[fx];
+}
+
+char Stjorn::ascii(int blk, int digit)
+{
+    char ascii = ' ';
+
+    switch (blk){
+        case BLK_SONG:
+            ascii = m_dispSong[digit];
+            break;
+        case BLK_CURR:
+            ascii = m_dispCurr[digit];
+            break;
+        case BLK_NEXT:
+            ascii = m_dispNext[digit];
+            break;
+        case BLK_RIG:
+            ascii = m_dispRig[digit];
+            break;
+        default:
+            break;
+    }
+
+    return ascii;
 }
 
 

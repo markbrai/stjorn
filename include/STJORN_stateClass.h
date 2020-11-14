@@ -32,6 +32,11 @@ class Stjorn
         int getStateLed(int state);
         // footswitch 
         bool m_pressed[NUM_FS];
+        // display
+        char m_dispSong[2];
+        char m_dispCurr[4];
+        char m_dispNext[4];
+        char m_dispRig[2];
         // leds
         bool m_ledState[NUM_LEDS];
         int m_ledColour[NUM_LEDS];
@@ -55,7 +60,7 @@ class Stjorn
 
         // Set functions
         void setState(int stNew);
-        bool confirmState(int state);
+        void confirmState(int state);
         void setPressed(int btn, bool state);
         void setLed(int type, int led, bool state, int colour);
         void selectPatch(int patch);
@@ -65,6 +70,7 @@ class Stjorn
         void saveSongVar();
         void setSong(int song);
         void setNext(int press, int song);
+        void setDisplay(int block, int digit, char ascii );
 
         // Get functions
         int state() {return m_stCurr;}
@@ -77,6 +83,7 @@ class Stjorn
         int relay() {return m_relayState;}
         bool fx(int fx);
         bool next() {return m_nextSong;}
+        char ascii(int blk, int digit);
         
 };
 

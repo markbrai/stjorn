@@ -28,6 +28,8 @@ void procFsPatch(Bounce fs, int fsNum);
 
 void procLedPatch();
 
+void procDisplayPatch();
+
 
 
 #endif

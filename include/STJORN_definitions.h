@@ -70,6 +70,7 @@
 #define ORANGE 0xFF7700
 #define WHITE 0xFFFFFF
 #define DARK 0x000000
+#define LED_VDIM 16
 #define LED_DIM 32
 #define LED_BRT 64
 
@@ -90,6 +91,16 @@
 
 #define SCRN_DIM 4
 #define SCRN_BRT 6
+
+#define BLK_SONG 0
+#define BLK_CURR 1
+#define BLK_NEXT 2
+#define BLK_RIG 3
+
+#define DIGIT_SONG 2
+#define DIGIT_CURR 4
+#define DIGIT_NEXT 4
+#define DIGIT_RIG 2
 
 // define some things for FX and Patches
 #define NUM_FX 8    // actually only 7, but include tap tempo button

@@ -41,6 +41,8 @@ void statePatch(Bounce *fs){
 
     procLedPatch();
 
+    procDisplayPatch();
+
 
     // reset 'changed' state flag if just changed to this state
     stjorn.confirmState(ST_PATCH);
@@ -120,8 +122,22 @@ void procLedPatch(){
         stjorn.setLed(ACTION,i,state,WHITE);
     }
 
+}
 
+void procDisplayPatch(){
 
-        
+    char dispPatch[NUM_PATCH][DIGIT_RIG] = {{'A','M'},
+                                            {'R','2'},
+                                            {'D','2'},
+                                            {'L','2'},
+                                            {'C','L'},
+                                            {'R','1'},
+                                            {'D','1'},
+                                            {'L','1'}};
+
+    for (int i=0; i < DIGIT_RIG; i++){
+        char ascii = dispPatch[stjorn.patch()][i];
+        stjorn.setDisplay(BLK_RIG,i,ascii);
+    }
 
 }

@@ -31,8 +31,6 @@ void processMidi(){
     data1 = usbMIDI.getData1();
     data2 = usbMIDI.getData2();
 
-    int ledNum = -1;
-
     switch (type) {
         case usbMIDI.NoteOff:
             processNoteOff(channel,data1,data2);

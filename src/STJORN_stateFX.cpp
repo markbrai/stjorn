@@ -45,7 +45,7 @@ void stateFX(Bounce *fs){
 
 
     // reset 'changed' state flag if just changed to this state
-    bool stLed = stjorn.confirmState(ST_FX);
+    stjorn.confirmState(ST_FX);
 
 }
 
