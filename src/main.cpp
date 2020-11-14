@@ -170,6 +170,10 @@ void loop() {
 
 // UPDATE AND PROCESS MIDI
 
+  while (usbMIDI.read() ){
+    // read and ignore messages
+  }
+
 
 // UPDATE FOOTSWITCHES
 
