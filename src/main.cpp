@@ -73,12 +73,15 @@ void setup() {
   display3.setBrightness(SCRN_DIM);
 
 // setup welcome message
-  display1.writeDigitAscii(3,'S');
-  display2.writeDigitAscii(0,'T');
-  display2.writeDigitAscii(1,'J');
-  display2.writeDigitAscii(2,'O');
-  display2.writeDigitAscii(3,'R');
-  display3.writeDigitAscii(0,'N');
+
+  char splash[6] = {'S','T','J','O','R','N'};
+
+  display1.writeDigitAscii(3,splash[0]);
+  display2.writeDigitAscii(0,splash[1]);
+  display2.writeDigitAscii(1,splash[2]);
+  display2.writeDigitAscii(2,splash[3]);
+  display2.writeDigitAscii(3,splash[4]);
+  display3.writeDigitAscii(0,splash[5]);
 
 // write displays
   display1.writeDisplay();
@@ -90,7 +93,7 @@ void setup() {
 
 // LED SETUP
   leds.begin();
-  leds.setBrightness(LED_DIM);
+  leds.setBrightness(LED_VDIM);
   for(int i = 0; i < NUM_LEDS; i++) {
       leds.setPixel(i,RED);
   }
@@ -114,7 +117,17 @@ delay(2000);    // keep STJORN 'splash' on screen for a few seconds
   }
   leds.show();
 
-  Serial.begin(9600);
+  //Serial.begin(9600);
+
+  // clear screen buffers
+  int digits[4] = {DIGIT_SONG,DIGIT_CURR,DIGIT_NEXT,DIGIT_RIG};
+
+  for (int blk = 0; blk < 4; blk++){
+    int numDigits = digits[blk];
+    for (int i = 0; i < numDigits; i++){
+      stjorn.setDisplay(blk,i,' ');
+    }
+  }
 
 }
 
@@ -221,10 +234,11 @@ void loop() {
   }
 
 
+// Set LEDs 
   for (int i = 0; i < NUM_LEDS; i++){
     int colour;
     if (stjorn.isLit(i) ){
-      colour = BLUE;
+      colour = stjorn.isColour(i);
     } else {
       colour = DARK;
     }
@@ -232,7 +246,25 @@ void loop() {
   }
   leds.show();
 
+// Set Displays
 
+  display1.writeDigitAscii(0,stjorn.ascii(BLK_SONG,0));
+  display1.writeDigitAscii(1,stjorn.ascii(BLK_SONG,1));
+  display1.writeDigitAscii(2,stjorn.ascii(BLK_CURR,0));
+  display1.writeDigitAscii(3,stjorn.ascii(BLK_CURR,1));
+  display1.writeDisplay();
+
+  display2.writeDigitAscii(0,stjorn.ascii(BLK_CURR,2));
+  display2.writeDigitAscii(1,stjorn.ascii(BLK_CURR,3));
+  display2.writeDigitAscii(2,stjorn.ascii(BLK_NEXT,0));
+  display2.writeDigitAscii(3,stjorn.ascii(BLK_NEXT,1));
+  display2.writeDisplay();
+
+  display3.writeDigitAscii(0,stjorn.ascii(BLK_NEXT,2));
+  display3.writeDigitAscii(1,stjorn.ascii(BLK_NEXT,3));
+  display3.writeDigitAscii(2,stjorn.ascii(BLK_RIG,0));
+  display3.writeDigitAscii(3,stjorn.ascii(BLK_RIG,1));
+  display3.writeDisplay();
 
   
 }

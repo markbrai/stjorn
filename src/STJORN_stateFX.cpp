@@ -21,6 +21,7 @@
 #include "STJORN_stateFX.h"
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
+#include "STJORN_display.h"
 
 #define FX_MOD 0
 #define FX_DLY 1
@@ -39,11 +40,14 @@ void stateFX(Bounce *fs){
         procFsFX(fs[i], i);
     }
 
+    procLedFX();
+
+    procDisplayFX();
+
 
 
     // reset 'changed' state flag if just changed to this state
     stjorn.confirmState(ST_FX);
-
 
 }
 
@@ -69,9 +73,9 @@ void procFsFX(Bounce fs, int fsNum){
             break;
 
         case FS_ST_SONG:
-            if (fs.fell() ){
+            /*if (fs.fell() ){
                 stjorn.setState(ST_TRACKS);
-            }
+            }*/
             break;
 
         case FS_ST_RIG:
@@ -86,9 +90,9 @@ void procFsFX(Bounce fs, int fsNum){
             break;
 
         case FS_ST_LOOP:
-            if (fs.fell() ){
+            /*if (fs.fell() ){
                 stjorn.setState(ST_LOOP);
-            }
+            }*/
             break;
 
         case FS_ST_NEXT:
@@ -113,5 +117,25 @@ void procFsFX(Bounce fs, int fsNum){
     if (note != -1){
         usbMIDI.sendNoteOn(note,127,ch);
     }
+
+}
+
+void procLedFX(){
+
+    int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,DARK,YELLOW,YELLOW,RED,RED}; // colour of each FX
+
+    for (int i = 0; i < NUM_FX; i++){
+        int colour = DARK;
+        if (stjorn.fx(i) == true){
+            colour = fxLedCol[i];
+        } 
+        stjorn.setLed(ACTION,i,stjorn.fx(i),colour);
+    }
+
+}
+
+void procDisplayFX(){
+
+    setDisplayPatch();
 
 }

@@ -26,5 +26,9 @@ void stateFX(Bounce *fs);
 
 void procFsFX(Bounce fs, int fsNum);
 
+void procLedFX();
+
+void procDisplayFX();
+
 
 #endif

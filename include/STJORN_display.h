@@ -11,25 +11,22 @@
  * 
  */
 
-/* ------------ STATE - PATCH --------------
-*  Functions for selecting patches and controlling state
+/* ------------ DISPLAY  --------------
+*  Functions for setting display buffers
 *  ---------------------------------------- */
 
-#ifndef STJORN_STATEPATCH_H
-#define STJORN_STATEPATCH_H
+#ifndef STJORN_DISPLAY_H
+#define STJORN_DISPLAY_H
 
 #include <Arduino.h>
-#include <Bounce2.h>
 #include "STJORN_definitions.h"
+#include "STJORN_stateClass.h"
 
-void statePatch(Bounce *fs);
-
-void procFsPatch(Bounce fs, int fsNum);
-
-void procLedPatch();
-
-void procDisplayPatch();
+void setDisplayPatch();
+void setDisplaySong();
+void setDisplayCurr();
+void setDisplayNext();
 
 
 
-#endif
+#endif 

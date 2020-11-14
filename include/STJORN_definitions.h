@@ -61,19 +61,54 @@
 // define expression pedal input pin
 #define PIN_EXP 29
 
-// define some colours and brightness
+// define some stuff for LEDs
 
 #define RED 0xFF0000
 #define BLUE 0x0000FF
 #define GREEN 0x00FF00
+#define YELLOW 0xFFFF00
+#define ORANGE 0xFF7700
+#define WHITE 0xFFFFFF
 #define DARK 0x000000
+#define LED_VDIM 16
 #define LED_DIM 32
 #define LED_BRT 64
+
+#define LED_SONG 6
+#define LED_RIG 5
+#define LED_LOOP 4
+#define LED_NEXT 7
+#define LED_TRANSPORT 12
+#define LED_MIC 13
+
+#define ACTION 0      // types for setLed
+#define STATE 1
+#define NEXT 2
+#define MIC 3
+#define TRANSPORT 4
+
+// define some stuff for screens
 
 #define SCRN_DIM 4
 #define SCRN_BRT 6
 
+#define BLK_SONG 0
+#define BLK_CURR 1
+#define BLK_NEXT 2
+#define BLK_RIG 3
+
+#define DIGIT_SONG 2
+#define DIGIT_CURR 4
+#define DIGIT_NEXT 4
+#define DIGIT_RIG 2
+
+// define some things for FX and Patches
+#define NUM_FX 8    // actually only 7, but include tap tempo button
+#define NUM_PATCH 8
+#define NUM_ACTION 8 // number of 'action buttons' 
+
 // define STJORN states
+#define NUM_STATES 6
 
 enum StjornState {    
   ST_TRACKS,    // 0
@@ -90,7 +125,7 @@ enum StjornState {
 
 // define some MIDI parameters
 
-enum MidiType {  // Types of MIDI message to be received
+/*enum MidiType {  // Types of MIDI message to be received
   MIDI_NONE,     // 0. Init value, or no new MIDI message
   MIDI_PROG,     // 1. Program Change
   MIDI_NOTEON,   // 2. Note On
@@ -100,19 +135,19 @@ enum MidiType {  // Types of MIDI message to be received
   MIDI_STOP,
   MIDI_CONTINUE,
   MIDI_CLOCK,
-};
+};*/    // DEPRECATED - USED IN PREVIOUS MIDI processing
 
 #define MIDI_CH_LIVE 16
 #define MIDI_CH_GP 15
 #define MIDI_CH_OS 14
 
-enum ParamTgt {     // Target of incoming MIDI parameter
+/*enum ParamTgt {     // Target of incoming MIDI parameter
   TGT_NONE,         // 0. Init value, or incompatible parameter
   TGT_SONG,         // 1. Target is Song mode
   TGT_RIG,          // 2. Target is Rig Patch mode
   TGT_LOOP,         // 3. Target is Looper mode
   TGT_PADS,         // 4. Target is Pads mode
-};
+};*/ // DEPRECATED - USED IN PREVIOUS MIDI processing
 
 enum LiveParam {
   LIVE_NONE,        // 0. Init value, or incompatible parameter
@@ -144,7 +179,6 @@ enum LiveParam {
   LIVE_SPACE,       // 26. Spacer song section
   LIVE_CYCLEOK,     // 27. Cycle OK or Not
 };
-
 
 
 

@@ -24,17 +24,34 @@
 class Stjorn
 {
     private:
+        // state 
         int m_stCurr{};
         int m_stPrev{};
         bool m_stChange{false};
+        int m_stLedCol[NUM_STATES] = {WHITE,BLUE,WHITE,BLUE,WHITE,BLUE};
+        int getStateLed(int state);
+        // footswitch 
         bool m_pressed[NUM_FS];
+        // display
+        char m_dispSong[2];
+        char m_dispCurr[4];
+        char m_dispNext[4];
+        char m_dispRig[2];
+        // leds
         bool m_ledState[NUM_LEDS];
         int m_ledColour[NUM_LEDS];
+        int m_ledNumAction[NUM_ACTION] = {8,9,10,11,3,2,1,0};
+        // patch 
         int m_patchSelected{-1};
+        // relay (mic switcher) 
         int m_relayState{OPEN};
-        bool m_fx[7];
+        // FX 
+        bool m_fx[NUM_FX];
+        // song 
         int m_currSong{0};
         bool m_nextSong{false};
+        // transport 
+
 
 
     public:
@@ -45,7 +62,7 @@ class Stjorn
         void setState(int stNew);
         void confirmState(int state);
         void setPressed(int btn, bool state);
-        void setLed(int led, bool state, int colour);
+        void setLed(int type, int led, bool state, int colour);
         void selectPatch(int patch);
         void setRelay(int state);
         void setFX(int fx, bool state);
@@ -53,6 +70,7 @@ class Stjorn
         void saveSongVar();
         void setSong(int song);
         void setNext(int press, int song);
+        void setDisplay(int block, int digit, char ascii );
 
         // Get functions
         int state() {return m_stCurr;}
@@ -65,6 +83,7 @@ class Stjorn
         int relay() {return m_relayState;}
         bool fx(int fx);
         bool next() {return m_nextSong;}
+        char ascii(int blk, int digit);
         
 };
 

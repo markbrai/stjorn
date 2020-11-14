@@ -21,6 +21,7 @@
 #include "STJORN_statePatch.h"
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
+#include "STJORN_display.h"
 
 #define AM 0
 #define R2 1
@@ -39,6 +40,9 @@ void statePatch(Bounce *fs){
         procFsPatch(fs[i], i);
     }
 
+    procLedPatch();
+
+    procDisplayPatch();
 
     // reset 'changed' state flag if just changed to this state
     stjorn.confirmState(ST_PATCH);
@@ -78,9 +82,9 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
 
         case FS_ST_LOOP:
-            if (fs.fell() ){
+            /*if (fs.fell() ){
                 stjorn.setState(ST_LOOP);
-            }
+            }*/
             break;
 
         case FS_ST_NEXT:
@@ -105,5 +109,24 @@ void procFsPatch(Bounce fs, int fsNum){
     if (note != -1){
         usbMIDI.sendNoteOn(note,127,ch);
     }
+
+}
+
+void procLedPatch(){
+
+    for (int i=0; i < NUM_PATCH; i++){
+        bool state = false;
+        if (stjorn.patch() == i){
+            state = true;
+        }
+        stjorn.setLed(ACTION,i,state,WHITE);
+    }
+
+}
+
+void procDisplayPatch(){
+
+    setDisplayPatch();
+
 
 }
