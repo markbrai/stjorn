@@ -25,7 +25,7 @@
 #include "STJORN_stateClass.h"                      // STJORN main state variables
 #include "STJORN_statePatch.h"                      // STJORN state functions for PATCH
 #include "STJORN_stateFX.h"
-
+#include "STJORN_midi.h"
 
 // Instantiate encoder
 TWIST twist;
@@ -114,6 +114,7 @@ delay(2000);    // keep STJORN 'splash' on screen for a few seconds
   }
   leds.show();
 
+  Serial.begin(9600);
 
 }
 
@@ -170,8 +171,10 @@ void loop() {
 
 // UPDATE AND PROCESS MIDI
 
-  while (usbMIDI.read() ){
-    // read and ignore messages
+  if (usbMIDI.read() ){
+
+    processMidi();
+
   }
 
 
@@ -218,6 +221,16 @@ void loop() {
   }
 
 
+  for (int i = 0; i < NUM_LEDS; i++){
+    int colour;
+    if (stjorn.isLit(i) ){
+      colour = BLUE;
+    } else {
+      colour = DARK;
+    }
+    leds.setPixel(i,colour);
+  }
+  leds.show();
 
 
 
