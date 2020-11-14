@@ -21,10 +21,39 @@
 #define PIN_WS2812 1      // WS2812 serial data sent from pin 1
 
 // define footswitches
-#define NUM_BUTTONS 15
+#define NUM_FS 15
+#define NOCHANGE 0
+#define FELL 1
+#define ROSE 2
+
+#define FS_ACT_MN 0    // start of 'Action' switch range
+#define FS_ACT_MX 7    // end of 'Action' switch range 
+#define FS_ST_MN 8     // start of 'State' switch range
+#define FS_ST_MX 11     // end of 'State' switch range
+#define FS_ST_SONG 8
+#define FS_ST_RIG 9
+#define FS_ST_LOOP 10
+#define FS_ST_NEXT 11
+#define FS_RELAY 12     // index of 'Relay' switch
+#define FS_OS_MN 13     // start of 'OnSong' switch range
+#define FS_OS_MX 14     // end of 'OnSong' switch range
+
+#define PRESSED 1
+#define NOT_PRESSED 0
+
+#define LONGPRESS 500     // longpress is > 500ms pressed state
+#define PRESS_SHORT 1
+#define PRESS_LONG 2
 
 // define relay pin
 #define PIN_RELAY 25
+
+#define MIC_PRESS 250      // time after which relay is triggered
+#define DBL_PRESS 1000      // time within which 2 presses can be made
+#define OPEN 0
+#define MOMENTARY 1
+#define LATCHED 2
+#define WAIT 3
 
 // define power LED pin
 #define PIN_PWRLED 13
@@ -44,9 +73,20 @@
 #define SCRN_DIM 4
 #define SCRN_BRT 6
 
+// define STJORN states
+
+enum StjornState {    
+  ST_TRACKS,    // 0
+  ST_SONG,      // 1
+  ST_PATCH,     // 2
+  ST_FX,        // 3
+  ST_LOOP,      // 4
+  ST_PADS,      // 5
+};
+
 // define some general parameters
 
-#define MAX_SONGS 14    // maximum number of songs that can be switched between
+#define MAX_SONGS 16    // maximum number of songs that can be switched between
 
 // define some MIDI parameters
 

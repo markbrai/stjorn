@@ -12,8 +12,7 @@
  */
 
 #include <Arduino.h>
-#include "STJORN_definitions.h"    // holds all STJORN definitions
-#include "STJORN_usbMIDI.h"
+#include "STJORN_definitions.h"                     // holds all STJORN definitions
 #include <SPI.h>                                    // required for PlatformIO build...
 #include "SparkFun_Qwiic_Twist_Arduino_Library.h"   // for rotary encoder
 #include <Adafruit_GFX.h>                           // for quad alphanumeric
@@ -22,7 +21,11 @@
 #include <Wire.h>                                   // for i2c comms
 #include <Bounce2.h>                                // for button debounce
 #include "Adafruit_VCNL4010.h"                      // for proximity sensor
-
+#include "STJORN_footswitches.h"                    // STJORN Footswitch functions
+#include "STJORN_stateClass.h"                      // STJORN main state variables
+#include "STJORN_statePatch.h"                      // STJORN state functions for PATCH
+#include "STJORN_stateFX.h"
+#include "STJORN_midi.h"
 
 // Instantiate encoder
 TWIST twist;
@@ -39,11 +42,16 @@ DMAMEM byte displayMemory[NUM_LEDS*12];
 WS2812Serial leds(NUM_LEDS, displayMemory, drawingMemory, PIN_WS2812, WS2812_RGB);
 
 // Instantiate button debouncers
-const uint8_t BUTTON_PINS[NUM_BUTTONS] = {23,22,21,20,17,16,15,14,33,32,31,30,28,27,26};
-Bounce *buttons = new Bounce[NUM_BUTTONS];
+/* Button orders:
+*  
+*/
+const uint8_t FS_PINS[NUM_FS] = {33,32,31,30,20,21,22,23,15,16,17,14,27,28,26};
+Bounce *fs = new Bounce[NUM_FS];
 
 // Instantiate proximity sensor
 Adafruit_VCNL4010 vcnl;
+
+Stjorn stjorn;
 
 
 void setup() {
@@ -93,19 +101,20 @@ void setup() {
 
 
 // SETUP FOOTSWITCHES
-  for (int i = 0; i < NUM_BUTTONS; i++) {
-    buttons[i].attach( BUTTON_PINS[i] , INPUT_PULLUP  );       //setup the bounce instance for the current button
-    buttons[i].interval(10);              // interval in ms
+  for (int i = 0; i < NUM_FS; i++) {
+    fs[i].attach( FS_PINS[i] , INPUT_PULLUP  );       //setup the bounce instance for the current button
+    fs[i].interval(5);                               // interval in ms
   }
 
 
-delay(5000);    // keep STJORN 'splash' on screen for a few seconds
+delay(2000);    // keep STJORN 'splash' on screen for a few seconds
 
   for(int i = 0; i < NUM_LEDS; i++) {
       leds.setPixel(i,DARK);              // turn all LEDs 'off'
   }
   leds.show();
 
+  Serial.begin(9600);
 
 }
 
@@ -120,11 +129,11 @@ void loop() {
    */
 
   /* Functions to run:
-   X Read incoming MIDI             
+   * Read incoming MIDI             
    * Read footswitches
    * Read expression pedal
    * Read encoder
-   / Process MIDI (determine channel, type, number, value)
+   * Process MIDI (determine channel, type, number, value)
    * Process footswitches (from current state, what is FS action)
    * - Also includes priority check if MIDI and FS 'clash'
    * Process expression pedal
@@ -160,43 +169,51 @@ void loop() {
    * - Sets screen text for song part
    */
 
-// Read incoming MIDI and get parameters
-  // initialise parameters
-  MidiType midiType = MIDI_NONE;
-  int midiChan = -1;
-  int midiNum = -1;
-  int MidiVal = -1;
-  bool newMidi = false;
-  int paramTgt = TGT_NONE;
+// UPDATE AND PROCESS MIDI
 
-  byte newSongNum = -1;  // initialise newSongNum to -1 in case no new song Prog Ch is read
+  if (usbMIDI.read() ){
 
-  // read incoming MIDI and get parameters
-  if (usbMIDI.read()){
-    newMidi = true;
-    // Process incming MIDI and 'return' type, channel, number, and value params
-    MidiInProcess(&midiType, &midiChan, &midiNum, &MidiVal);
+    processMidi();
+
   }
 
-// read footswitches
+
+// UPDATE FOOTSWITCHES
+
+  updateFootswitches(fs);
+
+// UPDATE EXPRESSION PEDALS
 
 
+// SELECT AND PROCESS STATES
+/* Each state is responsible for handling footswitch and expression actions
+ * plus setting correct displays and leds based on received MIDI or state
+ * changes
+ */
 
-// process MIDI
-  switch(midiType){
+  switch (stjorn.state()){
+    case ST_TRACKS:
 
-    case MIDI_PROG:
-      newSongNum = MidiProcessProgCh(midiChan, midiNum);   // returns the new song number from program change
-      break;         
-
-    case MIDI_NOTEOFF:
-    case MIDI_NOTEON:
-      paramTgt = MidiProcessTgt(midiChan, midiNum);       // returns target of message
+      break;
+    
+    case ST_SONG:
 
       break;
 
-    case MIDI_CC:
-      paramTgt = MidiProcessTgt(midiChan, midiNum);       // returns target of message
+    case ST_PATCH:
+      statePatch(fs);
+      break;
+
+    case ST_FX:
+      stateFX(fs);
+      break;
+
+    case ST_LOOP:
+
+      break;
+
+    case ST_PADS:
+
       break;
 
     default:
@@ -204,13 +221,16 @@ void loop() {
   }
 
 
-
-
-
-
-
-
-
+  for (int i = 0; i < NUM_LEDS; i++){
+    int colour;
+    if (stjorn.isLit(i) ){
+      colour = BLUE;
+    } else {
+      colour = DARK;
+    }
+    leds.setPixel(i,colour);
+  }
+  leds.show();
 
 
 
