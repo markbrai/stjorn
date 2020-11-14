@@ -29,8 +29,10 @@ Stjorn::Stjorn()
     // initialise both states to 0
     m_stCurr = ST_PATCH;        
     m_stPrev = ST_PATCH;
+    // set state LED
+    setLed(STATE,getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);    // intialise state LED
 
-    setLed(getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);    // intialise state LED
+    
 }
 
 // SET FUNCTIONS *********************
@@ -38,9 +40,9 @@ Stjorn::Stjorn()
 void Stjorn::setState(int stNew)
 {
     m_stPrev = m_stCurr;
-        setLed(getStateLed(m_stPrev),false,DARK);
+        setLed(STATE,getStateLed(m_stPrev),false,DARK);
     m_stCurr = stNew;
-        setLed(getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);
+        setLed(STATE,getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);
     m_stChange = true;
 
 }
@@ -59,12 +61,35 @@ void Stjorn::setPressed(int btn, bool state)
     m_pressed[btn] = state;
 }
 
-void Stjorn::setLed(int led, bool state, int colour)
+void Stjorn::setLed(int type, int num, bool state, int colour)
 {
+    int led;
+
+    switch (type){
+        case ACTION:
+            led = m_ledNumAction[num];
+            break;
+        case STATE:
+            led = num;
+            break;
+        case NEXT:
+            led = num;
+            break;
+        case MIC:
+            led = num;
+            break;
+        case TRANSPORT:
+            led = num;
+            break;
+        default:
+            break;
+    }
+
+
     m_ledState[led] = state;
     m_ledColour[led] = colour;
-
 }
+
 
 void Stjorn::selectPatch(int patch)
 {

@@ -48,17 +48,17 @@ void processNoteOff(byte channel, byte noteNum, byte velocity){
 
 if (channel == MIDI_CH_GP){
     switch (noteNum) {
-        case 17 ... 24:   // FX 
+
+        case 1 ... 8:       // Patches
+            stjorn.selectPatch(noteNum - 1);
+            break;
+
+        case 17 ... 24:     // FX
             if (noteNum == 20){       // ignore tap tempo
                 break;
             }
             int fxNum = noteNum - 17;     // rebase FX number to 0
-            bool fxState;
-            if (velocity > 64){
-                fxState = true;
-            } else {
-                fxState = false;
-            }
+            bool fxState = processFXMidi(noteNum,velocity);
             stjorn.setFX(fxNum,fxState);
             break;
 
@@ -68,4 +68,17 @@ if (channel == MIDI_CH_GP){
 
 }
 
+}
+
+bool processFXMidi(byte noteNum, byte velocity){
+
+    bool fxState;
+
+        if (velocity > 64){
+            fxState = true;
+        } else {
+            fxState = false;
+        }
+
+        return fxState;
 }

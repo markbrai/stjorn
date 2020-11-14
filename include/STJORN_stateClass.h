@@ -28,13 +28,14 @@ class Stjorn
         int m_stCurr{};
         int m_stPrev{};
         bool m_stChange{false};
-        int m_stLedCol[NUM_STATES] = {BLUE,WHITE,BLUE,WHITE,BLUE,WHITE};
+        int m_stLedCol[NUM_STATES] = {WHITE,BLUE,WHITE,BLUE,WHITE,BLUE};
         int getStateLed(int state);
         // footswitch 
         bool m_pressed[NUM_FS];
         // leds
         bool m_ledState[NUM_LEDS];
         int m_ledColour[NUM_LEDS];
+        int m_ledNumAction[NUM_ACTION] = {8,9,10,11,3,2,1,0};
         // patch 
         int m_patchSelected{-1};
         // relay (mic switcher) 
@@ -56,7 +57,7 @@ class Stjorn
         void setState(int stNew);
         bool confirmState(int state);
         void setPressed(int btn, bool state);
-        void setLed(int led, bool state, int colour);
+        void setLed(int type, int led, bool state, int colour);
         void selectPatch(int patch);
         void setRelay(int state);
         void setFX(int fx, bool state);

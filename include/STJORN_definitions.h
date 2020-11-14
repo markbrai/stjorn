@@ -80,13 +80,21 @@
 #define LED_TRANSPORT 12
 #define LED_MIC 13
 
+#define ACTION 0      // types for setLed
+#define STATE 1
+#define NEXT 2
+#define MIC 3
+#define TRANSPORT 4
+
 // define some stuff for screens
 
 #define SCRN_DIM 4
 #define SCRN_BRT 6
 
-// define some things for FX
+// define some things for FX and Patches
 #define NUM_FX 8    // actually only 7, but include tap tempo button
+#define NUM_PATCH 8
+#define NUM_ACTION 8 // number of 'action buttons' 
 
 // define STJORN states
 #define NUM_STATES 6

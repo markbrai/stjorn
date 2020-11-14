@@ -71,9 +71,9 @@ void procFsFX(Bounce fs, int fsNum){
             break;
 
         case FS_ST_SONG:
-            if (fs.fell() ){
+            /*if (fs.fell() ){
                 stjorn.setState(ST_TRACKS);
-            }
+            }*/
             break;
 
         case FS_ST_RIG:
@@ -88,9 +88,9 @@ void procFsFX(Bounce fs, int fsNum){
             break;
 
         case FS_ST_LOOP:
-            if (fs.fell() ){
+            /*if (fs.fell() ){
                 stjorn.setState(ST_LOOP);
-            }
+            }*/
             break;
 
         case FS_ST_NEXT:
@@ -120,17 +120,14 @@ void procFsFX(Bounce fs, int fsNum){
 
 void procLedFX(){
 
-    int fxLedNum[NUM_FX] = {8,9,10,11,3,2,1,0};      // relates FX Num to LED num
     int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,DARK,YELLOW,YELLOW,RED,RED}; // colour of each FX
 
     for (int i = 0; i < NUM_FX; i++){
-        int colour;
+        int colour = DARK;
         if (stjorn.fx(i) == true){
             colour = fxLedCol[i];
-        } else {
-            colour = DARK;
-        }
-        stjorn.setLed(fxLedNum[i],stjorn.fx(i),colour);
+        } 
+        stjorn.setLed(ACTION,i,stjorn.fx(i),colour);
     }
 
 }

@@ -26,5 +26,8 @@ void statePatch(Bounce *fs);
 
 void procFsPatch(Bounce fs, int fsNum);
 
+void procLedPatch();
+
+
 
 #endif
