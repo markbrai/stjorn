@@ -61,16 +61,26 @@
 // define expression pedal input pin
 #define PIN_EXP 29
 
-// define some colours and brightness
+// define some stuff for LEDs
 
 #define RED 0xFF0000
 #define BLUE 0x0000FF
 #define GREEN 0x00FF00
 #define YELLOW 0xFFFF00
 #define ORANGE 0xFF7700
+#define WHITE 0xFFFFFF
 #define DARK 0x000000
 #define LED_DIM 32
 #define LED_BRT 64
+
+#define LED_SONG 6
+#define LED_RIG 5
+#define LED_LOOP 4
+#define LED_NEXT 7
+#define LED_TRANSPORT 12
+#define LED_MIC 13
+
+// define some stuff for screens
 
 #define SCRN_DIM 4
 #define SCRN_BRT 6
@@ -79,6 +89,7 @@
 #define NUM_FX 8    // actually only 7, but include tap tempo button
 
 // define STJORN states
+#define NUM_STATES 6
 
 enum StjornState {    
   ST_TRACKS,    // 0

@@ -24,17 +24,28 @@
 class Stjorn
 {
     private:
+        // state 
         int m_stCurr{};
         int m_stPrev{};
         bool m_stChange{false};
+        int m_stLedCol[NUM_STATES] = {BLUE,WHITE,BLUE,WHITE,BLUE,WHITE};
+        int getStateLed(int state);
+        // footswitch 
         bool m_pressed[NUM_FS];
+        // leds
         bool m_ledState[NUM_LEDS];
         int m_ledColour[NUM_LEDS];
+        // patch 
         int m_patchSelected{-1};
+        // relay (mic switcher) 
         int m_relayState{OPEN};
+        // FX 
         bool m_fx[NUM_FX];
+        // song 
         int m_currSong{0};
         bool m_nextSong{false};
+        // transport 
+
 
 
     public:
@@ -43,7 +54,7 @@ class Stjorn
 
         // Set functions
         void setState(int stNew);
-        void confirmState(int state);
+        bool confirmState(int state);
         void setPressed(int btn, bool state);
         void setLed(int led, bool state, int colour);
         void selectPatch(int patch);

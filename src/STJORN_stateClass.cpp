@@ -20,6 +20,8 @@
 #include "STJORN_stateClass.h"
 #include "STJORN_definitions.h"
 
+int ledNum;
+
 // CONSTRUCTOR *********************
 
 Stjorn::Stjorn()
@@ -27,6 +29,8 @@ Stjorn::Stjorn()
     // initialise both states to 0
     m_stCurr = ST_PATCH;        
     m_stPrev = ST_PATCH;
+
+    setLed(getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);    // intialise state LED
 }
 
 // SET FUNCTIONS *********************
@@ -34,15 +38,20 @@ Stjorn::Stjorn()
 void Stjorn::setState(int stNew)
 {
     m_stPrev = m_stCurr;
+        setLed(getStateLed(m_stPrev),false,DARK);
     m_stCurr = stNew;
+        setLed(getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);
     m_stChange = true;
+
 }
 
-void Stjorn::confirmState(int state)
+bool Stjorn::confirmState(int state)
 {
     if (m_stChange == true && state == m_stCurr){
         m_stChange = false;
+        return true;           // return true to set LED
     }
+    return false;
 }
 
 void Stjorn::setPressed(int btn, bool state)
@@ -127,4 +136,27 @@ int Stjorn::isColour(int led)
 bool Stjorn::fx(int fx)
 {
     return m_fx[fx];
+}
+
+
+// OTHER FUNCTIONS
+
+int Stjorn::getStateLed(int state){
+
+    switch (state){
+        case ST_TRACKS ... ST_SONG:
+            ledNum = LED_SONG;
+            break;
+        case ST_PATCH ... ST_FX:
+            ledNum = LED_RIG;
+            break;
+        case ST_LOOP ... ST_PADS:
+            ledNum = LED_LOOP;
+            break;
+        default:
+            break;
+    }
+
+    return ledNum;
+
 }
