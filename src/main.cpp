@@ -114,7 +114,7 @@ delay(2000);    // keep STJORN 'splash' on screen for a few seconds
   }
   leds.show();
 
-  Serial.begin(9600);
+  //Serial.begin(9600);
 
 }
 
@@ -224,7 +224,7 @@ void loop() {
   for (int i = 0; i < NUM_LEDS; i++){
     int colour;
     if (stjorn.isLit(i) ){
-      colour = BLUE;
+      colour = stjorn.isColour(i);
     } else {
       colour = DARK;
     }

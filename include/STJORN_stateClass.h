@@ -32,7 +32,7 @@ class Stjorn
         int m_ledColour[NUM_LEDS];
         int m_patchSelected{-1};
         int m_relayState{OPEN};
-        bool m_fx[7];
+        bool m_fx[NUM_FX];
         int m_currSong{0};
         bool m_nextSong{false};
 

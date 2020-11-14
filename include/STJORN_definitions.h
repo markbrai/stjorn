@@ -66,12 +66,17 @@
 #define RED 0xFF0000
 #define BLUE 0x0000FF
 #define GREEN 0x00FF00
+#define YELLOW 0xFFFF00
+#define ORANGE 0xFF7700
 #define DARK 0x000000
 #define LED_DIM 32
 #define LED_BRT 64
 
 #define SCRN_DIM 4
 #define SCRN_BRT 6
+
+// define some things for FX
+#define NUM_FX 8    // actually only 7, but include tap tempo button
 
 // define STJORN states
 
@@ -90,7 +95,7 @@ enum StjornState {
 
 // define some MIDI parameters
 
-enum MidiType {  // Types of MIDI message to be received
+/*enum MidiType {  // Types of MIDI message to be received
   MIDI_NONE,     // 0. Init value, or no new MIDI message
   MIDI_PROG,     // 1. Program Change
   MIDI_NOTEON,   // 2. Note On
@@ -100,19 +105,19 @@ enum MidiType {  // Types of MIDI message to be received
   MIDI_STOP,
   MIDI_CONTINUE,
   MIDI_CLOCK,
-};
+};*/    // DEPRECATED - USED IN PREVIOUS MIDI processing
 
 #define MIDI_CH_LIVE 16
 #define MIDI_CH_GP 15
 #define MIDI_CH_OS 14
 
-enum ParamTgt {     // Target of incoming MIDI parameter
+/*enum ParamTgt {     // Target of incoming MIDI parameter
   TGT_NONE,         // 0. Init value, or incompatible parameter
   TGT_SONG,         // 1. Target is Song mode
   TGT_RIG,          // 2. Target is Rig Patch mode
   TGT_LOOP,         // 3. Target is Looper mode
   TGT_PADS,         // 4. Target is Pads mode
-};
+};*/ // DEPRECATED - USED IN PREVIOUS MIDI processing
 
 enum LiveParam {
   LIVE_NONE,        // 0. Init value, or incompatible parameter
@@ -144,7 +149,6 @@ enum LiveParam {
   LIVE_SPACE,       // 26. Spacer song section
   LIVE_CYCLEOK,     // 27. Cycle OK or Not
 };
-
 
 
 

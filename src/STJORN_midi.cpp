@@ -18,6 +18,7 @@
 #include <Arduino.h>
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
+#include "STJORN_midi.h"
 
 void processMidi(){
     byte type;
@@ -30,55 +31,41 @@ void processMidi(){
     data1 = usbMIDI.getData1();
     data2 = usbMIDI.getData2();
 
-    Serial.print("Ch:");
-    Serial.print(channel,DEC);
-    Serial.print(", note:");
-    Serial.println(data1,DEC);
-
     int ledNum = -1;
 
     switch (type) {
         case usbMIDI.NoteOff:
-            if (channel == MIDI_CH_GP){
-                switch (data1) {
-                    case 17:
-                        ledNum = 8;
-                        break;
-                    case 18:
-                        break;
-                    case 19:
-                        break;
-                    case 21:
-                        break;
-                    case 22:
-                        break;
-                    case 23:
-                        break;
-                    default:
-                        break;
-                }
-
-            if (ledNum >= 0){
-                int colour;
-                bool state;
-                if (data2 > 64){
-                    colour = BLUE;
-                    state = true;
-                } else {
-                    colour = DARK;
-                    state = false;
-                }
-                stjorn.setLed(ledNum,state,colour);
-            }
-
-            }
+            processNoteOff(channel,data1,data2);
             break;
         
         default:
             break;
     }
 
+}
 
+void processNoteOff(byte channel, byte noteNum, byte velocity){
 
+if (channel == MIDI_CH_GP){
+    switch (noteNum) {
+        case 17 ... 24:   // FX 
+            if (noteNum == 20){       // ignore tap tempo
+                break;
+            }
+            int fxNum = noteNum - 17;     // rebase FX number to 0
+            bool fxState;
+            if (velocity > 64){
+                fxState = true;
+            } else {
+                fxState = false;
+            }
+            stjorn.setFX(fxNum,fxState);
+            break;
+
+        default:
+            break;
+    }
+
+}
 
 }

@@ -39,6 +39,9 @@ void stateFX(Bounce *fs){
         procFsFX(fs[i], i);
     }
 
+    procLedFX();
+
+
 
 
     // reset 'changed' state flag if just changed to this state
@@ -112,6 +115,23 @@ void procFsFX(Bounce fs, int fsNum){
 
     if (note != -1){
         usbMIDI.sendNoteOn(note,127,ch);
+    }
+
+}
+
+void procLedFX(){
+
+    int fxLedNum[NUM_FX] = {8,9,10,11,3,2,1,0};      // relates FX Num to LED num
+    int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,DARK,YELLOW,YELLOW,RED,RED}; // colour of each FX
+
+    for (int i = 0; i < NUM_FX; i++){
+        int colour;
+        if (stjorn.fx(i) == true){
+            colour = fxLedCol[i];
+        } else {
+            colour = DARK;
+        }
+        stjorn.setLed(fxLedNum[i],stjorn.fx(i),colour);
     }
 
 }
