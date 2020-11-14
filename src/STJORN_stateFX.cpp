@@ -21,6 +21,7 @@
 #include "STJORN_stateFX.h"
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
+#include "STJORN_display.h"
 
 #define FX_MOD 0
 #define FX_DLY 1
@@ -41,6 +42,7 @@ void stateFX(Bounce *fs){
 
     procLedFX();
 
+    procDisplayFX();
 
 
 
@@ -129,5 +131,11 @@ void procLedFX(){
         } 
         stjorn.setLed(ACTION,i,stjorn.fx(i),colour);
     }
+
+}
+
+void procDisplayFX(){
+
+    setDisplayPatch();
 
 }

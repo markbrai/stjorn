@@ -21,6 +21,7 @@
 #include "STJORN_statePatch.h"
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
+#include "STJORN_display.h"
 
 #define AM 0
 #define R2 1
@@ -42,7 +43,6 @@ void statePatch(Bounce *fs){
     procLedPatch();
 
     procDisplayPatch();
-
 
     // reset 'changed' state flag if just changed to this state
     stjorn.confirmState(ST_PATCH);
@@ -126,18 +126,7 @@ void procLedPatch(){
 
 void procDisplayPatch(){
 
-    char dispPatch[NUM_PATCH][DIGIT_RIG] = {{'A','M'},
-                                            {'R','2'},
-                                            {'D','2'},
-                                            {'L','2'},
-                                            {'C','L'},
-                                            {'R','1'},
-                                            {'D','1'},
-                                            {'L','1'}};
+    setDisplayPatch();
 
-    for (int i=0; i < DIGIT_RIG; i++){
-        char ascii = dispPatch[stjorn.patch()][i];
-        stjorn.setDisplay(BLK_RIG,i,ascii);
-    }
 
 }

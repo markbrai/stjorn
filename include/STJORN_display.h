@@ -11,24 +11,22 @@
  * 
  */
 
-/* ------------ STATE - FX --------------
-*  Functions for selecting FX and controlling state
+/* ------------ DISPLAY  --------------
+*  Functions for setting display buffers
 *  ---------------------------------------- */
 
-#ifndef STJORN_STATEFX_H
-#define STJORN_STATEFX_H
+#ifndef STJORN_DISPLAY_H
+#define STJORN_DISPLAY_H
 
 #include <Arduino.h>
-#include <Bounce2.h>
 #include "STJORN_definitions.h"
+#include "STJORN_stateClass.h"
 
-void stateFX(Bounce *fs);
-
-void procFsFX(Bounce fs, int fsNum);
-
-void procLedFX();
-
-void procDisplayFX();
+void setDisplayPatch();
+void setDisplaySong();
+void setDisplayCurr();
+void setDisplayNext();
 
 
-#endif
+
+#endif 
