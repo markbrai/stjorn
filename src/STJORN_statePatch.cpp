@@ -56,6 +56,7 @@ void procFsPatch(Bounce fs, int fsNum){
 
     int note = -1;
     int ch = 1;
+    int press = 0;
 
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
@@ -75,7 +76,6 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
 
         case FS_ST_RIG:
-            int press = 0;
             press = fsShortLong(fs, fsNum);
             if (press == PRESS_SHORT){
                 stjorn.setState(ST_FX);
@@ -91,7 +91,6 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
 
         case FS_ST_NEXT:
-            press = 0;
             press = fsShortLong(fs, fsNum);
             stjorn.setNext(press, -1);
             break;

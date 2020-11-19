@@ -29,10 +29,13 @@ Stjorn::Stjorn()
     // initialise both states to 0
     m_stCurr = ST_PATCH;        
     m_stPrev = ST_PATCH;
-    // set state LED
+
+    // set state LED to starting state
     setLed(STATE,getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);    // intialise state LED
 
-    
+    // set song number to initial (01)
+    setSongDigits(m_currSong)
+
 }
 
 // SET FUNCTIONS *********************
@@ -243,7 +246,8 @@ char Stjorn::ascii(int blk, int digit)
 
 // PRIVATE FUNCTIONS
 
-int Stjorn::getStateLed(int state){
+int Stjorn::getStateLed(int state)
+{
 
     switch (state){
         case ST_TRACKS ... ST_SONG:
@@ -260,5 +264,16 @@ int Stjorn::getStateLed(int state){
     }
 
     return ledNum;
+
+}
+
+void Stjorn::setSongDigits(int song)
+{
+    int _m_songDisplay = song + 1;
+    int _m_digit = _m_songDisplay % 10;     // get lowest digit
+    setDisplay(BLK_SONG,1,_m_digit + '0');
+    _m_songDisplay /= 10;    // remove lowest digit
+    _m_digit = _m_songDisplay % 10;     // get digit
+    setDisplay(BLK_SONG,0,_m_digit + '0');
 
 }

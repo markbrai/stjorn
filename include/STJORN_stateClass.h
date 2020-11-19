@@ -57,6 +57,7 @@ class Stjorn
         // song 
         int m_currSong{0};
         bool m_nextSong{false};
+        void setSongDigits(int song);
         // transport 
 
 
@@ -99,7 +100,7 @@ class Stjorn
         char ascii(int blk, int digit);
         int expression() {return m_exprProx;};
         int exprChanged() {return m_exprChanged;}
-        
+        int song() {return m_currSong;}        
         
 };
 
