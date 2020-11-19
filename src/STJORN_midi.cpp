@@ -35,7 +35,10 @@ void processMidi(){
         case usbMIDI.NoteOff:
             processNoteOff(channel,data1,data2);
             break;
-        
+
+        case usbMIDI.ControlChange:
+            processControlChange(channel,data1,data2);
+            break;
         default:
             break;
     }
@@ -64,6 +67,20 @@ if (channel == MIDI_CH_GP){
             break;
     }
 
+}
+
+}
+
+void processControlChange(byte channel, byte ccNum, byte value){
+
+if (channel == MIDI_CH_GP){
+    switch (ccNum) {
+        case 3:     // aux FX num
+            stjorn.setAux(value);
+            break;
+        default:
+            break;
+    }
 }
 
 }

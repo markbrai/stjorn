@@ -65,7 +65,7 @@ void procFsPatch(Bounce fs, int fsNum){
                 note = fsNum + 1;
                 stjorn.selectPatch(fsNum);
             } else if (fs.fell() && stjorn.patch() == fsNum){
-                note = fsNum + 9;
+                note = stjorn.aux();
             }
             break;
 

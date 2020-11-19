@@ -105,6 +105,11 @@ void Stjorn::setFX(int fx, bool state)
     m_fx[fx] = state;
 }
 
+void Stjorn::setAux(int aux)
+{
+    m_fxAux = aux;
+}
+
 void Stjorn::sendTap()
 {
     usbMIDI.sendControlChange(LIVE_TAP,127,MIDI_CH_LIVE);

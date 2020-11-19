@@ -51,6 +51,7 @@ class Stjorn
         int m_relayState{OPEN};
         // FX 
         bool m_fx[NUM_FX];
+        int m_fxAux{0};
         // song 
         int m_currSong{0};
         bool m_nextSong{false};
@@ -70,6 +71,7 @@ class Stjorn
         void selectPatch(int patch);
         void setRelay(int state);
         void setFX(int fx, bool state);
+        void setAux(int aux);
         void sendTap();
         void saveSongVar();
         void setSong(int song);
@@ -87,6 +89,7 @@ class Stjorn
         int patch() {return m_patchSelected;}
         int relay() {return m_relayState;}
         bool fx(int fx);
+        int aux() {return m_fxAux;}
         bool next() {return m_nextSong;}
         char ascii(int blk, int digit);
         int expression() {return m_exprProx;};
