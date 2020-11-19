@@ -30,5 +30,7 @@ void procLedFX();
 
 void procDisplayFX();
 
+void procExprFX();
+
 
 #endif

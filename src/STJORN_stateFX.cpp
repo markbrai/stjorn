@@ -40,6 +40,8 @@ void stateFX(Bounce *fs){
         procFsFX(fs[i], i);
     }
 
+    procExprFX();
+
     procLedFX();
 
     procDisplayFX();
@@ -137,5 +139,12 @@ void procLedFX(){
 void procDisplayFX(){
 
     setDisplayPatch();
+
+}
+
+void procExprFX(){
+
+    sendExpression(EXPR_GTR_CC,MIDI_CH_GP);
+
 
 }
