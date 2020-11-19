@@ -105,7 +105,22 @@ void Stjorn::setFX(int fx, bool state)
     m_fx[fx] = state;
 }
 
-void Stjorn::setAux(int aux)
+void Stjorn::setAux()
+{
+    m_aux = !m_aux;
+    if (!m_auxPressed){
+        m_auxPressed = true;
+    }
+
+}
+
+void Stjorn::setAux(bool state)
+{
+    m_aux = state;
+    m_auxPressed = state;
+}
+
+void Stjorn::setAuxFX(int aux)
 {
     m_fxAux = aux;
 }

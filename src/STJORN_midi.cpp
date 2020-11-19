@@ -52,11 +52,14 @@ if (channel == MIDI_CH_GP){
 
         case 1 ... 8:       // Patches
             stjorn.selectPatch(noteNum - 1);
+            stjorn.setAux(false);   // on patch change, set Aux to false
             break;
 
         case 17 ... 24:     // FX
             if (noteNum == 20){       // ignore tap tempo
                 break;
+            } else if (noteNum == stjorn.auxFX() ){
+                stjorn.setAux();
             }
             int fxNum = noteNum - 17;     // rebase FX number to 0
             bool fxState = processFXMidi(noteNum,velocity);
@@ -76,7 +79,8 @@ void processControlChange(byte channel, byte ccNum, byte value){
 if (channel == MIDI_CH_GP){
     switch (ccNum) {
         case 3:     // aux FX num
-            stjorn.setAux(value);
+            stjorn.setAuxFX(value);
+            stjorn.setAux(false);
             break;
         default:
             break;
