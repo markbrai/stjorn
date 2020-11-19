@@ -124,7 +124,7 @@ void procFsFX(Bounce fs, int fsNum){
 
 void procLedFX(){
 
-    int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,DARK,YELLOW,YELLOW,RED,RED}; // colour of each FX
+    int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,DARK,PINK,YELLOW,RED,RED}; // colour of each FX
 
     for (int i = 0; i < NUM_FX; i++){
         int colour = DARK;
