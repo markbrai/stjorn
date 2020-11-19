@@ -30,9 +30,14 @@ void setDisplayPatch(){
                                             {'D','1'},
                                             {'L','1'}};
 
-    for (int i=0; i < DIGIT_RIG; i++){
-        char ascii = dispPatch[stjorn.patch()][i];
-        stjorn.setDisplay(BLK_RIG,i,ascii);
+    if (stjorn.patch() == -1){
+        stjorn.setDisplay(BLK_RIG,0,'-');
+        stjorn.setDisplay(BLK_RIG,1,'-');
+    } else {
+        for (int i=0; i < DIGIT_RIG; i++){
+            char ascii = dispPatch[stjorn.patch()][i];
+            stjorn.setDisplay(BLK_RIG,i,ascii);
+        }
     }
     
 }
