@@ -58,8 +58,11 @@
 // define power LED pin
 #define PIN_PWRLED 13
 
-// define expression pedal input pin
+// define expression pedal stuff
 #define PIN_EXP 29
+#define PROX_MIN 6500
+#define PROX_MAX 30000
+#define EXPR_GTR_CC 1
 
 // define some stuff for LEDs
 

@@ -32,6 +32,10 @@ class Stjorn
         int getStateLed(int state);
         // footswitch 
         bool m_pressed[NUM_FS];
+        // expression
+        int m_exprProx{0};
+        int m_exprProxPrev{0};
+        bool m_exprChanged{false};
         // display
         char m_dispSong[2];
         char m_dispCurr[4];
@@ -71,6 +75,7 @@ class Stjorn
         void setSong(int song);
         void setNext(int press, int song);
         void setDisplay(int block, int digit, char ascii );
+        void setProx(int prox);
 
         // Get functions
         int state() {return m_stCurr;}
@@ -84,6 +89,9 @@ class Stjorn
         bool fx(int fx);
         bool next() {return m_nextSong;}
         char ascii(int blk, int digit);
+        int expression() {return m_exprProx;};
+        int exprChanged() {return m_exprChanged;}
+        
         
 };
 

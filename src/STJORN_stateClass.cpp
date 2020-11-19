@@ -160,6 +160,18 @@ void Stjorn::setDisplay(int block, int digit, char ascii)
     }
 }
 
+void Stjorn::setProx(int prox)
+{
+    if (prox == m_exprProxPrev){
+        m_exprChanged = false;
+    } else {
+        m_exprProxPrev = m_exprProx;
+        m_exprProx = prox;
+        m_exprChanged = true;
+    }
+}
+
+
 // GET FUNCTIONS *********************
 
 bool Stjorn::isPressed(int btn)
@@ -207,7 +219,9 @@ char Stjorn::ascii(int blk, int digit)
 }
 
 
-// OTHER FUNCTIONS
+
+
+// PRIVATE FUNCTIONS
 
 int Stjorn::getStateLed(int state){
 

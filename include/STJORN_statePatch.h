@@ -30,6 +30,6 @@ void procLedPatch();
 
 void procDisplayPatch();
 
-
+void procExprPatch();
 
 #endif

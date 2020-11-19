@@ -40,6 +40,8 @@ void statePatch(Bounce *fs){
         procFsPatch(fs[i], i);
     }
 
+    procExprPatch();
+
     procLedPatch();
 
     procDisplayPatch();
@@ -129,4 +131,10 @@ void procDisplayPatch(){
     setDisplayPatch();
 
 
+}
+
+void procExprPatch(){
+
+    sendExpression(EXPR_GTR_CC,MIDI_CH_GP);
+    
 }
