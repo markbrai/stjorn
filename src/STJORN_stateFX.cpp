@@ -57,10 +57,19 @@ void stateFX(Bounce *fs){
 void procFsFX(Bounce fs, int fsNum){
 
     int note = -1;
-    int ch = 1;
+    int ch = MIDI_CH_GP;
+    int press = 0;
 
     switch (fsNum){
-        case FS_ACT_MN ... FS_ACT_MX:
+        case FX_MOD ...  FX_VRB:
+            press = fsShortLong(fs,fsNum);
+            if (press == PRESS_SHORT){
+                note = fsNum + 17; 
+            } else if (press == PRESS_LONG){
+                note = fsNum + 25;
+            }
+            break;
+        case FX_TAP ... FS_ACT_MX:
             if (fsNum == FX_TAP) {
                 bool tapEngage = fsTapEngage(fs,fsNum);
                 if (tapEngage){
@@ -68,7 +77,6 @@ void procFsFX(Bounce fs, int fsNum){
                 }
             } else {
                 if (fs.fell() ){
-                    ch = MIDI_CH_GP;
                     note = fsNum + 17;
                 }
             }
@@ -81,7 +89,6 @@ void procFsFX(Bounce fs, int fsNum){
             break;
 
         case FS_ST_RIG:
-            int press = 0;
             press = fsShortLong(fs, fsNum);
             if (press == PRESS_SHORT){
                 stjorn.setState(ST_PATCH);
