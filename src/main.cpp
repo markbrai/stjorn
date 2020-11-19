@@ -132,6 +132,8 @@ void setup() {
     }
   }
 
+  stjorn.setSong(stjorn.song() );
+
 }
 
 

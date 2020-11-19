@@ -92,7 +92,9 @@ void procFsPatch(Bounce fs, int fsNum){
 
         case FS_ST_NEXT:
             press = fsShortLong(fs, fsNum);
-            stjorn.setNext(press, -1);
+            if (press != 0 ){
+                stjorn.setNext(press, -1);
+            }
             break;
 
         case FS_RELAY:

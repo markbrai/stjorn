@@ -34,7 +34,7 @@ Stjorn::Stjorn()
     setLed(STATE,getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);    // intialise state LED
 
     // set song number to initial (01)
-    setSongDigits(m_currSong)
+    setSongDigits(m_currSong);
 
 }
 
@@ -146,10 +146,12 @@ void Stjorn::setSong(int song)
 
 void Stjorn::setNext(int press, int song)
 {
-    if (song == -1){            // triggered from 'next'
-        setSong(song + 1);
-    } else {
-        setSong(song);
+    if (m_nextSong == false){
+        if (song == -1) {            // triggered from 'next'
+            setSong(m_currSong + 1);
+        } else {
+            setSong(song);
+        }
     }
 
     if (press == PRESS_SHORT){
