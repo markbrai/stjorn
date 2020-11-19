@@ -72,6 +72,7 @@
 #define YELLOW 0xFFFF00
 #define ORANGE 0xFF7700
 #define WHITE 0xFFFFFF
+#define PINK 0xD4005C
 #define DARK 0x000000
 #define LED_VDIM 16
 #define LED_DIM 32

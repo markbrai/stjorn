@@ -24,6 +24,7 @@
 
 void processMidi();
 void processNoteOff(byte channel, byte noteNum, byte velocity);
+void processControlChange(byte channel, byte ccNum, byte value);
 bool processFXMidi(byte noteNum, byte velocity);
 
 

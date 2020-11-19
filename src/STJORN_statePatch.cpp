@@ -65,7 +65,8 @@ void procFsPatch(Bounce fs, int fsNum){
                 note = fsNum + 1;
                 stjorn.selectPatch(fsNum);
             } else if (fs.fell() && stjorn.patch() == fsNum){
-                note = fsNum + 9;
+                note = stjorn.auxFX();
+                //stjorn.setAux();
             }
             break;
 
@@ -115,13 +116,17 @@ void procFsPatch(Bounce fs, int fsNum){
 }
 
 void procLedPatch(){
+int colour = WHITE;
 
     for (int i=0; i < NUM_PATCH; i++){
         bool state = false;
         if (stjorn.patch() == i){
             state = true;
         }
-        stjorn.setLed(ACTION,i,state,WHITE);
+        if (stjorn.aux() ){
+            colour = BLUE;
+        }
+        stjorn.setLed(ACTION,i,state,colour);
     }
 
 }

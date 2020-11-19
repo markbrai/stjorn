@@ -95,9 +95,7 @@ void setup() {
   }
 
 // SETUP EXPRESSION PEDAL
-  if (! vcnl.begin()){
-    while (1);
-  }
+  vcnl.begin();
 
 // setup welcome message
 
@@ -243,6 +241,8 @@ void loop() {
     default:
       break;
   }
+
+// Process TWIST
 
 
 // Set LEDs 
