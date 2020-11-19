@@ -157,9 +157,9 @@ void Stjorn::setNext(int press, int song)
     if (press == PRESS_SHORT){
         if (m_nextSong == false){        // immediate next GP & LIVE
             usbMIDI.sendProgramChange(stjorn.song(),MIDI_CH_LIVE);
-            usbMIDI.sendProgramChange(stjorn.song(),MIDI_CH_GP);
+            usbMIDI.sendProgramChange(stjorn.song(),2);
         } else {                        // next GP
-            usbMIDI.sendProgramChange(stjorn.song(),MIDI_CH_GP);
+            usbMIDI.sendProgramChange(stjorn.song(),2);
             m_nextSong = false;
         }
     } else if (press == PRESS_LONG){    // next LIVE only
