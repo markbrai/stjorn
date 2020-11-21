@@ -58,6 +58,7 @@ class Stjorn
         int m_currSong{0};
         bool m_nextSong{false};
         void setSongDigits(int song);
+        void sendSong(int press, int song);
         // transport 
 
 
@@ -80,6 +81,7 @@ class Stjorn
         void sendTap();
         void saveSongVar();
         void setSong(int song);
+        void setSong(int press, int song);
         void setNext(int press, int song);
         void setDisplay(int block, int digit, char ascii );
         void setProx(int prox);

@@ -144,6 +144,12 @@ void Stjorn::setSong(int song)
     setSongDigits(m_currSong);
 }
 
+void Stjorn::setSong(int press, int song){
+    m_currSong = song;
+    setSongDigits(m_currSong);
+    sendSong(press, m_currSong);
+}
+
 void Stjorn::setNext(int press, int song)
 {
     if (m_nextSong == false){
@@ -154,19 +160,12 @@ void Stjorn::setNext(int press, int song)
         }
     }
 
-    if (press == PRESS_SHORT){
-        if (m_nextSong == false){        // immediate next GP & LIVE
-            usbMIDI.sendProgramChange(stjorn.song(),MIDI_CH_LIVE);
-            usbMIDI.sendProgramChange(stjorn.song(),2);
-        } else {                        // next GP
-            usbMIDI.sendProgramChange(stjorn.song(),2);
-            m_nextSong = false;
-        }
-    } else if (press == PRESS_LONG){    // next LIVE only
-        usbMIDI.sendProgramChange(stjorn.song(),MIDI_CH_LIVE);
-        m_nextSong = true;
-    }
+    sendSong(press,m_currSong);
+
 }
+
+
+
 
 void Stjorn::setDisplay(int block, int digit, char ascii)
 {
@@ -281,4 +280,20 @@ void Stjorn::setSongDigits(int song)
     _m_digit = _m_songDisplay % 10;     // get digit
     setDisplay(BLK_SONG,0,_m_digit + '0');
 
+}
+
+void Stjorn::sendSong(int press, int song){
+
+    if (press == PRESS_SHORT){
+        if (m_nextSong == false){        // immediate next GP & LIVE
+            usbMIDI.sendProgramChange(m_currSong,MIDI_CH_LIVE);
+            usbMIDI.sendProgramChange(m_currSong,2);
+        } else {                        // next GP
+            usbMIDI.sendProgramChange(m_currSong,2);
+            m_nextSong = false;
+        }
+    } else if (press == PRESS_LONG){    // next LIVE only
+        usbMIDI.sendProgramChange(m_currSong,MIDI_CH_LIVE);
+        m_nextSong = true;
+    }
 }
