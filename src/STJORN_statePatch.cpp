@@ -108,6 +108,9 @@ void procFsPatch(Bounce fs, int fsNum){
         case FS_OS_MX:
 
             break;
+
+        default:
+            break;
     }
 
     if (note != -1){
