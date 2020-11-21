@@ -144,7 +144,8 @@ void Stjorn::setSong(int song)
     setSongDigits(m_currSong);
 }
 
-void Stjorn::setSong(int press, int song){
+void Stjorn::setSong(int press, int song)
+{
     m_currSong = song;
     setSongDigits(m_currSong);
     sendSong(press, m_currSong);

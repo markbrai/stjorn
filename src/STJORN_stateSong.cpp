@@ -18,7 +18,7 @@
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
-#include "STJORN_statePatch.h"
+#include "STJORN_stateSong.h"
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
@@ -26,8 +26,17 @@
 void stateSong(Bounce *fs){
 
     for (int i = 0; i < NUM_FS; i++){
-        procFsSong(fs[i],i);
+        procFsSong(fs[i], i);
     }
+
+    procExprSong();
+
+    procLedSong();
+
+    procDisplaySong();
+
+   // reset 'changed' state flag if just changed to this state
+    stjorn.confirmState(ST_SONG);    
 
 }
 
@@ -37,13 +46,19 @@ void procFsSong(Bounce fs, int fsNum){
 
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
-
-
+            press = fsShortLong(fs, fsNum);
+            if (press != 0){
+                stjorn.setSong(press,fsNum);
+            }
+            break;
 
         case FS_ST_SONG:
             break;
 
         case FS_ST_RIG:
+            if (fs.fell() ){
+                stjorn.setState(ST_PATCH);
+            }
             break;
 
         case FS_ST_LOOP:
@@ -71,4 +86,17 @@ void procFsSong(Bounce fs, int fsNum){
 
     }
 
+}
+
+void procExprSong(){
+    sendExpression(EXPR_GTR_CC,MIDI_CH_GP);
+}
+
+void procLedSong(){
+
+
+}
+
+void procDisplaySong(){
+    setDisplayMain();
 }

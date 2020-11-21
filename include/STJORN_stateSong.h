@@ -24,6 +24,9 @@
 
 void stateSong(Bounce *fs);
 void procFsSong(Bounce fs, int fsnum);
+void procExprSong();
+void procLedSong();
+void procDisplaySong();
 
 
 

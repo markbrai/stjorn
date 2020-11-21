@@ -25,6 +25,7 @@
 #include "STJORN_stateClass.h"                      // STJORN main state variables
 #include "STJORN_statePatch.h"                      // STJORN state functions for PATCH
 #include "STJORN_stateFX.h"
+#include "STJORN_stateSong.h"
 #include "STJORN_midi.h"
 
 // Instantiate encoder
@@ -221,7 +222,7 @@ void loop() {
       break;
     
     case ST_SONG:
-
+      stateSong(fs);
       break;
 
     case ST_PATCH:
