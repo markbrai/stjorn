@@ -72,7 +72,9 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
 
         case FS_ST_SONG:
-
+            if (fs.fell() ){
+                stjorn.setState(ST_SONG);
+            }
             break;
 
         case FS_ST_RIG:
@@ -137,7 +139,7 @@ int colour = WHITE;
 
 void procDisplayPatch(){
 
-    setDisplayPatch();
+    setDisplayMain();
 
 
 }

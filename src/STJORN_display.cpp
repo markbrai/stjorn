@@ -18,6 +18,14 @@
 #include <Arduino.h>
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
+#include "STJORN_display.h"
+
+void setDisplayMain(){
+    setDisplayPatch();
+    setDisplaySong();
+    setDisplayCurr();
+    setDisplayNext();
+}
 
 void setDisplayPatch(){
 

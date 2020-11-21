@@ -22,6 +22,7 @@
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
 
+void setDisplayMain();
 void setDisplayPatch();
 void setDisplaySong();
 void setDisplayCurr();
