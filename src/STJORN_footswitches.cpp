@@ -68,6 +68,7 @@ bool fsTapEngage(Bounce fs, int fsNum){
         }
     } else if (fs.rose() && stjorn.isPressed(fsNum) ){
         stjorn.setPressed(fsNum,NOT_PRESSED);
+            return true;
     }
 
     if (stjorn.isPressed(fsNum) ){

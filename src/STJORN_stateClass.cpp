@@ -132,9 +132,14 @@ void Stjorn::setAuxFX(int aux)
     m_fxAux = aux;
 }
 
-void Stjorn::sendTap()
-{
-    usbMIDI.sendControlChange(LIVE_TAP,127,MIDI_CH_LIVE);
+void Stjorn::sendTap(bool state)
+{ int ccVal = 0;
+
+    if (state){
+        ccVal = 127;
+    }
+
+    usbMIDI.sendControlChange(LIVE_TAP,ccVal,MIDI_CH_LIVE);
 }
 
 void Stjorn::saveSongVar()

@@ -65,7 +65,11 @@ void procFsFX(Bounce fs, int fsNum){
             if (fsNum == FX_TAP) {
                 bool tapEngaged = fsTapEngage(fs,fsNum);
                 if (tapEngaged){
-                    stjorn.sendTap();
+                    if (fs.fell() ){
+                        stjorn.sendTap(true);
+                    } else if (fs.rose()){
+                        stjorn.sendTap(false);
+                    }
                 }
             } else {
                 if (fs.fell() ){

@@ -81,7 +81,7 @@ class Stjorn
         void setAux();
         void setAux(bool state);
         void setAuxFX(int aux);
-        void sendTap();
+        void sendTap(bool state);
         void saveSongVar();
         void setSong(int song);
         void setSong(int press, int song);
