@@ -32,12 +32,14 @@ int fsShortLong(Bounce fs, int fsNum){
         stjorn.setPressed(fsNum,PRESSED);
     } else if (fs.rose() && stjorn.isPressed(fsNum) ){
         stjorn.setPressed(fsNum, NOT_PRESSED);
+        Serial.print("PRESS_SHORT");
         return PRESS_SHORT;
     }
 
     if (stjorn.isPressed(fsNum) ){
         if (fs.duration() >= LONGPRESS){
             stjorn.setPressed(fsNum,NOT_PRESSED);
+            Serial.print("PRESS_LONG");
             return PRESS_LONG;
         }
     }

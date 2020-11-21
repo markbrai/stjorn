@@ -11,22 +11,24 @@
  * 
  */
 
-/* ------------ STATE MIDI --------------
-*  MIDI functions to read and process
+/* ------------ STATE - SONG --------------
+*  Functions for selecting songs and controlling state
 *  ---------------------------------------- */
 
-#ifndef STJORN_MIDI_H
-#define STJORN_MIDI_H
+#ifndef STJORN_STATESONG_H
+#define STJORN_STATESONG_H
 
 #include <Arduino.h>
+#include <Bounce2.h>
 #include "STJORN_definitions.h"
-#include "STJORN_stateClass.h"
 
-void processMidi();
-void processNoteOff(byte channel, byte noteNum, byte velocity);
-void processControlChange(byte channel, byte ccNum, byte value);
-void processProgramChange(byte channel, byte progNum);
-bool processFXMidi(byte noteNum, byte velocity);
+void stateSong(Bounce *fs);
+void procFsSong(Bounce fs, int fsnum);
+void procExprSong();
+void procLedSong();
+void procDisplaySong();
+
+
 
 
 #endif

@@ -39,8 +39,15 @@ void processMidi(){
         case usbMIDI.ControlChange:
             processControlChange(channel,data1,data2);
             break;
+
+        case usbMIDI.ProgramChange:
+            processProgramChange(channel,data1);
+            break;
+            
         default:
             break;
+
+        
     }
 
 }
@@ -74,6 +81,8 @@ if (channel == MIDI_CH_GP){
 
 }
 
+
+
 void processControlChange(byte channel, byte ccNum, byte value){
 
 if (channel == MIDI_CH_GP){
@@ -86,6 +95,19 @@ if (channel == MIDI_CH_GP){
             break;
     }
 }
+
+}
+
+void processProgramChange(byte channel, byte progNum){
+
+    switch (channel){
+        case MIDI_CH_GP:
+            stjorn.setSong(progNum);
+            break;
+        default:    
+            break;
+    }
+
 
 }
 

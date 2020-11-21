@@ -18,6 +18,14 @@
 #include <Arduino.h>
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
+#include "STJORN_display.h"
+
+void setDisplayMain(){
+    setDisplayPatch();
+    setDisplaySong();
+    setDisplayCurr();
+    setDisplayNext();
+}
 
 void setDisplayPatch(){
 
@@ -43,6 +51,11 @@ void setDisplayPatch(){
 }
 
 void setDisplaySong(){
+
+for (int i = 0; i < DIGIT_SONG; i++){
+    stjorn.setDisplay(BLK_SONG,i,stjorn.songDigit(i));
+}    
+
 
 }
 

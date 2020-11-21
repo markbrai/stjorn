@@ -29,10 +29,13 @@ Stjorn::Stjorn()
     // initialise both states to 0
     m_stCurr = ST_PATCH;        
     m_stPrev = ST_PATCH;
-    // set state LED
+
+    // set state LED to starting state
     setLed(STATE,getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);    // intialise state LED
 
-    
+    // set song number to initial (01)
+    setSongDigits(m_currSong);
+
 }
 
 // SET FUNCTIONS *********************
@@ -44,6 +47,10 @@ void Stjorn::setState(int stNew)
     m_stCurr = stNew;
         setLed(STATE,getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);
     m_stChange = true;
+
+    if (m_stCurr == ST_SONG){
+        m_songPage = false;     // reset song page
+    }
 
 }
 
@@ -138,27 +145,37 @@ void Stjorn::saveSongVar()
 void Stjorn::setSong(int song)
 {
     m_currSong = song;
+    setSongDigits(m_currSong);
+}
+
+void Stjorn::setSong(int press, int song)
+{
+    m_currSong = song;
+    setSongDigits(m_currSong);
+    sendSong(press, m_currSong);
 }
 
 void Stjorn::setNext(int press, int song)
 {
-    if (song == -1){            // triggered from 'next'
-        song = m_currSong + 1;
+    if (m_nextSong == false){
+        if (song == -1) {            // triggered from 'next'
+            setSong(m_currSong + 1);
+        } else {
+            setSong(song);
+        }
     }
 
-    if (press == PRESS_SHORT){
-        if (m_nextSong == false){        // immediate next GP & LIVE
-            usbMIDI.sendProgramChange(song,MIDI_CH_LIVE);
-            usbMIDI.sendProgramChange(song,MIDI_CH_GP);
-        } else {                        // next GP
-            usbMIDI.sendProgramChange(song,MIDI_CH_GP);
-            m_nextSong = false;
-        }
-    } else if (press == PRESS_LONG){    // next LIVE only
-        usbMIDI.sendProgramChange(song,MIDI_CH_LIVE);
-        m_nextSong = true;
-    }
+    sendSong(press,m_currSong);
+
 }
+
+void Stjorn::setSongPage(bool page)
+{
+    m_songPage = page;
+}
+
+
+
 
 void Stjorn::setDisplay(int block, int digit, char ascii)
 {
@@ -238,12 +255,23 @@ char Stjorn::ascii(int blk, int digit)
     return ascii;
 }
 
+char Stjorn::songDigit(int digit){
+/*char _m_songDigit;
+
+    _m_songDigit = m_songDigits[digit];
+
+    return _m_songDigit;*/
+
+    return m_songDigits[digit];
+
+}
 
 
 
 // PRIVATE FUNCTIONS
 
-int Stjorn::getStateLed(int state){
+int Stjorn::getStateLed(int state)
+{
 
     switch (state){
         case ST_TRACKS ... ST_SONG:
@@ -261,4 +289,33 @@ int Stjorn::getStateLed(int state){
 
     return ledNum;
 
+}
+
+void Stjorn::setSongDigits(int song)
+{
+    int _m_songDisplay = song + 1;
+    int _m_digit = _m_songDisplay % 10;     // get lowest digit
+    m_songDigits[1] = _m_digit + '0';
+    //setDisplay(BLK_SONG,1,_m_digit + '0');
+    _m_songDisplay /= 10;    // remove lowest digit
+    _m_digit = _m_songDisplay % 10;     // get digit
+    m_songDigits[0] = _m_digit + '0';
+    //setDisplay(BLK_SONG,0,_m_digit + '0');
+
+}
+
+void Stjorn::sendSong(int press, int song){
+
+    if (press == PRESS_SHORT){
+        if (m_nextSong == false){        // immediate next GP & LIVE
+            usbMIDI.sendProgramChange(m_currSong,MIDI_CH_LIVE);
+            usbMIDI.sendProgramChange(m_currSong,2);
+        } else {                        // next GP
+            usbMIDI.sendProgramChange(m_currSong,2);
+            m_nextSong = false;
+        }
+    } else if (press == PRESS_LONG){    // next LIVE only
+        usbMIDI.sendProgramChange(m_currSong,MIDI_CH_LIVE);
+        m_nextSong = true;
+    }
 }

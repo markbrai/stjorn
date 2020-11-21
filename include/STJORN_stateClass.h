@@ -57,6 +57,10 @@ class Stjorn
         // song 
         int m_currSong{0};
         bool m_nextSong{false};
+        void setSongDigits(int song);
+        char m_songDigits[DIGIT_SONG] = {'0','1'};
+        void sendSong(int press, int song);
+        bool m_songPage{false};
         // transport 
 
 
@@ -79,9 +83,11 @@ class Stjorn
         void sendTap();
         void saveSongVar();
         void setSong(int song);
+        void setSong(int press, int song);
         void setNext(int press, int song);
         void setDisplay(int block, int digit, char ascii );
         void setProx(int prox);
+        void setSongPage(bool page);    // true sets page 2
 
         // Get functions
         int state() {return m_stCurr;}
@@ -99,8 +105,9 @@ class Stjorn
         char ascii(int blk, int digit);
         int expression() {return m_exprProx;};
         int exprChanged() {return m_exprChanged;}
-        
-        
+        int song() {return m_currSong;}
+        char songDigit(int digit);    
+        bool songPage() {return m_songPage;} 
 };
 
 
