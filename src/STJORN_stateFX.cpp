@@ -129,6 +129,7 @@ void procFsFX(Bounce fs, int fsNum){
 
 void procLedFX(){
 
+    // set FX LEDs
     int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,DARK,PINK,YELLOW,RED,RED}; // colour of each FX
 
     for (int i = 0; i < NUM_FX; i++){
@@ -138,6 +139,10 @@ void procLedFX(){
         } 
         stjorn.setLed(ACTION,i,stjorn.fx(i),colour);
     }
+
+    // set next LED
+    stjorn.setLed(NEXT,LED_NEXT,false,DARK);
+
 
 }
 

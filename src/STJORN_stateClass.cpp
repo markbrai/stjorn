@@ -48,6 +48,10 @@ void Stjorn::setState(int stNew)
         setLed(STATE,getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);
     m_stChange = true;
 
+    if (m_stCurr == ST_SONG){
+        m_songPage = false;     // reset song page
+    }
+
 }
 
 void Stjorn::confirmState(int state)
@@ -165,6 +169,11 @@ void Stjorn::setNext(int press, int song)
 
 }
 
+void Stjorn::setSongPage(bool page)
+{
+    m_songPage = page;
+}
+
 
 
 
@@ -246,6 +255,16 @@ char Stjorn::ascii(int blk, int digit)
     return ascii;
 }
 
+char Stjorn::songDigit(int digit){
+/*char _m_songDigit;
+
+    _m_songDigit = m_songDigits[digit];
+
+    return _m_songDigit;*/
+
+    return m_songDigits[digit];
+
+}
 
 
 
@@ -276,10 +295,12 @@ void Stjorn::setSongDigits(int song)
 {
     int _m_songDisplay = song + 1;
     int _m_digit = _m_songDisplay % 10;     // get lowest digit
-    setDisplay(BLK_SONG,1,_m_digit + '0');
+    m_songDigits[1] = _m_digit + '0';
+    //setDisplay(BLK_SONG,1,_m_digit + '0');
     _m_songDisplay /= 10;    // remove lowest digit
     _m_digit = _m_songDisplay % 10;     // get digit
-    setDisplay(BLK_SONG,0,_m_digit + '0');
+    m_songDigits[0] = _m_digit + '0';
+    //setDisplay(BLK_SONG,0,_m_digit + '0');
 
 }
 

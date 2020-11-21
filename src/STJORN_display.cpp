@@ -52,6 +52,11 @@ void setDisplayPatch(){
 
 void setDisplaySong(){
 
+for (int i = 0; i < DIGIT_SONG; i++){
+    stjorn.setDisplay(BLK_SONG,i,stjorn.songDigit(i));
+}    
+
+
 }
 
 void setDisplayCurr(){

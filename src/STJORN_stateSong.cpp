@@ -25,6 +25,10 @@
 
 void stateSong(Bounce *fs){
 
+    if (stjorn.stateChange() && stjorn.song() > 7){
+        stjorn.setSongPage(true);
+    }
+
     for (int i = 0; i < NUM_FS; i++){
         procFsSong(fs[i], i);
     }
@@ -42,13 +46,21 @@ void stateSong(Bounce *fs){
 
 void procFsSong(Bounce fs, int fsNum){
 
+    
     int press = 0;
 
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
             press = fsShortLong(fs, fsNum);
+            int _songNum;
             if (press != 0){
-                stjorn.setSong(press,fsNum);
+                int _songNum;
+                if (stjorn.songPage() ){
+                    _songNum = fsNum + 8; 
+                } else {
+                    _songNum =fsNum;
+                }
+                stjorn.setSong(press,_songNum);
             }
             break;
 
@@ -65,9 +77,12 @@ void procFsSong(Bounce fs, int fsNum){
             break;
 
         case FS_ST_NEXT:
-            press = fsShortLong(fs, fsNum);
+            /*press = fsShortLong(fs, fsNum);
             if (press != 0 ){
                 stjorn.setNext(press, -1);
+            }*/
+            if (fs.fell() ){
+                stjorn.setSongPage(!stjorn.songPage() );
             }
             break;
         
@@ -95,13 +110,18 @@ void procExprSong(){
 void procLedSong(){
 int colour = WHITE;
 
+    // selected song LED
     for (int i = 0; i < NUM_ACTION; i++){
         bool state = false;
-        if (stjorn.song()== i){
+        if ((stjorn.song()== i && !stjorn.songPage() )
+            || (stjorn.song()== i+8 && stjorn.songPage() ) ){
             state = true;
         }
         stjorn.setLed(ACTION,i,state,colour);
     }
+
+    // page 2 LED
+    stjorn.setLed(NEXT,LED_NEXT,stjorn.songPage(),BLUE);
 
 
 }

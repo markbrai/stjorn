@@ -124,6 +124,7 @@ void procFsPatch(Bounce fs, int fsNum){
 void procLedPatch(){
 int colour = WHITE;
 
+    // selected patch LED
     for (int i=0; i < NUM_PATCH; i++){
         bool state = false;
         if (stjorn.patch() == i){
@@ -134,6 +135,9 @@ int colour = WHITE;
         }
         stjorn.setLed(ACTION,i,state,colour);
     }
+
+    // next LED
+    stjorn.setLed(NEXT,LED_NEXT,false,DARK);
 
 }
 
