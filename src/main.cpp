@@ -246,6 +246,7 @@ void loop() {
   }
 
 // Process TWIST
+  twist.setColor(0,0,0);
 
 
 // Set LEDs 

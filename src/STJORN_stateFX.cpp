@@ -23,14 +23,7 @@
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
 
-#define FX_MOD 0
-#define FX_DLY 1
-#define FX_VRB 2
-#define FX_TAP 3
-#define FX_FLT 4
-#define FX_CMP 5
-#define FX_DR2 6
-#define FX_DR1 7
+
 
 
 void stateFX(Bounce *fs){
@@ -58,6 +51,7 @@ void procFsFX(Bounce fs, int fsNum){
     int ch = MIDI_CH_GP;
     int press = 0;
 
+
     switch (fsNum){
         case FX_MOD ...  FX_VRB:
             press = fsShortLong(fs,fsNum);
@@ -69,8 +63,8 @@ void procFsFX(Bounce fs, int fsNum){
             break;
         case FX_TAP ... FS_ACT_MX:
             if (fsNum == FX_TAP) {
-                bool tapEngage = fsTapEngage(fs,fsNum);
-                if (tapEngage){
+                bool tapEngaged = fsTapEngage(fs,fsNum);
+                if (tapEngaged){
                     stjorn.sendTap();
                 }
             } else {
@@ -130,7 +124,7 @@ void procFsFX(Bounce fs, int fsNum){
 void procLedFX(){
 
     // set FX LEDs
-    int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,DARK,PINK,YELLOW,RED,RED}; // colour of each FX
+    int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,WHITE,PINK,YELLOW,RED,RED}; // colour of each FX
 
     for (int i = 0; i < NUM_FX; i++){
         int colour = DARK;

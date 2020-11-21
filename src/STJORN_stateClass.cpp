@@ -208,6 +208,12 @@ void Stjorn::setProx(int prox)
     }
 }
 
+void Stjorn::setTap(bool state)
+{
+    m_tap = state;
+    m_fx[FX_TAP] = m_tap;
+}
+
 
 // GET FUNCTIONS *********************
 

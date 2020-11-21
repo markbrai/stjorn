@@ -54,6 +54,7 @@ class Stjorn
         int m_fxAux{0};
         bool m_aux{false};
         bool m_auxPressed{false};
+        bool m_tap{false};
         // song 
         int m_currSong{0};
         bool m_nextSong{false};
@@ -88,6 +89,7 @@ class Stjorn
         void setDisplay(int block, int digit, char ascii );
         void setProx(int prox);
         void setSongPage(bool page);    // true sets page 2
+        void setTap(bool state);
 
         // Get functions
         int state() {return m_stCurr;}
@@ -108,6 +110,7 @@ class Stjorn
         int song() {return m_currSong;}
         char songDigit(int digit);    
         bool songPage() {return m_songPage;} 
+        bool tap() {return m_tap;}
 };
 
 

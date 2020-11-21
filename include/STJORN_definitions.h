@@ -112,6 +112,15 @@
 #define NUM_PATCH 8
 #define NUM_ACTION 8 // number of 'action buttons' 
 
+#define FX_MOD 0
+#define FX_DLY 1
+#define FX_VRB 2
+#define FX_TAP 3
+#define FX_FLT 4
+#define FX_CMP 5
+#define FX_DR2 6
+#define FX_DR1 7
+
 // define STJORN states
 #define NUM_STATES 6
 

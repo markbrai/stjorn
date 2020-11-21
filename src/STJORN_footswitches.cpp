@@ -54,15 +54,16 @@ bool fsTapEngage(Bounce fs, int fsNum){
     #define LOCKED 0
     #define TAP_TIMEOUT 10000
 
-    static bool tapEngage = LOCKED;
+    //static bool tapEngage = LOCKED;
 
     if (stjorn.stateChange()){      // reset tapEngage status when state changes
-        tapEngage = LOCKED; 
+        //tapEngage = LOCKED;
+        stjorn.setTap(LOCKED);
     }
     
     if (fs.fell() ){
         stjorn.setPressed(fsNum,PRESSED);
-        if (tapEngage == ENGAGED){
+        if (stjorn.tap() == ENGAGED){
             return true;
         }
     } else if (fs.rose() && stjorn.isPressed(fsNum) ){
@@ -72,13 +73,14 @@ bool fsTapEngage(Bounce fs, int fsNum){
     if (stjorn.isPressed(fsNum) ){
         if (fs.duration() >= LONGPRESS){
             stjorn.setPressed(fsNum,NOT_PRESSED);
-            tapEngage = ENGAGED;
+            //tapEngage = ENGAGED;
+            stjorn.setTap(ENGAGED);
         }
     }
 
-    if (!stjorn.isPressed(fsNum) && tapEngage == ENGAGED){
+    if (!stjorn.isPressed(fsNum) && stjorn.tap() == ENGAGED){
         if (fs.duration() >= TAP_TIMEOUT){
-            tapEngage = LOCKED;
+            stjorn.setTap(LOCKED);
         }
     }
 
