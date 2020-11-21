@@ -40,11 +40,11 @@ void stateFX(Bounce *fs){
         procFsFX(fs[i], i);
     }
 
+    procExprFX();
+
     procLedFX();
 
     procDisplayFX();
-
-
 
     // reset 'changed' state flag if just changed to this state
     stjorn.confirmState(ST_FX);
@@ -55,10 +55,19 @@ void stateFX(Bounce *fs){
 void procFsFX(Bounce fs, int fsNum){
 
     int note = -1;
-    int ch = 1;
+    int ch = MIDI_CH_GP;
+    int press = 0;
 
     switch (fsNum){
-        case FS_ACT_MN ... FS_ACT_MX:
+        case FX_MOD ...  FX_VRB:
+            press = fsShortLong(fs,fsNum);
+            if (press == PRESS_SHORT){
+                note = fsNum + 17; 
+            } else if (press == PRESS_LONG){
+                note = fsNum + 25;
+            }
+            break;
+        case FX_TAP ... FS_ACT_MX:
             if (fsNum == FX_TAP) {
                 bool tapEngage = fsTapEngage(fs,fsNum);
                 if (tapEngage){
@@ -66,20 +75,18 @@ void procFsFX(Bounce fs, int fsNum){
                 }
             } else {
                 if (fs.fell() ){
-                    ch = MIDI_CH_GP;
                     note = fsNum + 17;
                 }
             }
             break;
 
         case FS_ST_SONG:
-            /*if (fs.fell() ){
-                stjorn.setState(ST_TRACKS);
-            }*/
+            if (fs.fell() ){
+                stjorn.setState(ST_SONG);
+            }
             break;
 
         case FS_ST_RIG:
-            int press = 0;
             press = fsShortLong(fs, fsNum);
             if (press == PRESS_SHORT){
                 stjorn.setState(ST_PATCH);
@@ -96,10 +103,10 @@ void procFsFX(Bounce fs, int fsNum){
             break;
 
         case FS_ST_NEXT:
-            press = 0;
             press = fsShortLong(fs, fsNum);
-            stjorn.setNext(press, -1);
-            break;
+            if (press != 0 ){
+                stjorn.setNext(press, -1);
+            }
 
         case FS_RELAY:
             processRelay(fs);
@@ -122,7 +129,8 @@ void procFsFX(Bounce fs, int fsNum){
 
 void procLedFX(){
 
-    int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,DARK,YELLOW,YELLOW,RED,RED}; // colour of each FX
+    // set FX LEDs
+    int fxLedCol[NUM_FX] = {BLUE,GREEN,ORANGE,DARK,PINK,YELLOW,RED,RED}; // colour of each FX
 
     for (int i = 0; i < NUM_FX; i++){
         int colour = DARK;
@@ -132,10 +140,21 @@ void procLedFX(){
         stjorn.setLed(ACTION,i,stjorn.fx(i),colour);
     }
 
+    // set next LED
+    stjorn.setLed(NEXT,LED_NEXT,false,DARK);
+
+
 }
 
 void procDisplayFX(){
 
-    setDisplayPatch();
+    setDisplayMain();
+
+}
+
+void procExprFX(){
+
+    sendExpression(EXPR_GTR_CC,MIDI_CH_GP);
+
 
 }

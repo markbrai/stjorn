@@ -40,6 +40,8 @@ void statePatch(Bounce *fs){
         procFsPatch(fs[i], i);
     }
 
+    procExprPatch();
+
     procLedPatch();
 
     procDisplayPatch();
@@ -54,6 +56,7 @@ void procFsPatch(Bounce fs, int fsNum){
 
     int note = -1;
     int ch = 1;
+    int press = 0;
 
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
@@ -63,16 +66,18 @@ void procFsPatch(Bounce fs, int fsNum){
                 note = fsNum + 1;
                 stjorn.selectPatch(fsNum);
             } else if (fs.fell() && stjorn.patch() == fsNum){
-                note = fsNum + 9;
+                note = stjorn.auxFX();
+                //stjorn.setAux();
             }
             break;
 
         case FS_ST_SONG:
-
+            if (fs.fell() ){
+                stjorn.setState(ST_SONG);
+            }
             break;
 
         case FS_ST_RIG:
-            int press = 0;
             press = fsShortLong(fs, fsNum);
             if (press == PRESS_SHORT){
                 stjorn.setState(ST_FX);
@@ -88,9 +93,10 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
 
         case FS_ST_NEXT:
-            press = 0;
             press = fsShortLong(fs, fsNum);
-            stjorn.setNext(press, -1);
+            if (press != 0 ){
+                stjorn.setNext(press, -1);
+            }
             break;
 
         case FS_RELAY:
@@ -104,6 +110,9 @@ void procFsPatch(Bounce fs, int fsNum){
         case FS_OS_MX:
 
             break;
+
+        default:
+            break;
     }
 
     if (note != -1){
@@ -113,20 +122,34 @@ void procFsPatch(Bounce fs, int fsNum){
 }
 
 void procLedPatch(){
+int colour = PURPLE;
 
+    // selected patch LED
     for (int i=0; i < NUM_PATCH; i++){
         bool state = false;
         if (stjorn.patch() == i){
             state = true;
         }
-        stjorn.setLed(ACTION,i,state,WHITE);
+        if (stjorn.aux() ){
+            colour = BLUE;
+        }
+        stjorn.setLed(ACTION,i,state,colour);
     }
+
+    // next LED
+    stjorn.setLed(NEXT,LED_NEXT,false,DARK);
 
 }
 
 void procDisplayPatch(){
 
-    setDisplayPatch();
+    setDisplayMain();
 
 
+}
+
+void procExprPatch(){
+
+    sendExpression(EXPR_GTR_CC,MIDI_CH_GP);
+    
 }

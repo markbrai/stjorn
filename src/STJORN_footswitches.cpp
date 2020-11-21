@@ -32,12 +32,14 @@ int fsShortLong(Bounce fs, int fsNum){
         stjorn.setPressed(fsNum,PRESSED);
     } else if (fs.rose() && stjorn.isPressed(fsNum) ){
         stjorn.setPressed(fsNum, NOT_PRESSED);
+        Serial.print("PRESS_SHORT");
         return PRESS_SHORT;
     }
 
     if (stjorn.isPressed(fsNum) ){
         if (fs.duration() >= LONGPRESS){
             stjorn.setPressed(fsNum,NOT_PRESSED);
+            Serial.print("PRESS_LONG");
             return PRESS_LONG;
         }
     }
@@ -81,4 +83,27 @@ bool fsTapEngage(Bounce fs, int fsNum){
     }
 
     return false;
+}
+
+void updateExpression(int prox){
+// conversion from raw proximity to MIDI value
+int proxMidi = 0;
+
+    if (prox <= PROX_MIN) {
+        proxMidi = 127;
+    } else if (prox >= PROX_MAX) {
+        proxMidi = 0; 
+    } else {
+        proxMidi = map(prox,PROX_MAX,PROX_MIN,0,127);    // scale proximity to MIDI
+    }
+    stjorn.setProx(proxMidi);
+
+}
+
+void sendExpression(int cc, int channel){
+
+    if (stjorn.exprChanged() ){         // expression MIDI value is updated
+        usbMIDI.sendControlChange(cc, stjorn.expression(), channel);
+    }
+
 }

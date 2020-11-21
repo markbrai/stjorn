@@ -28,10 +28,14 @@ class Stjorn
         int m_stCurr{};
         int m_stPrev{};
         bool m_stChange{false};
-        int m_stLedCol[NUM_STATES] = {WHITE,BLUE,WHITE,BLUE,WHITE,BLUE};
+        int m_stLedCol[NUM_STATES] = {WHITE,BLUE,PURPLE,RED,WHITE,BLUE};
         int getStateLed(int state);
         // footswitch 
         bool m_pressed[NUM_FS];
+        // expression
+        int m_exprProx{0};
+        int m_exprProxPrev{0};
+        bool m_exprChanged{false};
         // display
         char m_dispSong[2];
         char m_dispCurr[4];
@@ -47,9 +51,16 @@ class Stjorn
         int m_relayState{OPEN};
         // FX 
         bool m_fx[NUM_FX];
+        int m_fxAux{0};
+        bool m_aux{false};
+        bool m_auxPressed{false};
         // song 
         int m_currSong{0};
         bool m_nextSong{false};
+        void setSongDigits(int song);
+        char m_songDigits[DIGIT_SONG] = {'0','1'};
+        void sendSong(int press, int song);
+        bool m_songPage{false};
         // transport 
 
 
@@ -66,11 +77,17 @@ class Stjorn
         void selectPatch(int patch);
         void setRelay(int state);
         void setFX(int fx, bool state);
+        void setAux();
+        void setAux(bool state);
+        void setAuxFX(int aux);
         void sendTap();
         void saveSongVar();
         void setSong(int song);
+        void setSong(int press, int song);
         void setNext(int press, int song);
         void setDisplay(int block, int digit, char ascii );
+        void setProx(int prox);
+        void setSongPage(bool page);    // true sets page 2
 
         // Get functions
         int state() {return m_stCurr;}
@@ -82,9 +99,15 @@ class Stjorn
         int patch() {return m_patchSelected;}
         int relay() {return m_relayState;}
         bool fx(int fx);
+        int aux() {return m_aux;}
+        int auxFX() {return m_fxAux;}
         bool next() {return m_nextSong;}
         char ascii(int blk, int digit);
-        
+        int expression() {return m_exprProx;};
+        int exprChanged() {return m_exprChanged;}
+        int song() {return m_currSong;}
+        char songDigit(int digit);    
+        bool songPage() {return m_songPage;} 
 };
 
 

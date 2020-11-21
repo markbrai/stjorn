@@ -25,6 +25,7 @@
 #include "STJORN_stateClass.h"                      // STJORN main state variables
 #include "STJORN_statePatch.h"                      // STJORN state functions for PATCH
 #include "STJORN_stateFX.h"
+#include "STJORN_stateSong.h"
 #include "STJORN_midi.h"
 
 // Instantiate encoder
@@ -50,6 +51,7 @@ Bounce *fs = new Bounce[NUM_FS];
 
 // Instantiate proximity sensor
 Adafruit_VCNL4010 vcnl;
+elapsedMillis msExpr = 0;
 
 Stjorn stjorn;
 
@@ -72,22 +74,6 @@ void setup() {
   display2.setBrightness(SCRN_DIM);
   display3.setBrightness(SCRN_DIM);
 
-// setup welcome message
-
-  char splash[6] = {'S','T','J','O','R','N'};
-
-  display1.writeDigitAscii(3,splash[0]);
-  display2.writeDigitAscii(0,splash[1]);
-  display2.writeDigitAscii(1,splash[2]);
-  display2.writeDigitAscii(2,splash[3]);
-  display2.writeDigitAscii(3,splash[4]);
-  display3.writeDigitAscii(0,splash[5]);
-
-// write displays
-  display1.writeDisplay();
-  display2.writeDisplay();
-  display3.writeDisplay();
-
 // TWIST SETUP
   twist.begin();
 
@@ -109,15 +95,33 @@ void setup() {
     fs[i].interval(5);                               // interval in ms
   }
 
+// SETUP EXPRESSION PEDAL
+  vcnl.begin();
 
-delay(2000);    // keep STJORN 'splash' on screen for a few seconds
+// setup welcome message
+
+  char splash[6] = {'S','T','J','O','R','N'};
+
+  display1.writeDigitAscii(3,splash[0]);
+  display2.writeDigitAscii(0,splash[1]);
+  display2.writeDigitAscii(1,splash[2]);
+  display2.writeDigitAscii(2,splash[3]);
+  display2.writeDigitAscii(3,splash[4]);
+  display3.writeDigitAscii(0,splash[5]);
+
+// write displays
+  display1.writeDisplay();
+  display2.writeDisplay();
+  display3.writeDisplay();
+
+  delay(2000);    // keep STJORN 'splash' on screen for a few seconds
 
   for(int i = 0; i < NUM_LEDS; i++) {
       leds.setPixel(i,DARK);              // turn all LEDs 'off'
   }
   leds.show();
 
-  //Serial.begin(9600);
+  Serial.begin(9600);
 
   // clear screen buffers
   int digits[4] = {DIGIT_SONG,DIGIT_CURR,DIGIT_NEXT,DIGIT_RIG};
@@ -128,6 +132,8 @@ delay(2000);    // keep STJORN 'splash' on screen for a few seconds
       stjorn.setDisplay(blk,i,' ');
     }
   }
+
+  stjorn.setSong(stjorn.song() );
 
 }
 
@@ -197,6 +203,12 @@ void loop() {
 
 // UPDATE EXPRESSION PEDALS
 
+  if (msExpr >= 20){    // has 20ms passed since last check
+    msExpr = 0;         // reset timer 
+    updateExpression(vcnl.readProximity());
+  }
+
+
 
 // SELECT AND PROCESS STATES
 /* Each state is responsible for handling footswitch and expression actions
@@ -210,7 +222,7 @@ void loop() {
       break;
     
     case ST_SONG:
-
+      stateSong(fs);
       break;
 
     case ST_PATCH:
@@ -232,6 +244,8 @@ void loop() {
     default:
       break;
   }
+
+// Process TWIST
 
 
 // Set LEDs 

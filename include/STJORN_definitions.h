@@ -58,8 +58,11 @@
 // define power LED pin
 #define PIN_PWRLED 13
 
-// define expression pedal input pin
+// define expression pedal stuff
 #define PIN_EXP 29
+#define PROX_MIN 6500
+#define PROX_MAX 30000
+#define EXPR_GTR_CC 1
 
 // define some stuff for LEDs
 
@@ -69,6 +72,8 @@
 #define YELLOW 0xFFFF00
 #define ORANGE 0xFF7700
 #define WHITE 0xFFFFFF
+#define PINK 0xD4005C
+#define PURPLE 0x8029CC
 #define DARK 0x000000
 #define LED_VDIM 16
 #define LED_DIM 32
