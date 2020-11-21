@@ -104,8 +104,9 @@ void procFsFX(Bounce fs, int fsNum){
 
         case FS_ST_NEXT:
             press = fsShortLong(fs, fsNum);
-            stjorn.setNext(press, -1);
-            break;
+            if (press != 0 ){
+                stjorn.setNext(press, -1);
+            }
 
         case FS_RELAY:
             processRelay(fs);
