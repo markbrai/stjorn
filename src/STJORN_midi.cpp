@@ -100,11 +100,14 @@ if (channel == MIDI_CH_GP){
 
 void processProgramChange(byte channel, byte progNum){
 
-if (channel == MIDI_CH_GP){
+    switch (channel){
+        case MIDI_CH_GP:
+            stjorn.setSong(progNum);
+            break;
+        default:    
+            break;
+    }
 
-    stjorn.setSong(progNum);    
-
-}
 
 }
 
