@@ -93,6 +93,15 @@ void procExprSong(){
 }
 
 void procLedSong(){
+int colour = WHITE;
+
+    for (int i = 0; i < NUM_ACTION; i++){
+        bool state = false;
+        if (stjorn.song()== i){
+            state = true;
+        }
+        stjorn.setLed(ACTION,i,state,colour);
+    }
 
 
 }
