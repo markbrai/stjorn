@@ -108,7 +108,7 @@ void procExprSong(){
 }
 
 void procLedSong(){
-int colour = WHITE;
+int colour = BLUE;
 
     // selected song LED
     for (int i = 0; i < NUM_ACTION; i++){

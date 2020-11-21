@@ -122,7 +122,7 @@ void procFsPatch(Bounce fs, int fsNum){
 }
 
 void procLedPatch(){
-int colour = WHITE;
+int colour = PURPLE;
 
     // selected patch LED
     for (int i=0; i < NUM_PATCH; i++){
