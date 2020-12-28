@@ -98,7 +98,7 @@ if (channel == MIDI_CH_GP){
     switch (ccNum) {
         case 50:
             if (value <= LOOPER_OVERDUB){
-                stjorn.setLooper(value)
+                stjorn.setLooper(value);
             }
             break;
         default:
