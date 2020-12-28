@@ -87,9 +87,9 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
 
         case FS_ST_LOOP:
-            /*if (fs.fell() ){
+            if (fs.fell() ){
                 stjorn.setState(ST_LOOP);
-            }*/
+            }
             break;
 
         case FS_ST_NEXT:

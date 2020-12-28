@@ -24,7 +24,7 @@
 
 void stateLoop(Bounce *fs);
 void procFsLoop(Bounce fs, int fsNum);
-int procLoopControl(int fsNum, int press);
+void procLoopControl(int fsNum, int press);
 void procExprLoop();
 void procLedLoop();
 void procDisplayLoop();

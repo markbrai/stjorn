@@ -60,13 +60,11 @@ void stateLoop(Bounce *fs){
 void procFsLoop(Bounce fs, int fsNum){
 
     int press = 0;
-    int cc = -1;
-
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
             press = fsShortLong(fs, fsNum);     // returns PRESS_SHORT or PRESS_LONG
             if (press != NOT_PRESSED)  {
-                cc = procLoopControl(fsNum, press);
+                procLoopControl(fsNum, press);
             }
             break;
         
@@ -109,15 +107,14 @@ void procFsLoop(Bounce fs, int fsNum){
             break;
     }
 
-    if (cc != -1) {
-        usbMIDI.sendControlChange(cc,127,MIDI_CH_LIVE);
-    }
+
 
 }
 
 
-int procLoopControl(int fsNum, int press){
-int cc;
+void procLoopControl(int fsNum, int press){
+int cc = -1;
+bool clear = false;
 
     switch (fsNum){
         case 0:     // FDBK +
@@ -126,6 +123,7 @@ int cc;
             } else {
                 cc = LOOP_CC_FBRESET;
             }
+            clear = true;
             break;
 
         case 1:     // LENGTH +
@@ -137,7 +135,7 @@ int cc;
             break;
 
         case 3:     // EXPR GTR
-
+            
             break;
         
         case 4:     // FDBK -
@@ -146,6 +144,7 @@ int cc;
             } else {
                 cc = LOOP_CC_FBRESET;
             }
+            clear = true;
             break;
 
         case 5:     // LENGTH -
@@ -167,7 +166,11 @@ int cc;
         case 7:     // REC/PLAY/DUB
             switch (stjorn.looper() ){
                 case LOOPER_STOP:
-                    cc = LOOP_CC_REC;
+                    if (press == PRESS_SHORT){
+                        cc = LOOP_CC_REC;
+                    } else {
+                        cc = LOOP_CC_PLAY;
+                    }
                     break;
 
                 case LOOPER_RECORD:     
@@ -185,11 +188,18 @@ int cc;
             break;
 
         default:
+            
             break;
         
 
     }
 
+    if (cc != -1) {
+        usbMIDI.sendControlChange(cc,127,MIDI_CH_LIVE);
+        if (clear == true){
+            usbMIDI.sendControlChange(cc,0,MIDI_CH_LIVE);   // makes trigger momentary
+        }
+    }
 
 
 }

@@ -74,6 +74,9 @@ void procFsSong(Bounce fs, int fsNum){
             break;
 
         case FS_ST_LOOP:
+            if (fs.fell() ){
+                stjorn.setState(ST_LOOP);
+            }
             break;
 
         case FS_ST_NEXT:
