@@ -22,7 +22,8 @@
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
 
-
+void stateLoop(Bounce *fs);
+void procFsLoop(Bounce fs, int fsNum);
 
 
 
