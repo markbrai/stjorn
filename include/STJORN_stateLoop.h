@@ -24,6 +24,7 @@
 
 void stateLoop(Bounce *fs);
 void procFsLoop(Bounce fs, int fsNum);
+void procLoopControl(int fsNum, int pressLong);
 
 
 

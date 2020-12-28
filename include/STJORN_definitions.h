@@ -40,7 +40,6 @@
 
 #define PRESSED 1
 #define NOT_PRESSED 0
-
 #define LONGPRESS 500     // longpress is > 500ms pressed state
 #define PRESS_SHORT 1
 #define PRESS_LONG 2
