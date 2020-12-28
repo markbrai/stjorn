@@ -50,12 +50,13 @@ void stateLoop(Bounce *fs){
 void procFsLoop(Bounce fs, int fsNum){
 
     int press = 0;
+    int cc = -1;
 
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
             press = fsShortLong(fs, fsNum);     // returns PRESS_SHORT or PRESS_LONG
             if (press != NOT_PRESSED)  {
-                procLoopControl(fsNum, press);
+                cc = procLoopControl(fsNum, press);
             }
 
             break;
@@ -99,22 +100,31 @@ void procFsLoop(Bounce fs, int fsNum){
             break;
     }
 
+    if (cc != -1) {
+        usbMIDI.sendControlChange(cc,127,MIDI_CH_LIVE);
+    }
+
 }
 
 
-void procLoopControl(int fsNum, int pressLong){
+int procLoopControl(int fsNum, int press){
+int cc;
 
     switch (fsNum){
         case 0:     // FDBK +
-
+            if (press == PRESS_SHORT){
+                cc = LOOP_FBINC;
+            } else {
+                cc = LOOP_FBRESET;
+            }
             break;
 
         case 1:     // LENGTH +
-
+            cc = LOOP_DBL;
             break;
 
         case 2:     // UNDO
-
+            cc = LOOP_UNDO;
             break;
 
         case 3:     // EXPR GTR
@@ -122,15 +132,19 @@ void procLoopControl(int fsNum, int pressLong){
             break;
         
         case 4:     // FDBK -
-
+            if (press == PRESS_SHORT){
+                cc = LOOP_FBDEC;
+            } else {
+                cc = LOOP_FBRESET;
+            }
             break;
 
         case 5:     // LENGTH -
-
+            cc = LOOP_HALF;
             break;
         
         case 6:     // STOP/CLR
-
+            
             break;
 
         case 7:     // REC/PLAY
