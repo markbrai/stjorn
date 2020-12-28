@@ -211,6 +211,58 @@ void procExprLoop(){
 
 void procLedLoop(){
 
+
+
+    for (int i = 0; i < NUM_ACTION; i++) {
+    bool state = false;
+    int color;
+        switch (i){
+            case 0 ... 2:
+                color = DARK;
+                break;
+
+            case 3:
+                color = PINK;
+                break;
+            case 4 ... 5:
+                color = DARK;
+                break;
+            case 6:
+                if (stjorn.looper() == LOOPER_STOP){    // looper is stopped
+                    color = WHITE;
+                } else {                                // looper is playing/recording
+                    color = RED;
+                }
+                state = true;
+                break;
+            case 7: 
+                switch (stjorn.looper() ){
+                    case LOOPER_STOP:
+                        color = RED;
+                        break;
+                    case LOOPER_RECORD ... LOOPER_PLAY:
+                        color = CYAN;
+                        break;
+                    case LOOPER_OVERDUB:
+                        color = YELLOW;
+                        break;
+                    default:
+                        color = DARK;
+                        break;
+                }
+                state = true;
+                break;
+
+
+        }
+        stjorn.setLed(ACTION,i,state,color);
+
+    }
+
+
+
+
+
 }
 
 void procDisplayLoop(){

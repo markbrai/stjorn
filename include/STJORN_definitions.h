@@ -73,6 +73,7 @@
 #define WHITE 0xFFFFFF
 #define PINK 0xD4005C
 #define PURPLE 0x8029CC
+#define CYAN 0x42DAF5
 #define DARK 0x000000
 #define LED_VDIM 16
 #define LED_DIM 32
