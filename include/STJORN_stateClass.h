@@ -64,6 +64,9 @@ class Stjorn
         bool m_songPage{false};
         // transport 
 
+        // looper
+        int m_looperState{0};
+
 
 
     public:
@@ -90,6 +93,7 @@ class Stjorn
         void setProx(int prox);
         void setSongPage(bool page);    // true sets page 2
         void setTap(bool state);
+        void setLooper(int state);
 
         // Get functions
         int state() {return m_stCurr;}
@@ -111,6 +115,7 @@ class Stjorn
         char songDigit(int digit);    
         bool songPage() {return m_songPage;} 
         bool tap() {return m_tap;}
+        int looper() {return m_looperState;}
 };
 
 

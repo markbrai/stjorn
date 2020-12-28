@@ -193,6 +193,10 @@ enum LiveParam {
   LIVE_CYCLEOK,     // 27. Cycle OK or Not
 };
 
-
+// Some stuff for the Looper
+#define LOOPER_STOP 0
+#define LOOPER_RECORD 1
+#define LOOPER_PLAY 2
+#define LOOPER_OVERDUB 3 
 
 #endif

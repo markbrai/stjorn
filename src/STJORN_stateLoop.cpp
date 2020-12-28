@@ -23,17 +23,18 @@
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
 
-#define LOOP_REC 51
-#define LOOP_PLAY 52
-#define LOOP_DUB 53
-#define LOOP_STOP 54
-#define LOOP_UNDO 55
-#define LOOP_CLEAR 56
-#define LOOP_DBL 57
-#define LOOP_HALF 58
-#define LOOP_FBINC 59
-#define LOOP_FBDEC 60
-#define LOOP_FBRESET 61
+#define LOOP_CC_REC 51
+#define LOOP_CC_PLAY 52
+#define LOOP_CC_DUB 53
+#define LOOP_CC_STOP 54
+#define LOOP_CC_UNDO 55
+#define LOOP_CC_CLEAR 56
+#define LOOP_CC_DBL 57
+#define LOOP_CC_HALF 58
+#define LOOP_CC_FBINC 59
+#define LOOP_CC_FBDEC 60
+#define LOOP_CC_FBRESET 61
+#define LOOP_CC_FADE 62
 
 
 
@@ -44,6 +45,15 @@ void stateLoop(Bounce *fs){
     for (int i = 0; i < NUM_FS; i++){
         procFsLoop(fs[i],i);
     }
+
+    procExprLoop();
+
+    procLedLoop();
+
+    procDisplayLoop();
+
+     // reset 'changed' state flag if just changed to this state
+    stjorn.confirmState(ST_LOOP);   
 
 }
 
@@ -58,7 +68,6 @@ void procFsLoop(Bounce fs, int fsNum){
             if (press != NOT_PRESSED)  {
                 cc = procLoopControl(fsNum, press);
             }
-
             break;
         
         case FS_ST_SONG:
@@ -113,18 +122,18 @@ int cc;
     switch (fsNum){
         case 0:     // FDBK +
             if (press == PRESS_SHORT){
-                cc = LOOP_FBINC;
+                cc = LOOP_CC_FBINC;
             } else {
-                cc = LOOP_FBRESET;
+                cc = LOOP_CC_FBRESET;
             }
             break;
 
         case 1:     // LENGTH +
-            cc = LOOP_DBL;
+            cc = LOOP_CC_DBL;
             break;
 
         case 2:     // UNDO
-            cc = LOOP_UNDO;
+            cc = LOOP_CC_UNDO;
             break;
 
         case 3:     // EXPR GTR
@@ -133,22 +142,46 @@ int cc;
         
         case 4:     // FDBK -
             if (press == PRESS_SHORT){
-                cc = LOOP_FBDEC;
+                cc = LOOP_CC_FBDEC;
             } else {
-                cc = LOOP_FBRESET;
+                cc = LOOP_CC_FBRESET;
             }
             break;
 
         case 5:     // LENGTH -
-            cc = LOOP_HALF;
+            cc = LOOP_CC_HALF;
             break;
         
         case 6:     // STOP/CLR
-            
+            if (stjorn.looper() != LOOPER_STOP){  //looper playing/recording
+                if (press == PRESS_SHORT){
+                    cc = LOOP_CC_STOP;
+                } else {
+                    cc = LOOP_CC_FADE;
+                }
+            } else {    // looper stopped
+                cc = LOOP_CC_CLEAR;
+            }
             break;
 
-        case 7:     // REC/PLAY
+        case 7:     // REC/PLAY/DUB
+            switch (stjorn.looper() ){
+                case LOOPER_STOP:
+                    cc = LOOP_CC_REC;
+                    break;
 
+                case LOOPER_RECORD:     
+                    cc = LOOP_CC_DUB;       // change this to menu/max/osc configurable
+                    break;
+
+                case LOOPER_PLAY:
+                    cc = LOOP_CC_DUB;
+                    break;
+
+                case LOOPER_OVERDUB:
+                    cc = LOOP_CC_PLAY;
+                    break;
+            }
             break;
 
         default:
@@ -159,5 +192,18 @@ int cc;
 
 
 
+}
+
+
+void procExprLoop(){
+
+}
+
+void procLedLoop(){
+
+}
+
+void procDisplayLoop(){
+    setDisplayMain();
 }
 
