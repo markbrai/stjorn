@@ -87,14 +87,14 @@ void procFsPatch(Bounce fs, int fsNum){
             break;
 
         case FS_ST_LOOP:
-            /*if (fs.fell() ){
+            if (fs.fell() ){
                 stjorn.setState(ST_LOOP);
-            }*/
+            }
             break;
 
         case FS_ST_NEXT:
             press = fsShortLong(fs, fsNum);
-            if (press != 0 ){
+            if (press != NOT_PRESSED ){
                 stjorn.setNext(press, -1);
             }
             break;
@@ -139,6 +139,7 @@ int colour = PURPLE;
     // next LED
     stjorn.setLed(NEXT,LED_NEXT,false,DARK);
 
+
 }
 
 void procDisplayPatch(){
@@ -150,6 +151,9 @@ void procDisplayPatch(){
 
 void procExprPatch(){
 
-    sendExpression(EXPR_GTR_CC,MIDI_CH_GP);
+    if (stjorn.exprType() != EXPR_GTR_CC){
+        stjorn.setExprType(EXPR_GTR_CC);
+    }
+    sendExpression();
     
 }

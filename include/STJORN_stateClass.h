@@ -28,7 +28,7 @@ class Stjorn
         int m_stCurr{};
         int m_stPrev{};
         bool m_stChange{false};
-        int m_stLedCol[NUM_STATES] = {WHITE,BLUE,PURPLE,RED,WHITE,BLUE};
+        int m_stLedCol[NUM_STATES] = {WHITE,BLUE,PURPLE,RED,PINK,BLUE};
         int getStateLed(int state);
         // footswitch 
         bool m_pressed[NUM_FS];
@@ -36,6 +36,7 @@ class Stjorn
         int m_exprProx{0};
         int m_exprProxPrev{0};
         bool m_exprChanged{false};
+        int m_exprType{EXPR_GTR_CC};
         // display
         char m_dispSong[2];
         char m_dispCurr[4];
@@ -64,6 +65,9 @@ class Stjorn
         bool m_songPage{false};
         // transport 
 
+        // looper
+        int m_looperState{0};
+
 
 
     public:
@@ -90,6 +94,8 @@ class Stjorn
         void setProx(int prox);
         void setSongPage(bool page);    // true sets page 2
         void setTap(bool state);
+        void setLooper(int state);
+        void setExprType(int type);
 
         // Get functions
         int state() {return m_stCurr;}
@@ -111,6 +117,8 @@ class Stjorn
         char songDigit(int digit);    
         bool songPage() {return m_songPage;} 
         bool tap() {return m_tap;}
+        int looper() {return m_looperState;}
+        int exprType() {return m_exprType;}
 };
 
 

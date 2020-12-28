@@ -220,6 +220,17 @@ void Stjorn::setTap(bool state)
 }
 
 
+void Stjorn::setLooper(int state)
+{
+    m_looperState = state;
+}
+
+void Stjorn::setExprType(int type)
+{
+    m_exprType = type;
+}
+
+
 // GET FUNCTIONS *********************
 
 bool Stjorn::isPressed(int btn)

@@ -26,6 +26,7 @@
 #include "STJORN_statePatch.h"                      // STJORN state functions for PATCH
 #include "STJORN_stateFX.h"
 #include "STJORN_stateSong.h"
+#include "STJORN_stateLoop.h"
 #include "STJORN_midi.h"
 
 // Instantiate encoder
@@ -234,7 +235,7 @@ void loop() {
       break;
 
     case ST_LOOP:
-
+      stateLoop(fs);
       break;
 
     case ST_PADS:
@@ -250,6 +251,13 @@ void loop() {
 
 
 // Set LEDs 
+
+  if (stjorn.state() != ST_LOOP){
+    // process looper state LED as required
+    procLoopStateled();
+  }
+
+
   for (int i = 0; i < NUM_LEDS; i++){
     int colour;
     if (stjorn.isLit(i) ){

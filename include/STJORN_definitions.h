@@ -40,7 +40,6 @@
 
 #define PRESSED 1
 #define NOT_PRESSED 0
-
 #define LONGPRESS 500     // longpress is > 500ms pressed state
 #define PRESS_SHORT 1
 #define PRESS_LONG 2
@@ -63,6 +62,10 @@
 #define PROX_MIN 6500
 #define PROX_MAX 30000
 #define EXPR_GTR_CC 1
+#define EXPR_LOOP_CC 12
+#define EXPR_TRAX_CC 11
+#define EXPR_PADS_CC 13
+#define EXPR_WAH_CC 2
 
 // define some stuff for LEDs
 
@@ -74,6 +77,7 @@
 #define WHITE 0xFFFFFF
 #define PINK 0xD4005C
 #define PURPLE 0x8029CC
+#define CYAN 0x42DAF5
 #define DARK 0x000000
 #define LED_VDIM 16
 #define LED_DIM 32
@@ -194,6 +198,10 @@ enum LiveParam {
   LIVE_CYCLEOK,     // 27. Cycle OK or Not
 };
 
-
+// Some stuff for the Looper
+#define LOOPER_STOP 0
+#define LOOPER_RECORD 1
+#define LOOPER_PLAY 2
+#define LOOPER_OVERDUB 3 
 
 #endif

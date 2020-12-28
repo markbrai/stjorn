@@ -94,6 +94,17 @@ if (channel == MIDI_CH_GP){
         default:
             break;
     }
+} else if (channel == MIDI_CH_LIVE){
+    switch (ccNum) {
+        case 50:
+            if (value <= LOOPER_OVERDUB){
+                stjorn.setLooper(value);
+            }
+            break;
+        default:
+            break;
+
+    }
 }
 
 }

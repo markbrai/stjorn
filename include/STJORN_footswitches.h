@@ -28,7 +28,7 @@ bool fsTapEngage(Bounce fs, int fsNum);
 
 void updateExpression(int prox);
 
-void sendExpression(int cc, int channel);
+void sendExpression();
 
 #endif 
 
