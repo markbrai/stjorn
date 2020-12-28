@@ -105,10 +105,25 @@ int proxMidi = 0;
 
 }
 
-void sendExpression(int cc, int channel){
+void sendExpression(){
 
-    if (stjorn.exprChanged() ){         // expression MIDI value is updated
+    /*if (stjorn.exprChanged() ){         // expression MIDI value is updated
         usbMIDI.sendControlChange(cc, stjorn.expression(), channel);
+    }*/
+
+    if (stjorn.exprChanged() ){
+    int exprType = stjorn.exprType();
+    int channel;
+
+        if (exprType == EXPR_GTR_CC || exprType == EXPR_WAH_CC){
+            channel = MIDI_CH_GP;
+        } else {
+            channel = MIDI_CH_LIVE;
+        }
+
+        usbMIDI.sendControlChange(exprType, stjorn.expression(), channel);
+
     }
+
 
 }

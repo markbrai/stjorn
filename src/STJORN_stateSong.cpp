@@ -23,6 +23,7 @@
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
 
+
 void stateSong(Bounce *fs){
 
     if (stjorn.stateChange() && stjorn.song() > 7){
@@ -107,7 +108,12 @@ void procFsSong(Bounce fs, int fsNum){
 }
 
 void procExprSong(){
-    sendExpression(EXPR_GTR_CC,MIDI_CH_GP);
+    // Add in logic to change expression to tracks
+
+    if (stjorn.exprType() != EXPR_GTR_CC){      // reset back to guitar vol expression
+        stjorn.setExprType(EXPR_GTR_CC);
+    }
+    sendExpression();
 }
 
 void procLedSong(){

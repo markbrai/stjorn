@@ -28,5 +28,6 @@ void procLoopControl(int fsNum, int press);
 void procExprLoop();
 void procLedLoop();
 void procDisplayLoop();
+void procLoopStateled();
 
 #endif

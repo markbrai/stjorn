@@ -139,6 +139,7 @@ int colour = PURPLE;
     // next LED
     stjorn.setLed(NEXT,LED_NEXT,false,DARK);
 
+
 }
 
 void procDisplayPatch(){
@@ -150,6 +151,9 @@ void procDisplayPatch(){
 
 void procExprPatch(){
 
-    sendExpression(EXPR_GTR_CC,MIDI_CH_GP);
+    if (stjorn.exprType() != EXPR_GTR_CC){
+        stjorn.setExprType(EXPR_GTR_CC);
+    }
+    sendExpression();
     
 }

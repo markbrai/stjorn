@@ -62,6 +62,10 @@
 #define PROX_MIN 6500
 #define PROX_MAX 30000
 #define EXPR_GTR_CC 1
+#define EXPR_LOOP_CC 12
+#define EXPR_TRAX_CC 11
+#define EXPR_PADS_CC 13
+#define EXPR_WAH_CC 2
 
 // define some stuff for LEDs
 

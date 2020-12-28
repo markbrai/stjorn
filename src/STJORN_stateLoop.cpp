@@ -135,7 +135,11 @@ bool clear = false;
             break;
 
         case 3:     // EXPR GTR
-            
+            if (stjorn.exprType() != EXPR_LOOP_CC){
+                stjorn.setExprType(EXPR_LOOP_CC);
+            } else {
+                stjorn.setExprType(EXPR_GTR_CC);
+            }
             break;
         
         case 4:     // FDBK -
@@ -207,6 +211,14 @@ bool clear = false;
 
 void procExprLoop(){
 
+    if (stjorn.stateChange() == true) {   // state is newly entered
+        stjorn.setExprType(EXPR_GTR_CC);    // set to guitar CC on entering state
+    }
+
+    sendExpression();
+
+
+
 }
 
 void procLedLoop(){
@@ -223,6 +235,11 @@ void procLedLoop(){
 
             case 3:
                 color = PINK;
+                if (stjorn.exprType() == EXPR_LOOP_CC){
+                    state = true;
+                } else {
+                    state = false;
+                }
                 break;
             case 4 ... 5:
                 color = DARK;
@@ -267,5 +284,41 @@ void procLedLoop(){
 
 void procDisplayLoop(){
     setDisplayMain();
+}
+
+
+void procLoopStateled(){
+int color;
+int state;
+
+    switch (stjorn.looper() ) {
+        case LOOPER_STOP:
+            color = DARK;
+            state = false;
+            break;
+        
+        case LOOPER_RECORD:
+            color = RED;
+            state = true;
+            break;
+
+        case LOOPER_PLAY:
+            color = YELLOW;
+            state = true;
+            break;
+
+        case LOOPER_OVERDUB:
+            color = CYAN;
+            state = true;
+            break;
+
+        default:
+            color = DARK;
+            state = false;
+            break;
+    }
+    
+    stjorn.setLed(STATE,LED_LOOP,state,color);
+
 }
 

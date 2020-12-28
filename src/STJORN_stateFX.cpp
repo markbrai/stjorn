@@ -142,6 +142,7 @@ void procLedFX(){
     stjorn.setLed(NEXT,LED_NEXT,false,DARK);
 
 
+
 }
 
 void procDisplayFX(){
@@ -152,7 +153,10 @@ void procDisplayFX(){
 
 void procExprFX(){
 
-    sendExpression(EXPR_GTR_CC,MIDI_CH_GP);
+    if (stjorn.exprType() != EXPR_GTR_CC){
+        stjorn.setExprType(EXPR_GTR_CC);
+    }
+    sendExpression();
 
 
 }

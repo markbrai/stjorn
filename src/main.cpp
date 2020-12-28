@@ -251,6 +251,13 @@ void loop() {
 
 
 // Set LEDs 
+
+  if (stjorn.state() != ST_LOOP){
+    // process looper state LED as required
+    procLoopStateled();
+  }
+
+
   for (int i = 0; i < NUM_LEDS; i++){
     int colour;
     if (stjorn.isLit(i) ){
