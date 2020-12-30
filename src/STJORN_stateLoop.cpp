@@ -211,8 +211,15 @@ bool clear = false;
 
 void procExprLoop(){
 
-    if (stjorn.stateChange() == true) {   // state is newly entered
+    /*if (stjorn.stateChange() == true) {   // state is newly entered
         stjorn.setExprType(EXPR_GTR_CC);    // set to guitar CC on entering state
+    }*/
+
+    // auto-set expression based on looper mode (play = loop, record = gtr)
+    if (stjorn.looper() == LOOPER_PLAY) {
+        stjorn.setExprType(EXPR_LOOP_CC);
+    } else {
+        stjorn.setExprType(EXPR_GTR_CC);
     }
 
     sendExpression();
