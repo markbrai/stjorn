@@ -42,5 +42,67 @@ void stateTracks(Bounce *fs) {
 }
 
 void procFsTracks(Bounce fs, int fsNum) {
+
+int press = 0;
+
+    switch (fsNum){
+        case FS_ACT_MN ... FS_ACT_MX:
+
+            break;
+        
+        case FS_ST_SONG:
+
+            break;
+
+        case FS_ST_RIG:
+            if (fs.fell() ){
+                stjorn.setState(ST_PATCH);
+            }
+            break;
+
+        case FS_ST_LOOP:
+            if (fs.fell() ){
+                stjorn.setState(ST_LOOP);
+            }
+            break;
+
+        case FS_ST_NEXT:
+            press = fsShortLong(fs, fsNum);
+            if (press != NOT_PRESSED){
+                stjorn.setNext(press,-1);
+            }
+            break;
+
+        case FS_RELAY:
+            processRelay(fs);
+            break;
+
+        case FS_OS_MN:
+
+            break;
+
+        case FS_OS_MX:
+
+            break;
+
+        default:
+            break;
+
+
+    }
+
+
     
+}
+
+void procExprTracks(){
+
+}
+
+void procLedTracks(){
+
+}
+
+void procDisplayTracks(){
+
 }
