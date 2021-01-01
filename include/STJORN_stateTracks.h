@@ -22,10 +22,12 @@
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
 
+void tracksControls(int *arrCC, int fsNum, Bounce fs);
 void stateTracks(Bounce *fs);
 void procFsTracks(Bounce fs, int fsNum);
 void procExprTracks();
 void procLedTracks();
 void procDisplayTracks();
+
 
 #endif

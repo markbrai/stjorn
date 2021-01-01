@@ -23,6 +23,17 @@
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
 
+#define CC_NUM 0
+#define CC_VAL 1
+
+#define FS_STOP 0
+#define FS_PLAY 1
+#define FS_CYCLE 2
+#define FS_TAP 3
+#define FS_G4 4
+#define FS_G3 5
+#define FS_G2 6
+#define FS_G1 7
 
 void stateTracks(Bounce *fs) {
 
@@ -44,10 +55,22 @@ void stateTracks(Bounce *fs) {
 void procFsTracks(Bounce fs, int fsNum) {
 
 int press = 0;
+int arrCC[2] = {-1,0};
 
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
-
+            if (fsNum == FS_TAP){
+                bool tapEngaged = fsTapEngage(fs, fsNum);
+                if (tapEngaged){
+                    if (fs.fell() ){
+                        stjorn.sendTap(true);
+                    } else if (fs.rose() ){
+                        stjorn.sendTap(false);
+                    }
+                }
+            } else {
+                tracksControls(arrCC,fsNum,fs);
+            }
             break;
         
         case FS_ST_SONG:
@@ -88,12 +111,40 @@ int press = 0;
         default:
             break;
 
-
     }
 
-
+    if (arrCC[CC_NUM] != -1){
+        usbMIDI.sendControlChange(arrCC[CC_NUM],arrCC[CC_VAL],MIDI_CH_LIVE);
+    }
     
 }
+
+void tracksControls(int arrCC[2], int fsNum, Bounce fs){
+ int press = 0;
+ int arrFsShortLong[8] = {1,1,1,0,0,0,0,0};
+ int arrCCNumShort[8] = {2,1,4,-1,9,8,7,6};
+ int arrCCValShort[8] = {127,127,127,0,127,127,127,127};
+ int arrCCNumLong[8] = {2,1,28,-1,9,8,7,6};
+ int arrCCValLong[8] = {64,64,127,0,64,64,64,64};
+
+    if (arrFsShortLong[fsNum] == 0){
+        if (fs.fell() ){
+            arrCC[CC_NUM] = arrCCNumShort[fsNum];
+            arrCC[CC_VAL] = arrCCValShort[fsNum];
+        }
+    } else {
+        press = fsShortLong(fs,fsNum);
+        if (press == PRESS_SHORT){
+            arrCC[CC_NUM] = arrCCNumShort[fsNum];
+            arrCC[CC_VAL] = arrCCValShort[fsNum];
+        } else if (press == PRESS_LONG){
+            arrCC[CC_NUM] = arrCCNumLong[fsNum];
+            arrCC[CC_VAL] = arrCCValLong[fsNum];
+        }
+    }
+
+}
+
 
 void procExprTracks(){
 
