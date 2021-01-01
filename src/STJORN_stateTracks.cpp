@@ -74,7 +74,9 @@ int arrCC[2] = {-1,0};
             break;
         
         case FS_ST_SONG:
-
+            if (fs.fell() ){
+                stjorn.setState(ST_SONG);
+            }
             break;
 
         case FS_ST_RIG:
@@ -148,6 +150,11 @@ void tracksControls(int arrCC[2], int fsNum, Bounce fs){
 
 void procExprTracks(){
 
+    if (stjorn.exprType() != EXPR_GTR_CC){
+        stjorn.setExprType(EXPR_GTR_CC);
+    }
+    sendExpression();
+
 }
 
 void procLedTracks(){
@@ -155,5 +162,7 @@ void procLedTracks(){
 }
 
 void procDisplayTracks(){
+
+    setDisplayMain();
 
 }
