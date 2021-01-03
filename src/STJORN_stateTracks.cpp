@@ -163,6 +163,47 @@ void procExprTracks(){
 
 void procLedTracks(){
 
+    for (int i = 0; i < NUM_ACTION; i++){
+    int colour = DARK;
+    int state = false;
+        switch (i){
+            case 0:         // stop
+                if (stjorn.transport() != TRAN_STOP){
+                    state = true;
+                    colour = RED;
+                }
+                break;
+            case 1:         // play
+                if (stjorn.transport() != TRAN_PLAY){
+                    state = true;
+                    colour = GREEN;
+                }
+                break;
+            case 2:         // cycle
+                if (stjorn.transport() != TRAN_STOP){
+                    state = true;
+                    colour = YELLOW;
+                }
+                break;
+            case 3:         // tap
+                state = stjorn.fx(i);
+                colour = WHITE;
+                break;
+            case 4 ... 7:         // goto 4
+                if (stjorn.transport() != TRAN_STOP){
+                    state = true;
+                    colour = PURPLE;
+                }
+                break;
+            default:
+                break;
+        }
+    stjorn.setLed(ACTION,i,state,colour);
+
+    }
+
+
+
 }
 
 void procDisplayTracks(){
