@@ -53,7 +53,6 @@ void procFsSong(Bounce fs, int fsNum){
     switch (fsNum){
         case FS_ACT_MN ... FS_ACT_MX:
             press = fsShortLong(fs, fsNum);
-            int _songNum;
             if (press != NOT_PRESSED){
                 int _songNum;
                 if (stjorn.songPage() ){

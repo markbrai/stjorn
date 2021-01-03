@@ -60,9 +60,57 @@ for (int i = 0; i < DIGIT_SONG; i++){
 }
 
 void setDisplayCurr(){
+char ascii;
+
+    for (int i = 0; i < DIGIT_CURR; i++){
+        if (stjorn.transport() == TRAN_STOP){
+            ascii = '-';
+        } else {
+            ascii = stjorn.scene(SCENE_CURR,i);
+        }
+        stjorn.setDisplay(BLK_CURR,i,ascii);
+    }
 
 }
 
 void setDisplayNext(){
+char ascii;
+char loop[4] = {'L','O','O','P'};
+
+    for (int i = 0; i < DIGIT_NEXT; i++){
+        switch (stjorn.transport()){
+            case TRAN_PLAY:
+                ascii = stjorn.scene(SCENE_NEXT,i);
+                break;
+            case TRAN_STOP:
+                ascii = '-';
+                break;
+            case TRAN_CYCLE:
+                ascii = loop[i];
+                break;
+            case TRAN_GOTO:
+                switch (stjorn.follow()){
+                    case FLW_GOTO1:
+                        ascii = stjorn.scene(SCENE_G1,i);
+                        break;
+                    case FLW_GOTO2:
+                        ascii = stjorn.scene(SCENE_G2,i);
+                        break;
+                    case FLW_GOTO3:
+                        ascii = stjorn.scene(SCENE_G3,i);
+                        break;
+                    case FLW_GOTO4:
+                        ascii = stjorn.scene(SCENE_G4,i);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+    } 
+        stjorn.setDisplay(BLK_NEXT,i,ascii);  
+    }
+
     
 }

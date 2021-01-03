@@ -272,22 +272,41 @@ void loop() {
 
 // Set Displays
 
+  // SONG BLOCK
   display1.writeDigitAscii(0,stjorn.ascii(BLK_SONG,0));
   display1.writeDigitAscii(1,stjorn.ascii(BLK_SONG,1));
+
+  // CURRENT BLOCK
   display1.writeDigitAscii(2,stjorn.ascii(BLK_CURR,0));
   display1.writeDigitAscii(3,stjorn.ascii(BLK_CURR,1));
-  display1.writeDisplay();
-
   display2.writeDigitAscii(0,stjorn.ascii(BLK_CURR,2));
   display2.writeDigitAscii(1,stjorn.ascii(BLK_CURR,3));
-  display2.writeDigitAscii(2,stjorn.ascii(BLK_NEXT,0));
-  display2.writeDigitAscii(3,stjorn.ascii(BLK_NEXT,1));
-  display2.writeDisplay();
 
-  display3.writeDigitAscii(0,stjorn.ascii(BLK_NEXT,2));
-  display3.writeDigitAscii(1,stjorn.ascii(BLK_NEXT,3));
+  // NEXT BLOCK
+  if (stjorn.follow() == FLW_ONESHOT){
+    display2.writeDigitRaw(2,0x0);
+    display2.writeDigitRaw(3,0x2480);
+    display3.writeDigitRaw(0,0xC0);
+    display3.writeDigitRaw(1,0x0);
+  } else if (stjorn.follow() == FLW_CYCLE){
+    display2.writeDigitRaw(2,0x0);
+    display2.writeDigitRaw(3,0x439);
+    display3.writeDigitRaw(0,0x80F);
+    display3.writeDigitRaw(1,0x0);
+  } else {
+    display2.writeDigitAscii(2,stjorn.ascii(BLK_NEXT,0));
+    display2.writeDigitAscii(3,stjorn.ascii(BLK_NEXT,1));
+    display3.writeDigitAscii(0,stjorn.ascii(BLK_NEXT,2));
+    display3.writeDigitAscii(1,stjorn.ascii(BLK_NEXT,3));
+  }
+
+  // RIG BLOCK
   display3.writeDigitAscii(2,stjorn.ascii(BLK_RIG,0));
   display3.writeDigitAscii(3,stjorn.ascii(BLK_RIG,1));
+  
+  // Write Displays
+  display1.writeDisplay();
+  display2.writeDisplay();
   display3.writeDisplay();
 
   

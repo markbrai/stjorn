@@ -21,15 +21,10 @@
 #include "STJORN_midi.h"
 
 void processMidi(){
-    byte type;
-    byte channel;
-    byte data1;
-    byte data2;
-
-    type = usbMIDI.getType();
-    channel = usbMIDI.getChannel();
-    data1 = usbMIDI.getData1();
-    data2 = usbMIDI.getData2();
+    byte type = usbMIDI.getType();;
+    byte channel = usbMIDI.getChannel();
+    byte data1 = usbMIDI.getData1();
+    byte data2 = usbMIDI.getData2();
 
     switch (type) {
         case usbMIDI.NoteOff:
@@ -43,6 +38,13 @@ void processMidi(){
         case usbMIDI.ProgramChange:
             processProgramChange(channel,data1);
             break;
+
+        case usbMIDI.SystemExclusive:
+            const byte *pSysExArray = usbMIDI.getSysExArray();
+            int pSysExArrayLength = usbMIDI.getSysExArrayLength();
+            
+            processSysEx(channel, pSysExArray, pSysExArrayLength);
+
             
         default:
             break;
@@ -87,7 +89,7 @@ void processControlChange(byte channel, byte ccNum, byte value){
 
 if (channel == MIDI_CH_GP){
     switch (ccNum) {
-        case 3:     // aux FX num
+        case CC_AUXFX:     // aux FX num
             stjorn.setAuxFX(value);
             stjorn.setAux(false);
             break;
@@ -96,11 +98,57 @@ if (channel == MIDI_CH_GP){
     }
 } else if (channel == MIDI_CH_LIVE){
     switch (ccNum) {
-        case 50:
+        case CC_LOOPER_IN:
             if (value <= LOOPER_OVERDUB){
                 stjorn.setLooper(value);
             }
             break;
+        case CC_TRANSPORT:
+            if (value == CC_VAL_STOP){
+                stjorn.setTransport(TRAN_STOP);
+            } else if (value == CC_VAL_PLAY){
+                stjorn.setTransport(TRAN_PLAY);
+            } else if (value == CC_VAL_CLICK){
+                stjorn.setClickOnly(true);
+            } else if (value == CC_VAL_SONG){
+                stjorn.setClickOnly(false);
+            }
+            break;
+        case CC_CYCLE:
+            if (value == CC_VAL_NEXT){
+                stjorn.setFollow(FLW_NEXT);
+            } else if (value == CC_VAL_ONESHOT){
+                stjorn.setFollow(FLW_ONESHOT);
+                stjorn.setTransport(TRAN_CYCLE);
+            } else if (value == CC_VAL_CYCLE){
+                stjorn.setFollow(FLW_CYCLE);
+                stjorn.setTransport(TRAN_CYCLE);
+            }
+            break;
+        case CC_GOTO1 ... CC_GOTO4:
+            stjorn.setFollow(ccNum-3);
+            stjorn.setTransport(TRAN_GOTO);
+            break;
+        case CC_CYCLEOK:
+            if (value == CC_VAL_CYCLE_OK){
+                stjorn.setCycleAllowed(true);
+            } else if (value == CC_VAL_CYCLE_NOK){
+                stjorn.setCycleAllowed(false);
+            }
+            break;
+        case CC_TRAXMUTE:
+            if (value == CC_VAL_TRAX_MUTE){
+                stjorn.setTraxMute(true);
+            } else if (value == CC_VAL_TRAX_UNMUTE){
+                stjorn.setTraxMute(false);
+            }
+            break;
+        case CC_CUEMUTE:
+            if (value == CC_VAL_CUE_MUTE){
+                stjorn.setCueMute(true);
+            } else if (value == CC_VAL_CUE_UNMUTE){
+                stjorn.setCueMute(false);
+            }
         default:
             break;
 
@@ -133,4 +181,25 @@ bool processFXMidi(byte noteNum, byte velocity){
         }
 
         return fxState;
+}
+
+void processSysEx(byte channel, const byte pSysExArray[], int length){
+
+
+    if (pSysExArray[SYS_BYTE_ID] == SYSEX_STJORN && channel == MIDI_CH_LIVE){
+        switch (pSysExArray[SYS_BYTE_TYPE]){
+            case SYSEX_SCENES:
+                for (int i = 0; i < length; i++){
+                    stjorn.setScenes(i,pSysExArray[i]);
+                }
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+
+
 }

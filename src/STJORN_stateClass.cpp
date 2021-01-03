@@ -230,6 +230,94 @@ void Stjorn::setExprType(int type)
     m_exprType = type;
 }
 
+void Stjorn::setScenes(int byteNum, byte charVal)
+{ int idx = 0;
+
+    if (byteNum >= SYS_BYTE_CURR){
+        switch (byteNum){
+            case SYS_BYTE_CURR ... SYS_BYTE_CURR+3:
+                idx = byteNum - SYS_BYTE_CURR;
+                m_sceneCurr[idx] = charVal;
+                break;
+            case SYS_BYTE_G1 ... SYS_BYTE_G1+3:
+                idx = byteNum - SYS_BYTE_G1;
+                m_sceneGoto1[idx] = charVal;
+                break;
+            case SYS_BYTE_G2 ... SYS_BYTE_G2+3:
+                idx = byteNum - SYS_BYTE_G2;
+                m_sceneGoto2[idx] = charVal;
+                break;
+            case SYS_BYTE_G3 ... SYS_BYTE_G3+3:
+                idx = byteNum - SYS_BYTE_G3;
+                m_sceneGoto3[idx] = charVal;
+                break;
+            case SYS_BYTE_G4 ... SYS_BYTE_G4+3:
+                idx = byteNum - SYS_BYTE_G4;
+                m_sceneGoto4[idx] = charVal;
+                break;
+            case SYS_BYTE_NEXT ... SYS_BYTE_NEXT+3:
+                idx = byteNum - SYS_BYTE_NEXT;
+                m_sceneNext[idx] = charVal;
+                break;
+            default:
+                break;
+
+        }
+    }
+
+}
+
+void Stjorn::setTransport(int state)
+{ int color = DARK;
+
+    m_transport = state;
+
+    switch (m_transport){
+        case TRAN_STOP:
+            color = RED;
+            break;
+        case TRAN_PLAY:
+            color = GREEN;
+            break;
+        case TRAN_CYCLE:
+            color = YELLOW;
+            break;
+        case TRAN_GOTO:
+            color = PURPLE;
+            break;
+        default:   
+            break;
+    }
+
+    setLed(TRANSPORT,LED_TRANSPORT,true,color);
+    
+}
+
+void Stjorn::setClickOnly(bool state)
+{
+    m_clickOnly = state;
+}
+
+void Stjorn::setFollow(int state)
+{
+    m_follow = state;
+}
+
+void Stjorn::setCycleAllowed(bool state)
+{
+    m_cycleAllowed = state;
+}
+
+void Stjorn::setTraxMute(bool state)
+{
+    m_traxMute = state;
+}
+
+void Stjorn::setCueMute(bool state)
+{
+    m_cueMute = state;
+}
+
 
 // GET FUNCTIONS *********************
 
@@ -285,6 +373,43 @@ char Stjorn::songDigit(int digit){
     return _m_songDigit;*/
 
     return m_songDigits[digit];
+
+}
+
+char Stjorn::scene(int scene, int digit){
+
+char ascii = 0;
+
+    switch (scene){
+        case SCENE_CURR:
+            ascii = m_sceneCurr[digit];
+            break;
+
+        case SCENE_G1:
+            ascii = m_sceneGoto1[digit];
+            break;
+
+        case SCENE_G2:
+            ascii = m_sceneGoto2[digit];
+            break;
+
+        case SCENE_G3:
+            ascii = m_sceneGoto3[digit];
+            break;
+
+        case SCENE_G4:
+            ascii = m_sceneGoto4[digit];
+            break;
+        
+        case SCENE_NEXT:
+            ascii = m_sceneNext[digit];
+            break;
+
+        default:
+            break;
+    }
+
+    return ascii;
 
 }
 

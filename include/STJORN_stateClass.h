@@ -63,7 +63,22 @@ class Stjorn
         char m_songDigits[DIGIT_SONG] = {'0','1'};
         void sendSong(int press, int song);
         bool m_songPage{false};
-        // transport 
+        // transport
+        int m_transport{0};     // stop, play, cycle
+        bool m_clickOnly{0};
+        int m_follow{0};        // next, one-shot, cycle, goto
+        bool m_cycleAllowed{0}; 
+        bool m_traxMute{0};
+        bool m_cueMute{0};
+
+
+        // scenes
+        char m_sceneCurr[4] = {'-','-','-','-'};
+        char m_sceneNext[4] = {'-','-','-','-'};
+        char m_sceneGoto1[4] = {'-','-','-','-'};
+        char m_sceneGoto2[4] = {'-','-','-','-'};
+        char m_sceneGoto3[4] = {'-','-','-','-'};
+        char m_sceneGoto4[4] = {'-','-','-','-'};
 
         // looper
         int m_looperState{0};
@@ -96,6 +111,13 @@ class Stjorn
         void setTap(bool state);
         void setLooper(int state);
         void setExprType(int type);
+        void setScenes(int byteNum, byte charVal);
+        void setTransport(int state);
+        void setFollow(int state);
+        void setClickOnly(bool state);
+        void setCycleAllowed(bool state);
+        void setTraxMute(bool state);
+        void setCueMute(bool state);
 
         // Get functions
         int state() {return m_stCurr;}
@@ -119,6 +141,9 @@ class Stjorn
         bool tap() {return m_tap;}
         int looper() {return m_looperState;}
         int exprType() {return m_exprType;}
+        char scene(int scene, int digit);
+        int transport() {return m_transport;}
+        int follow() {return m_follow;}
 };
 
 
