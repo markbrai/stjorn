@@ -138,24 +138,14 @@ bool processFXMidi(byte noteNum, byte velocity){
 }
 
 void processSysEx(byte channel, const byte pSysExArray[], int length){
-#define SYS_BYTE_ID 1
-#define SYS_BYTE_TYPE 2
-#define SYS_BYTE_CURR 3
-#define SYS_BYTE_G1 7
-#define SYS_BYTE_G2 11
-#define SYS_BYTE_G3 15
-#define SYS_BYTE_G4 19
-#define SYS_BYTE_NEXT 23
-#define SYSEX_STJORN 102
-#define SYSEX_SCENES 83
+
 
     if (pSysExArray[SYS_BYTE_ID] == SYSEX_STJORN && channel == MIDI_CH_LIVE){
         switch (pSysExArray[SYS_BYTE_TYPE]){
             case SYSEX_SCENES:
-                for (int i = SYS_BYTE_CURR; i < length; i++){
+                for (int i = 0; i < length; i++){
                     stjorn.setScenes(i,pSysExArray[i]);
                 }
-
                 break;
 
             default:

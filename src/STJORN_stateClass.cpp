@@ -233,7 +233,7 @@ void Stjorn::setExprType(int type)
 void Stjorn::setScenes(int byteNum, byte charVal)
 { int idx = 0;
 
-    if (byteNum > SYS_BYTE_CURR){
+    if (byteNum >= SYS_BYTE_CURR){
         switch (byteNum){
             case SYS_BYTE_CURR ... SYS_BYTE_CURR+3:
                 idx = byteNum - SYS_BYTE_CURR;
@@ -322,6 +322,43 @@ char Stjorn::songDigit(int digit){
     return _m_songDigit;*/
 
     return m_songDigits[digit];
+
+}
+
+char Stjorn::scene(int scene, int digit){
+
+char ascii;
+
+    switch (scene){
+        case SCENE_CURR:
+            ascii = m_sceneCurr[digit];
+            break;
+
+        case SCENE_G1:
+            ascii = m_sceneGoto1[digit];
+            break;
+
+        case SCENE_G2:
+            ascii = m_sceneGoto2[digit];
+            break;
+
+        case SCENE_G3:
+            ascii = m_sceneGoto3[digit];
+            break;
+
+        case SCENE_G4:
+            ascii = m_sceneGoto4[digit];
+            break;
+        
+        case SCENE_NEXT:
+            ascii = m_sceneNext[digit];
+            break;
+
+        default:
+            break;
+    }
+
+    return ascii;
 
 }
 

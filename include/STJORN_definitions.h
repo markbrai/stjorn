@@ -187,5 +187,14 @@ enum StjornState {
 #define SYSEX_STJORN 102
 #define SYSEX_SCENES 83
 
+#define SCENE_CURR 0
+#define SCENE_G1 1
+#define SCENE_G2 2
+#define SCENE_G3 3
+#define SCENE_G4 4
+#define SCENE_NEXT 5
+
+
+
 #endif
 

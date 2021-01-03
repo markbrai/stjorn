@@ -128,6 +128,7 @@ class Stjorn
         bool tap() {return m_tap;}
         int looper() {return m_looperState;}
         int exprType() {return m_exprType;}
+        char scene(int scene, int digit);
 };
 
 

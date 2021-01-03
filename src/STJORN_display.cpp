@@ -60,9 +60,21 @@ for (int i = 0; i < DIGIT_SONG; i++){
 }
 
 void setDisplayCurr(){
+char ascii;
+
+    for (int i = 0; i < DIGIT_CURR; i++){
+        ascii = stjorn.scene(SCENE_CURR,i);
+        stjorn.setDisplay(BLK_CURR,i,ascii);
+    }
 
 }
 
 void setDisplayNext(){
+char ascii;
+
+    for (int i = 0; i <DIGIT_CURR; i++){
+        ascii = stjorn.scene(SCENE_NEXT,i);
+        stjorn.setDisplay(BLK_NEXT,i,ascii);
+    }
     
 }
