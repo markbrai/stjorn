@@ -87,8 +87,8 @@
 #define LED_RIG 5
 #define LED_LOOP 4
 #define LED_NEXT 7
-#define LED_TRANSPORT 12
-#define LED_MIC 13
+#define LED_TRANSPORT 13
+#define LED_MIC 12
 
 #define ACTION 0      // types for setLed
 #define STATE 1
@@ -124,6 +124,8 @@
 #define FX_CMP 5
 #define FX_DR2 6
 #define FX_DR1 7
+
+#define CC_AUXFX 3
 
 // define STJORN states
 #define NUM_STATES 6
@@ -169,7 +171,62 @@ enum StjornState {
 
 #define LIVE_TAP 10
 
+// Transport MIDI from Live
+
+#define CC_TRANSPORT 1
+#define CC_VAL_PLAY 127
+#define CC_VAL_STOP 0
+#define CC_VAL_CLICK 64
+#define CC_VAL_SONG 32
+
+#define CC_STOP 2
+#define CC_VAL_STOP_OUT 127
+#define CC_VAL_SOFTSTOP 64
+
+#define CC_TRAXMUTE 29
+#define CC_VAL_TRAX_MUTE 127
+#define CC_VAL_TRAX_UNMUTE 0
+
+#define CC_CUEMUTE 28
+#define CC_VAL_CUE_MUTE 127
+#define CC_VAL_CUE_UNMUTE 0
+
+#define CC_CYCLE 5
+#define CC_VAL_NEXT 0
+#define CC_VAL_ONESHOT 64
+#define CC_VAL_CYCLE 127
+
+#define CC_CYCLETOG 4
+#define CC_VAL_CYCTOG 127
+
+#define CC_CYCLEOK 27
+#define CC_VAL_CYCLE_OK 127
+#define CC_VAL_CYCLE_NOK 0
+
+#define CC_GOTO1 6
+#define CC_GOTO2 7
+#define CC_GOTO3 8
+#define CC_GOTO4 9
+#define CC_VAL_GOTO 127
+
+// Transport Values
+ #define TRAN_STOP 0
+ #define TRAN_PLAY 1
+ #define TRAN_CYCLE 2
+ #define TRAN_GOTO 3
+
+ #define FLW_NEXT 0
+ #define FLW_ONESHOT 1
+ #define FLW_CYCLE 2
+ #define FLW_GOTO1 3
+ #define FLW_GOTO2 4
+ #define FLW_GOTO3 5
+ #define FLW_GOTO4 6
+
+
+
 // Some stuff for the Looper
+#define CC_LOOPER_IN 50
 #define LOOPER_STOP 0
 #define LOOPER_RECORD 1
 #define LOOPER_PLAY 2

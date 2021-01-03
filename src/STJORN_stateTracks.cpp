@@ -122,12 +122,16 @@ int arrCC[2] = {-1,0};
 }
 
 void tracksControls(int arrCC[2], int fsNum, Bounce fs){
+ #define BOTH 1
+ #define SHORT 0
+ #define NONE -1
+ 
  int press = 0;
- int arrFsShortLong[8] = {1,1,1,0,0,0,0,0};
- int arrCCNumShort[8] = {2,1,4,-1,9,8,7,6};
- int arrCCValShort[8] = {127,127,127,0,127,127,127,127};
- int arrCCNumLong[8] = {2,1,28,-1,9,8,7,6};
- int arrCCValLong[8] = {64,64,127,0,64,64,64,64};
+ int arrFsShortLong[8] = {BOTH,BOTH,BOTH,SHORT,SHORT,SHORT,SHORT,SHORT};
+ int arrCCNumShort[8] = {CC_STOP,CC_TRANSPORT,CC_CYCLETOG,NONE,CC_GOTO4,CC_GOTO3,CC_GOTO2,CC_GOTO1};
+ int arrCCValShort[8] = {CC_VAL_STOP_OUT,CC_VAL_PLAY,CC_VAL_CYCTOG,NONE,CC_VAL_GOTO,CC_VAL_GOTO,CC_VAL_GOTO,CC_VAL_GOTO};
+ int arrCCNumLong[8] = {CC_STOP,CC_TRANSPORT,CC_CUEMUTE,NONE,NONE,NONE,NONE,NONE};
+ int arrCCValLong[8] = {CC_VAL_SOFTSTOP,CC_VAL_CLICK,CC_VAL_CUE_MUTE,NONE,NONE,NONE,NONE,NONE};
 
     if (arrFsShortLong[fsNum] == 0){
         if (fs.fell() ){

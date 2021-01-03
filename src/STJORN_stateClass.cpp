@@ -267,6 +267,57 @@ void Stjorn::setScenes(int byteNum, byte charVal)
 
 }
 
+void Stjorn::setTransport(int state)
+{ int color = DARK;
+
+    m_transport = state;
+
+    switch (m_transport){
+        case TRAN_STOP:
+            color = RED;
+            break;
+        case TRAN_PLAY:
+            color = GREEN;
+            break;
+        case TRAN_CYCLE:
+            color = YELLOW;
+            break;
+        case TRAN_GOTO:
+            color = PURPLE;
+            break;
+        default:   
+            break;
+    }
+
+    setLed(TRANSPORT,LED_TRANSPORT,true,color);
+    
+}
+
+void Stjorn::setClickOnly(bool state)
+{
+    m_clickOnly = state;
+}
+
+void Stjorn::setFollow(int state)
+{
+    m_follow = state;
+}
+
+void Stjorn::setCycleAllowed(bool state)
+{
+    m_cycleAllowed = state;
+}
+
+void Stjorn::setTraxMute(bool state)
+{
+    m_traxMute = state;
+}
+
+void Stjorn::setCueMute(bool state)
+{
+    m_cueMute = state;
+}
+
 
 // GET FUNCTIONS *********************
 
@@ -327,7 +378,7 @@ char Stjorn::songDigit(int digit){
 
 char Stjorn::scene(int scene, int digit){
 
-char ascii;
+char ascii = 0;
 
     switch (scene){
         case SCENE_CURR:
