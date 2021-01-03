@@ -73,12 +73,12 @@ class Stjorn
 
 
         // scenes
-        char m_sceneCurr[4];
-        char m_sceneNext[4];
-        char m_sceneGoto1[4];
-        char m_sceneGoto2[4];
-        char m_sceneGoto3[4];
-        char m_sceneGoto4[4];
+        char m_sceneCurr[4] = {'-','-','-','-'};
+        char m_sceneNext[4] = {'-','-','-','-'};
+        char m_sceneGoto1[4] = {'-','-','-','-'};
+        char m_sceneGoto2[4] = {'-','-','-','-'};
+        char m_sceneGoto3[4] = {'-','-','-','-'};
+        char m_sceneGoto4[4] = {'-','-','-','-'};
 
         // looper
         int m_looperState{0};
@@ -143,6 +143,7 @@ class Stjorn
         int exprType() {return m_exprType;}
         char scene(int scene, int digit);
         int transport() {return m_transport;}
+        int follow() {return m_follow;}
 };
 
 
