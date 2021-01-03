@@ -27,6 +27,6 @@ void processNoteOff(byte channel, byte noteNum, byte velocity);
 void processControlChange(byte channel, byte ccNum, byte value);
 void processProgramChange(byte channel, byte progNum);
 bool processFXMidi(byte noteNum, byte velocity);
-
+void processSysEx(byte channel, const byte pSysExArray[], int length);
 
 #endif

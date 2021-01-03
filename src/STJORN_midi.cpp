@@ -21,15 +21,10 @@
 #include "STJORN_midi.h"
 
 void processMidi(){
-    byte type;
-    byte channel;
-    byte data1;
-    byte data2;
-
-    type = usbMIDI.getType();
-    channel = usbMIDI.getChannel();
-    data1 = usbMIDI.getData1();
-    data2 = usbMIDI.getData2();
+    byte type = usbMIDI.getType();;
+    byte channel = usbMIDI.getChannel();
+    byte data1 = usbMIDI.getData1();
+    byte data2 = usbMIDI.getData2();
 
     switch (type) {
         case usbMIDI.NoteOff:
@@ -43,6 +38,13 @@ void processMidi(){
         case usbMIDI.ProgramChange:
             processProgramChange(channel,data1);
             break;
+
+        case usbMIDI.SystemExclusive:
+            const byte *pSysExArray = usbMIDI.getSysExArray();
+            int pSysExArrayLength = usbMIDI.getSysExArrayLength();
+            
+            processSysEx(channel, pSysExArray, pSysExArrayLength);
+
             
         default:
             break;
@@ -133,4 +135,35 @@ bool processFXMidi(byte noteNum, byte velocity){
         }
 
         return fxState;
+}
+
+void processSysEx(byte channel, const byte pSysExArray[], int length){
+#define SYS_BYTE_ID 1
+#define SYS_BYTE_TYPE 2
+#define SYS_BYTE_CURR 3
+#define SYS_BYTE_G1 7
+#define SYS_BYTE_G2 11
+#define SYS_BYTE_G3 15
+#define SYS_BYTE_G4 19
+#define SYS_BYTE_NEXT 23
+#define SYSEX_STJORN 102
+#define SYSEX_SCENES 83
+
+    if (pSysExArray[SYS_BYTE_ID] == SYSEX_STJORN && channel == MIDI_CH_LIVE){
+        switch (pSysExArray[SYS_BYTE_TYPE]){
+            case SYSEX_SCENES:
+                for (int i = SYS_BYTE_CURR; i < length; i++){
+                    stjorn.setScenes(i,pSysExArray[i]);
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+
+
 }

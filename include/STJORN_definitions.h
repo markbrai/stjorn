@@ -167,36 +167,7 @@ enum StjornState {
   TGT_PADS,         // 4. Target is Pads mode
 };*/ // DEPRECATED - USED IN PREVIOUS MIDI processing
 
-enum LiveParam {
-  LIVE_NONE,        // 0. Init value, or incompatible parameter
-  LIVE_TRANSPORT,   // 1. Play, Click-only, Stop
-  LIVE_STOPTYPE,    // 2. Type of Stop (soft, hard, or none [playing])
-  LIVE_PANIC,       // 3. PANIC!!!!
-  LIVE_CYCLETOG,    // 4. Toggle of cycle modes
-  LIVE_CYCLE,       // 5. Cycle type (One-shot, loop, none)
-  LIVE_GOTO1,       // 6. Goto 1
-  LIVE_GOTO2,       // 7. Goto 2
-  LIVE_GOTO3,       // 8. Goto 3
-  LIVE_GOTO4,       // 9. Goto 4
-  LIVE_TAP,         // 10. Tap tempo
-  LIVE_TRAXVOL,     // 11. Trax volume
-  LIVE_LOOPVOL,     // 12. Looper volume
-  LIVE_PADVOL,      // 13. Pads volume
-  LIVE_VERSE,       // 14. Verse song section
-  LIVE_CHORUS,      // 15. Chorus song section
-  LIVE_BRIDGE,      // 16. Bridge song section
-  LIVE_PRECH,       // 17. Pre-chorus song section
-  LIVE_TAG,         // 18. Tag song section
-  LIVE_TURN,        // 19. Turn song section
-  LIVE_INTRO,       // 20. Intro song section
-  LIVE_OUTRO,       // 21. Outro song section
-  LIVE_CLICK,       // 22. Click only song section
-  LIVE_COUNT,       // 23. Count song section
-  LIVE_END,         // 24. End song section
-  LIVE_CONTR,       // 25. Contribution song section
-  LIVE_SPACE,       // 26. Spacer song section
-  LIVE_CYCLEOK,     // 27. Cycle OK or Not
-};
+#define LIVE_TAP 10
 
 // Some stuff for the Looper
 #define LOOPER_STOP 0
@@ -204,4 +175,17 @@ enum LiveParam {
 #define LOOPER_PLAY 2
 #define LOOPER_OVERDUB 3 
 
+// Sysex Stuff
+#define SYS_BYTE_ID 1
+#define SYS_BYTE_TYPE 2
+#define SYS_BYTE_CURR 3
+#define SYS_BYTE_G1 7
+#define SYS_BYTE_G2 11
+#define SYS_BYTE_G3 15
+#define SYS_BYTE_G4 19
+#define SYS_BYTE_NEXT 23
+#define SYSEX_STJORN 102
+#define SYSEX_SCENES 83
+
 #endif
+

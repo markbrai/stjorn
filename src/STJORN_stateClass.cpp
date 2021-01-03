@@ -230,6 +230,43 @@ void Stjorn::setExprType(int type)
     m_exprType = type;
 }
 
+void Stjorn::setScenes(int byteNum, byte charVal)
+{ int idx = 0;
+
+    if (byteNum > SYS_BYTE_CURR){
+        switch (byteNum){
+            case SYS_BYTE_CURR ... SYS_BYTE_CURR+3:
+                idx = byteNum - SYS_BYTE_CURR;
+                m_sceneCurr[idx] = charVal;
+                break;
+            case SYS_BYTE_G1 ... SYS_BYTE_G1+3:
+                idx = byteNum - SYS_BYTE_G1;
+                m_sceneGoto1[idx] = charVal;
+                break;
+            case SYS_BYTE_G2 ... SYS_BYTE_G2+3:
+                idx = byteNum - SYS_BYTE_G2;
+                m_sceneGoto2[idx] = charVal;
+                break;
+            case SYS_BYTE_G3 ... SYS_BYTE_G3+3:
+                idx = byteNum - SYS_BYTE_G3;
+                m_sceneGoto3[idx] = charVal;
+                break;
+            case SYS_BYTE_G4 ... SYS_BYTE_G4+3:
+                idx = byteNum - SYS_BYTE_G4;
+                m_sceneGoto4[idx] = charVal;
+                break;
+            case SYS_BYTE_NEXT ... SYS_BYTE_NEXT+3:
+                idx = byteNum - SYS_BYTE_NEXT;
+                m_sceneNext[idx] = charVal;
+                break;
+            default:
+                break;
+
+        }
+    }
+
+}
+
 
 // GET FUNCTIONS *********************
 

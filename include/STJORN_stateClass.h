@@ -65,6 +65,14 @@ class Stjorn
         bool m_songPage{false};
         // transport 
 
+        // scenes
+        char m_sceneCurr[4];
+        char m_sceneNext[4];
+        char m_sceneGoto1[4];
+        char m_sceneGoto2[4];
+        char m_sceneGoto3[4];
+        char m_sceneGoto4[4];
+
         // looper
         int m_looperState{0};
 
@@ -96,6 +104,7 @@ class Stjorn
         void setTap(bool state);
         void setLooper(int state);
         void setExprType(int type);
+        void setScenes(int byteNum, byte charVal);
 
         // Get functions
         int state() {return m_stCurr;}
