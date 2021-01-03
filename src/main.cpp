@@ -27,6 +27,7 @@
 #include "STJORN_stateFX.h"
 #include "STJORN_stateSong.h"
 #include "STJORN_stateLoop.h"
+#include "STJORN_stateTracks.h"
 #include "STJORN_midi.h"
 
 // Instantiate encoder
@@ -219,7 +220,7 @@ void loop() {
 
   switch (stjorn.state()){
     case ST_TRACKS:
-
+      stateTracks(fs);
       break;
     
     case ST_SONG:
@@ -239,7 +240,7 @@ void loop() {
       break;
 
     case ST_PADS:
-
+    
       break;
 
     default:
