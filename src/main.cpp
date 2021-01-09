@@ -277,15 +277,40 @@ void loop() {
   display1.writeDigitAscii(1,stjorn.ascii(BLK_SONG,1));
 
   // CURRENT BLOCK
-  display1.writeDigitAscii(2,stjorn.ascii(BLK_CURR,0));
-  display1.writeDigitAscii(3,stjorn.ascii(BLK_CURR,1));
-  display2.writeDigitAscii(0,stjorn.ascii(BLK_CURR,2));
-  display2.writeDigitAscii(1,stjorn.ascii(BLK_CURR,3));
+  if (stjorn.transport() == TRAN_GOTO){
+    char gNum = '-';
+    switch (stjorn.follow()){
+      case FLW_GOTO1:
+        gNum = '1';
+        break;
+      case FLW_GOTO2:
+        gNum = '2';
+        break;
+      case FLW_GOTO3:
+        gNum = '3';
+        break;
+      case FLW_GOTO4:
+        gNum = '4';
+        break;
+      default:
+        break;
+    }
+    display1.writeDigitAscii(2,'G');
+    display1.writeDigitAscii(3,gNum);
+    display2.writeDigitRaw(0,0xC0);   // --
+    display2.writeDigitRaw(1,0x9C0);  // right facing arrow
+  } else {
+    display1.writeDigitAscii(2,stjorn.ascii(BLK_CURR,0));
+    display1.writeDigitAscii(3,stjorn.ascii(BLK_CURR,1));
+    display2.writeDigitAscii(0,stjorn.ascii(BLK_CURR,2));
+    display2.writeDigitAscii(1,stjorn.ascii(BLK_CURR,3));
+  }
+
 
   // NEXT BLOCK
   if (stjorn.follow() == FLW_ONESHOT){
     display2.writeDigitRaw(2,0x0);
-    display2.writeDigitRaw(3,0x2480);
+    display2.writeDigitRaw(3,0x24C0);
     display3.writeDigitRaw(0,0xC0);
     display3.writeDigitRaw(1,0x0);
   } else if (stjorn.follow() == FLW_CYCLE){
