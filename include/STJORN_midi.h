@@ -23,7 +23,7 @@
 #include "STJORN_stateClass.h"
 
 void processMidi();
-void processNoteOff(byte channel, byte noteNum, byte velocity);
+void processNote(byte channel, byte noteNum, byte velocity);
 void processControlChange(byte channel, byte ccNum, byte value);
 void processProgramChange(byte channel, byte progNum);
 bool processFXMidi(byte noteNum, byte velocity);

@@ -28,7 +28,11 @@ void processMidi(){
 
     switch (type) {
         case usbMIDI.NoteOff:
-            processNoteOff(channel,data1,data2);
+            processNote(channel,data1,data2);
+            break;
+
+        case usbMIDI.NoteOn:
+            processNote(channel,data1,data2);
             break;
 
         case usbMIDI.ControlChange:
@@ -54,7 +58,7 @@ void processMidi(){
 
 }
 
-void processNoteOff(byte channel, byte noteNum, byte velocity){
+void processNote(byte channel, byte noteNum, byte velocity){
 
 if (channel == MIDI_CH_GP){
     switch (noteNum) {
