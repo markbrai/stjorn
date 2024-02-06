@@ -44,16 +44,15 @@ void processMidi(){
             break;
 
         case usbMIDI.SystemExclusive:
+        {
             const byte *pSysExArray = usbMIDI.getSysExArray();
             int pSysExArrayLength = usbMIDI.getSysExArrayLength();
             
             processSysEx(channel, pSysExArray, pSysExArrayLength);
-
+        }
             
         default:
-            break;
-
-        
+            break; 
     }
 
 }
@@ -68,7 +67,8 @@ if (channel == MIDI_CH_GP){
             stjorn.setAux(false);   // on patch change, set Aux to false
             break;
 
-        case 17 ... 24:     // FX
+        case 17 ... 24:
+            {     // FX
             if (noteNum == 20){       // ignore tap tempo
                 break;
             } else if (noteNum == stjorn.auxFX() ){
@@ -78,6 +78,7 @@ if (channel == MIDI_CH_GP){
             bool fxState = processFXMidi(noteNum,velocity);
             stjorn.setFX(fxNum,fxState);
             break;
+            }
 
         default:
             break;
