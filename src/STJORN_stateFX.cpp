@@ -95,6 +95,7 @@ void procFsFX(Bounce fs, int fsNum)
         break;
 
     case FS_ST_RIG:
+        // TODO: Move to function from _statePatch
         press = fsShortLong(fs, fsNum);
         if (press == PRESS_SHORT)
         {

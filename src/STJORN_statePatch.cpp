@@ -70,6 +70,7 @@ void procFsPatch(Bounce fs, int fsNum)
         }
         else if (fs.fell() && stjorn.patch() == fsNum)
         {
+            // TODO: Update this to send out specific note
             note = stjorn.auxFX();
             // stjorn.setAux();
         }
@@ -83,6 +84,7 @@ void procFsPatch(Bounce fs, int fsNum)
         break;
 
     case FS_ST_RIG:
+        // TODO: Move this to a function for reuse in other states
         press = fsShortLong(fs, fsNum);
         if (press == PRESS_SHORT)
         {
@@ -90,6 +92,7 @@ void procFsPatch(Bounce fs, int fsNum)
         }
         else if (press == PRESS_LONG)
         {
+            // TODO: Add access to Rig select mode
         }
         break;
 
