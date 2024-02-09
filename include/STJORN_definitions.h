@@ -1,12 +1,12 @@
 /* ------------ STJORN controller --------------
  *  Code written for Teensy 3.2 micro-controller
- *  Teensy USB Type should be set to 'MIDI' 
- * 
- * https://github.com/markbrai/stjorn 
+ *  Teensy USB Type should be set to 'MIDI'
+ *
+ * https://github.com/markbrai/stjorn
  * https://hackaday.io/project/162616-stjrn
- * 
+ *
  * https://www.gigperformer.com
- * 
+ *
  */
 
 /* ------------ PRESETUP --------------
@@ -16,9 +16,9 @@
 #ifndef STJORN_DEFINITIONS_H
 #define STJORN_DEFINITIONS_H
 
-// define LEDs 
-#define NUM_LEDS 14       // number of WS2812 LEDs on controller
-#define PIN_WS2812 1      // WS2812 serial data sent from pin 1
+// define LEDs
+#define NUM_LEDS 14  // number of WS2812 LEDs on controller
+#define PIN_WS2812 1 // WS2812 serial data sent from pin 1
 
 // define footswitches
 #define NUM_FS 15
@@ -26,29 +26,29 @@
 #define FELL 1
 #define ROSE 2
 
-#define FS_ACT_MN 0    // start of 'Action' switch range
-#define FS_ACT_MX 7    // end of 'Action' switch range 
-#define FS_ST_MN 8     // start of 'State' switch range
-#define FS_ST_MX 11     // end of 'State' switch range
+#define FS_ACT_MN 0 // start of 'Action' switch range
+#define FS_ACT_MX 7 // end of 'Action' switch range
+#define FS_ST_MN 8  // start of 'State' switch range
+#define FS_ST_MX 11 // end of 'State' switch range
 #define FS_ST_SONG 8
 #define FS_ST_RIG 9
 #define FS_ST_LOOP 10
 #define FS_ST_NEXT 11
-#define FS_RELAY 12     // index of 'Relay' switch
-#define FS_OS_MN 13     // start of 'OnSong' switch range
-#define FS_OS_MX 14     // end of 'OnSong' switch range
+#define FS_RELAY 12 // index of 'Relay' switch
+#define FS_OS_MN 13 // start of 'OnSong' switch range
+#define FS_OS_MX 14 // end of 'OnSong' switch range
 
 #define PRESSED 1
 #define NOT_PRESSED 0
-#define LONGPRESS 500     // longpress is > 500ms pressed state
+#define LONGPRESS 500 // longpress is > 500ms pressed state
 #define PRESS_SHORT 1
 #define PRESS_LONG 2
 
 // define relay pin
 #define PIN_RELAY 25
 
-#define MIC_PRESS 250      // time after which relay is triggered
-#define DBL_PRESS 1000      // time within which 2 presses can be made
+#define MIC_PRESS 250  // time after which relay is triggered
+#define DBL_PRESS 1000 // time within which 2 presses can be made
 #define OPEN 0
 #define MOMENTARY 1
 #define LATCHED 2
@@ -90,7 +90,7 @@
 #define LED_TRANSPORT 13
 #define LED_MIC 12
 
-#define ACTION 0      // types for setLed
+#define ACTION 0 // types for setLed
 #define STATE 1
 #define NEXT 2
 #define MIC 3
@@ -112,9 +112,9 @@
 #define DIGIT_RIG 2
 
 // define some things for FX and Patches
-#define NUM_FX 8    // actually only 7, but include tap tempo button
+#define NUM_FX 8 // TODO: update to 9 for auxFX // actually only 7, but include tap tempo button
 #define NUM_PATCH 8
-#define NUM_ACTION 8 // number of 'action buttons' 
+#define NUM_ACTION 8 // number of 'action buttons'
 
 #define FX_MOD 0
 #define FX_DLY 1
@@ -130,18 +130,19 @@
 // define STJORN states
 #define NUM_STATES 6
 
-enum StjornState {    
-  ST_TRACKS,    // 0
-  ST_SONG,      // 1
-  ST_PATCH,     // 2
-  ST_FX,        // 3
-  ST_LOOP,      // 4
-  ST_PADS,      // 5
+enum StjornState
+{
+  ST_TRACKS, // 0
+  ST_SONG,   // 1
+  ST_PATCH,  // 2
+  ST_FX,     // 3
+  ST_LOOP,   // 4
+  ST_PADS,   // 5
 };
 
 // define some general parameters
 
-#define MAX_SONGS 16    // maximum number of songs that can be switched between
+#define MAX_SONGS 16 // maximum number of songs that can be switched between
 
 // define some MIDI parameters
 
@@ -155,7 +156,8 @@ enum StjornState {
   MIDI_STOP,
   MIDI_CONTINUE,
   MIDI_CLOCK,
-};*/    // DEPRECATED - USED IN PREVIOUS MIDI processing
+};*/
+// DEPRECATED - USED IN PREVIOUS MIDI processing
 
 #define MIDI_CH_LIVE 16
 #define MIDI_CH_GP 15
@@ -167,7 +169,8 @@ enum StjornState {
   TGT_RIG,          // 2. Target is Rig Patch mode
   TGT_LOOP,         // 3. Target is Looper mode
   TGT_PADS,         // 4. Target is Pads mode
-};*/ // DEPRECATED - USED IN PREVIOUS MIDI processing
+};*/
+// DEPRECATED - USED IN PREVIOUS MIDI processing
 
 #define LIVE_TAP 10
 
@@ -210,27 +213,25 @@ enum StjornState {
 #define CC_VAL_GOTO 127
 
 // Transport Values
- #define TRAN_STOP 0
- #define TRAN_PLAY 1
- #define TRAN_CYCLE 2
- #define TRAN_GOTO 3
+#define TRAN_STOP 0
+#define TRAN_PLAY 1
+#define TRAN_CYCLE 2
+#define TRAN_GOTO 3
 
- #define FLW_NEXT 0
- #define FLW_ONESHOT 1
- #define FLW_CYCLE 2
- #define FLW_GOTO1 3
- #define FLW_GOTO2 4
- #define FLW_GOTO3 5
- #define FLW_GOTO4 6
-
-
+#define FLW_NEXT 0
+#define FLW_ONESHOT 1
+#define FLW_CYCLE 2
+#define FLW_GOTO1 3
+#define FLW_GOTO2 4
+#define FLW_GOTO3 5
+#define FLW_GOTO4 6
 
 // Some stuff for the Looper
 #define CC_LOOPER_IN 50
 #define LOOPER_STOP 0
 #define LOOPER_RECORD 1
 #define LOOPER_PLAY 2
-#define LOOPER_OVERDUB 3 
+#define LOOPER_OVERDUB 3
 
 // Sysex Stuff
 #define SYS_BYTE_ID 1
@@ -251,7 +252,4 @@ enum StjornState {
 #define SCENE_G4 4
 #define SCENE_NEXT 5
 
-
-
 #endif
-

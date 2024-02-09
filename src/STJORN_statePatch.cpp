@@ -1,19 +1,19 @@
 /* ------------ STJORN controller --------------
  *  Code written for Teensy 3.2 micro-controller
- *  Teensy USB Type should be set to 'MIDI' 
- * 
- * https://github.com/markbrai/stjorn 
+ *  Teensy USB Type should be set to 'MIDI'
+ *
+ * https://github.com/markbrai/stjorn
  * https://hackaday.io/project/162616-stjrn
- * 
+ *
  * https://www.gigperformer.com
- * 
+ *
  * Mark Braithwaite, 2020
- * 
+ *
  */
 
 /* ------------ STATE - PATCH --------------
-*  Functions for selecting patches and controlling state
-*  ---------------------------------------- */
+ *  Functions for selecting patches and controlling state
+ *  ---------------------------------------- */
 
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
@@ -32,11 +32,12 @@
 #define D1 6
 #define L1 7
 
-
-void statePatch(Bounce *fs){
+void statePatch(Bounce *fs)
+{
 
     // Process footswitch inputs
-    for (int i = 0; i < NUM_FS; i++){
+    for (int i = 0; i < NUM_FS; i++)
+    {
         procFsPatch(fs[i], i);
     }
 
@@ -48,112 +49,123 @@ void statePatch(Bounce *fs){
 
     // reset 'changed' state flag if just changed to this state
     stjorn.confirmState(ST_PATCH);
-
 }
 
-
-void procFsPatch(Bounce fs, int fsNum){
+void procFsPatch(Bounce fs, int fsNum)
+{
 
     int note = -1;
     int ch = 1;
     int press = 0;
 
-    switch (fsNum){
-        case FS_ACT_MN ... FS_ACT_MX:
-    
-            ch = MIDI_CH_GP;
-            if (fs.fell() && stjorn.patch() != fsNum){
-                note = fsNum + 1;
-                stjorn.selectPatch(fsNum);
-            } else if (fs.fell() && stjorn.patch() == fsNum){
-                note = stjorn.auxFX();
-                //stjorn.setAux();
-            }
-            break;
+    switch (fsNum)
+    {
+    case FS_ACT_MN ... FS_ACT_MX:
 
-        case FS_ST_SONG:
-            if (fs.fell() ){
-                stjorn.setState(ST_TRACKS);
-            }
-            break;
+        ch = MIDI_CH_GP;
+        if (fs.fell() && stjorn.patch() != fsNum)
+        {
+            note = fsNum + 1;
+            stjorn.selectPatch(fsNum);
+        }
+        else if (fs.fell() && stjorn.patch() == fsNum)
+        {
+            note = stjorn.auxFX();
+            // stjorn.setAux();
+        }
+        break;
 
-        case FS_ST_RIG:
-            press = fsShortLong(fs, fsNum);
-            if (press == PRESS_SHORT){
-                stjorn.setState(ST_FX);
-            } else if (press == PRESS_LONG){
+    case FS_ST_SONG:
+        if (fs.fell())
+        {
+            stjorn.setState(ST_TRACKS);
+        }
+        break;
 
-            }
-            break;
+    case FS_ST_RIG:
+        press = fsShortLong(fs, fsNum);
+        if (press == PRESS_SHORT)
+        {
+            stjorn.setState(ST_FX);
+        }
+        else if (press == PRESS_LONG)
+        {
+        }
+        break;
 
-        case FS_ST_LOOP:
-            if (fs.fell() ){
-                stjorn.setState(ST_LOOP);
-            }
-            break;
+    case FS_ST_LOOP:
+        if (fs.fell())
+        {
+            stjorn.setState(ST_LOOP);
+        }
+        break;
 
-        case FS_ST_NEXT:
-            press = fsShortLong(fs, fsNum);
-            if (press != NOT_PRESSED ){
-                stjorn.setNext(press, -1);
-            }
-            break;
+    case FS_ST_NEXT:
+        press = fsShortLong(fs, fsNum);
+        if (press != NOT_PRESSED)
+        {
+            stjorn.setNext(press, -1);
+        }
+        break;
 
-        case FS_RELAY:
-            processRelay(fs);
-            break;
-        
-        case FS_OS_MN:
+    case FS_RELAY:
+        processRelay(fs);
+        break;
 
-            break;
+    case FS_OS_MN:
 
-        case FS_OS_MX:
+        break;
 
-            break;
+    case FS_OS_MX:
 
-        default:
-            break;
+        break;
+
+    default:
+        break;
     }
 
-    if (note != -1){
-        usbMIDI.sendNoteOn(note,127,ch);
+    if (note != -1)
+    {
+        usbMIDI.sendNoteOn(note, 127, ch);
     }
-
 }
 
-void procLedPatch(){
-int colour = PURPLE;
+void procLedPatch()
+{
+    int colour = PURPLE;
 
     // selected patch LED
-    for (int i=0; i < NUM_PATCH; i++){
+    for (int i = 0; i < NUM_PATCH; i++)
+    {
         bool state = false;
-        if (stjorn.patch() == i){
+        if (stjorn.patch() == i)
+        {
             state = true;
         }
-        if (stjorn.aux() ){
+        // TODO: Update this to look at stjorn.fx[LAST] to see if aux is ON
+        if (stjorn.aux())
+        {
             colour = BLUE;
         }
-        stjorn.setLed(ACTION,i,state,colour);
+        stjorn.setLed(ACTION, i, state, colour);
     }
 
     // next LED
-    stjorn.setLed(NEXT,LED_NEXT,false,DARK);
-
-
+    stjorn.setLed(NEXT, LED_NEXT, false, DARK);
 }
 
-void procDisplayPatch(){
+void procDisplayPatch()
+{
 
     setDisplayMain();
-
-
 }
 
-void procExprPatch(){
+void procExprPatch()
+{
 
-    if (stjorn.exprType() != EXPR_GTR_CC){
+    if (stjorn.exprType() != EXPR_GTR_CC)
+    {
         stjorn.setExprType(EXPR_GTR_CC);
     }
     sendExpression();
-    
 }
