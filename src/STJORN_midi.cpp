@@ -74,10 +74,10 @@ void processNote(byte channel, byte noteNum, byte velocity)
             break;
 
         // FX
-        case 17 ... 24: // TODO - Add in note num for new Aux approach
+        case 17 ... 26: // Added in note num for new Aux approach (26)
         {
-            if (noteNum == 20)
-            { // ignore tap tempo
+            if (noteNum == 20 || noteNum == 25)
+            { // ignore tap tempo nad GP EXPR2 active
                 break;
             }
 
@@ -87,15 +87,23 @@ void processNote(byte channel, byte noteNum, byte velocity)
             ////stjorn.setAux();
             ////}
 
-            int fxNum = noteNum - 17; // rebase FX number to 0
+            int fxNum;
+            if (noteNum == 26)
+            {
+                fxNum = NUM_FX - 1; // This is for Quick action and is last index of NUM_FX
+            }
+            else
+            {
+                fxNum = noteNum - 17; // rebase FX number to 0 for indexes 0-7
+            }
+
             bool fxState = processFXMidi(noteNum, velocity);
-            stjorn.setFX(fxNum, fxState); 
+            stjorn.setFX(fxNum, fxState);
             break;
         }
 
         default:
             break;
-            
         }
     }
 }
