@@ -21,6 +21,10 @@
 #include <Arduino.h>
 #include "STJORN_definitions.h"
 
+#define TYPE_FX_MOD 1
+#define TYPE_FX_DLY 2
+#define TYPE_FX_VRB 3
+
 class Stjorn
 {
 private:
@@ -100,7 +104,7 @@ public:
     void setFXMod(int fx, bool state);
     void setFXDly(int fx, bool state);
     void setFXVrb(int fx, bool state);
-    void setAux();
+    void setFXWetOff(int type) void setAux();
     void setAux(bool state);
     void setAuxFX(int aux);
     void sendTap(bool state);
