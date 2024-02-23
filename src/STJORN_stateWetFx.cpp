@@ -38,11 +38,41 @@ void stateWetFx(Bounce *fs)
     procDisplayWetFx();
 
     // reset 'changed' state flag if just changed to this state
-    stjorn.confirmState(ST_FX);
+    stjorn.confirmState(ST_WETFX);
 }
 
 void procFsWetFx(Bounce fs, int fsNum)
 {
+    int note = -1;
+    int ch = MIDI_CH_GP;
+    int press = 0;
+
+    switch (fsNum)
+    {
+    // Top row buttons
+    case FX_MOD ... FX_TAP:
+        break;
+    // bottom row
+    case FX_FLT ... FX_DR1:
+        break;
+    case FS_ST_SONG:
+        break;
+    case FS_ST_RIG:
+        break;
+    case FS_ST_LOOP:
+        break;
+    case FS_RELAY:
+        break;
+    case FS_OS_MN:
+        break;
+    case FS_OS_MX:
+        break;
+    }
+
+    if (note != -1)
+    {
+        usbMIDI.sendNoteOn(note, 127, ch);
+    }
 }
 
 void procLedWetFx()

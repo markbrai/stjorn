@@ -52,6 +52,7 @@ void procFsFX(Bounce fs, int fsNum)
     switch (fsNum)
     {
     case FX_MOD ... FX_VRB:
+        // TODO: Change these to set ST_WETFX
         press = fsShortLong(fs, fsNum);
         if (press == PRESS_SHORT)
         {
@@ -64,6 +65,7 @@ void procFsFX(Bounce fs, int fsNum)
         break;
     case FX_TAP ... FS_ACT_MX:
         if (fsNum == FX_TAP)
+        // TODO: Remove hold to engage
         {
             bool tapEngaged = fsTapEngage(fs, fsNum);
             if (tapEngaged)
