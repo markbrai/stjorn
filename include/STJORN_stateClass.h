@@ -28,7 +28,7 @@ class Stjorn
         int m_stCurr{};
         int m_stPrev{};
         bool m_stChange{false};
-        int m_stLedCol[NUM_STATES] = {WHITE,BLUE,PURPLE,RED,PINK,BLUE};
+        int m_stLedCol[NUM_STATES] = {WHITE,BLUE,PURPLE,RED,PINK,BLUE,YELLOW};
         int getStateLed(int state);
         // footswitch 
         bool m_pressed[NUM_FS];

@@ -128,7 +128,7 @@
 #define CC_AUXFX 3
 
 // define STJORN states
-#define NUM_STATES 6
+#define NUM_STATES 7
 
 enum StjornState
 {
@@ -138,6 +138,7 @@ enum StjornState
   ST_FX,     // 3
   ST_LOOP,   // 4
   ST_PADS,   // 5
+  ST_WETFX,  // 6
 };
 
 // define some general parameters
