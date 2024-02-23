@@ -127,6 +127,10 @@
 
 #define CC_AUXFX 3
 
+#define TYPE_FX_MOD 1
+#define TYPE_FX_DLY 2
+#define TYPE_FX_VRB 3
+
 // define STJORN states
 #define NUM_STATES 7
 
