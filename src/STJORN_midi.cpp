@@ -103,15 +103,22 @@ void processNote(byte channel, byte noteNum, byte velocity)
         }
 
         // WET FX
-        case 27 ... 30: // Mod Wet FX
-
-            int fxNum = noteNum - 27;
+        case 27 ... 31: // Mod Wet FX
 
             bool fxState = processFXMidi(noteNum, velocity);
-            stjorn.setFXMod(fxNum, fxState);
+
+            if (noteNum == 31)
+            {
+                for 
+            }
+            else
+            {
+                int fxNum = noteNum - 27;
+                stjorn.setFXMod(fxNum, fxState);
+            }
             break;
 
-        case 31 ... 34: // Delay Wet FX
+        case 32 ... 36: // Delay Wet FX
 
             int fxNum = noteNum - 31;
 
@@ -119,7 +126,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
             stjorn.setFXDly(fxNum, fxState);
             break;
 
-        case 35 ... 38: // Reverb Wet FX
+        case 37 ... 41: // Reverb Wet FX
 
             int fxNum = noteNum - 35;
 
