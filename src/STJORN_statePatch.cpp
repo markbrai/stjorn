@@ -70,8 +70,8 @@ void procFsPatch(Bounce fs, int fsNum)
         }
         else if (fs.fell() && stjorn.patch() == fsNum)
         {
-            // TODO: Update this to send out specific note
-            note = stjorn.auxFX();
+            // Updated this to send out specific note for QA
+            note = NOTE_QA;
             // stjorn.setAux();
         }
         break;
@@ -145,8 +145,8 @@ void procLedPatch()
         {
             state = true;
         }
-        // TODO: Update this to look at stjorn.fx[LAST] to see if aux is ON
-        if (stjorn.aux())
+        // Updated this to look at stjorn.fx[LAST] to see if aux is ON
+        if (stjorn.fx(NUM_FX - 1) == true)
         {
             colour = BLUE;
         }

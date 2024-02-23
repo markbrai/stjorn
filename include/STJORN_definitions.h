@@ -112,7 +112,7 @@
 #define DIGIT_RIG 2
 
 // define some things for FX and Patches
-#define NUM_FX 8 // TODO: update to 9 for auxFX // actually only 7, but include tap tempo button
+#define NUM_FX 9 // updated to 9 for auxFX // actually only 7, but includes tap tempo button
 #define NUM_PATCH 8
 #define NUM_ACTION 8 // number of 'action buttons'
 
@@ -173,6 +173,9 @@ enum StjornState
 // DEPRECATED - USED IN PREVIOUS MIDI processing
 
 #define LIVE_TAP 10
+
+// Note for Quick Actions
+#define NOTE_QA 26
 
 // Transport MIDI from Live
 

@@ -146,8 +146,8 @@ void procLedFX()
     // set FX LEDs
     int fxLedCol[NUM_FX] = {BLUE, GREEN, ORANGE, WHITE, PINK, YELLOW, RED, RED}; // colour of each FX
 
-    // TODO: Update this to i < (NUM_FX -1) so that auxFX is not included
-    for (int i = 0; i < NUM_FX; i++)
+    // Updated this to i < (NUM_FX -1) so that auxFX ([8]) is not included
+    for (int i = 0; i < NUM_FX - 1; i++)
     {
         int colour = DARK;
         if (stjorn.fx(i) == true)
