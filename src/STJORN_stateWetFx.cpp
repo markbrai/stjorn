@@ -51,6 +51,11 @@ void procFsWetFx(Bounce fs, int fsNum)
     {
     // Top row buttons
     case FX_MOD ... FX_TAP:
+        /*
+        - If not already active, send MIDI to activate
+        - If already active, send MIDI to switch off
+        - Different MIDI for Mod, Delay, Verb
+        */
         break;
     // bottom row
     case FX_FLT ... FX_DR1:
