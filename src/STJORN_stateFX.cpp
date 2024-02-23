@@ -52,15 +52,10 @@ void procFsFX(Bounce fs, int fsNum)
     switch (fsNum)
     {
     case FX_MOD ... FX_VRB:
-        // TODO: Change these to set ST_WETFX
-        press = fsShortLong(fs, fsNum);
-        if (press == PRESS_SHORT)
+        if (fs.fell())
         {
-            note = fsNum + 17;
-        }
-        else if (press == PRESS_LONG)
-        {
-            note = fsNum + 25;
+            stjorn.setFXWetPage(fsNum + 1);
+            stjorn.setState(ST_WETFX);
         }
         break;
     case FX_TAP ... FS_ACT_MX:

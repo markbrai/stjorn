@@ -247,6 +247,9 @@ void loop()
 
     break;
 
+  case ST_WETFX:
+    stateWetFx(fs);
+
   default:
     break;
   }
