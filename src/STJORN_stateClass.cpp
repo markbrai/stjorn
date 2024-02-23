@@ -144,6 +144,11 @@ void Stjorn::setFXWetOff(int type)
     }
 }
 
+void Stjorn::setFXWetPage(int type)
+{
+    m_wet_fx_page = type;
+}
+
 void Stjorn::setAux()
 {
     m_aux = !m_aux;
