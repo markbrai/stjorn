@@ -127,15 +127,20 @@ void Stjorn::setFXMod(int fx, bool state)
 
 void Stjorn::setFXWetOff(int type)
 {
-
-    switch (type)
+    for (int i = 0; i < 4; i++)
     {
-    case TYPE_FX_MOD:
-        break;
-    case TYPE_FX_DLY:
-        break;
-    case TYPE_FX_VRB:
-        break;
+        switch (type)
+        {
+        case TYPE_FX_MOD:
+            m_fx_mod[i] = false;
+            break;
+        case TYPE_FX_DLY:
+            m_fx_dly[i] = false;
+            break;
+        case TYPE_FX_VRB:
+            m_fx_vrb[i] = false;
+            break;
+        }
     }
 }
 

@@ -104,7 +104,8 @@ public:
     void setFXMod(int fx, bool state);
     void setFXDly(int fx, bool state);
     void setFXVrb(int fx, bool state);
-    void setFXWetOff(int type) void setAux();
+    void setFXWetOff(int type);
+    void setAux();
     void setAux(bool state);
     void setAuxFX(int aux);
     void sendTap(bool state);

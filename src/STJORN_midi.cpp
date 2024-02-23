@@ -109,7 +109,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
 
             if (noteNum == 31)
             {
-                for 
+                stjorn.setFXWetOff(TYPE_FX_MOD);
             }
             else
             {
@@ -120,18 +120,31 @@ void processNote(byte channel, byte noteNum, byte velocity)
 
         case 32 ... 36: // Delay Wet FX
 
-            int fxNum = noteNum - 31;
-
             bool fxState = processFXMidi(noteNum, velocity);
-            stjorn.setFXDly(fxNum, fxState);
+
+            if (noteNum == 36)
+            {
+                stjorn.setFXWetOff(TYPE_FX_DLY);
+            }
+            else
+            {
+                int fxNum = noteNum - 31;
+                stjorn.setFXDly(fxNum, fxState);
+            }
             break;
 
         case 37 ... 41: // Reverb Wet FX
-
-            int fxNum = noteNum - 35;
-
             bool fxState = processFXMidi(noteNum, velocity);
-            stjorn.setFXVrb(fxNum, fxState);
+
+            if (noteNum == 41)
+            {
+                stjorn.setFXWetOff(TYPE_FX_VRB);
+            }
+            else
+            {
+                int fxNum = noteNum - 35;
+                stjorn.setFXVrb(fxNum, fxState);
+            }
             break;
 
         default:
