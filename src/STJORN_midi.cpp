@@ -68,15 +68,16 @@ void processNote(byte channel, byte noteNum, byte velocity)
         {
 
         // Patches
-        case 1 ... 8:
+        case NOTE_PATCH1 ... NOTE_PATCH8:
             stjorn.selectPatch(noteNum - 1);
             stjorn.setAux(false); // on patch change, set Aux to false
             break;
 
         // FX
-        case 17 ... 28: // Added in note num for new Aux approach (26)
+        case NOTE_FX1 ... NOTE_FX8: // Added in note num for new Aux approach (26)
+        case NOTE_QA:
         {
-            if (noteNum == 20 || (noteNum >= 25 && noteNum <= 27))
+            if (noteNum == NOTE_TAP)
             { // ignore tap tempo nad GP EXPR2 active
                 break;
             }
@@ -88,13 +89,13 @@ void processNote(byte channel, byte noteNum, byte velocity)
             ////}
 
             int fxNum;
-            if (noteNum == 28)
+            if (noteNum == NOTE_QA)
             {
                 fxNum = NUM_FX - 1; // This is for Quick action and is last index of NUM_FX
             }
             else
             {
-                fxNum = noteNum - 17; // rebase FX number to 0 for indexes 0-7
+                fxNum = noteNum - NOTE_FX1; // rebase FX number to 0 for indexes 0-7
             }
 
             bool fxState = processFXMidi(noteNum, velocity);
@@ -103,46 +104,46 @@ void processNote(byte channel, byte noteNum, byte velocity)
         }
 
         // WET FX
-        case FX_WET_MOD_1 ... FX_WET_MOD_OFF: // Mod Wet FX
+        case NOTE_FX_MOD_1 ... NOTE_FX_MOD_OFF: // Mod Wet FX
 
             bool fxState = processFXMidi(noteNum, velocity);
 
-            if (noteNum == FX_WET_MOD_OFF)
+            if (noteNum == NOTE_FX_MOD_OFF)
             {
                 stjorn.setFXWetOff(TYPE_FX_MOD);
             }
             else
             {
-                int fxNum = noteNum - FX_WET_MOD_1;
+                int fxNum = noteNum - NOTE_FX_MOD_1;
                 stjorn.setFXMod(fxNum, fxState);
             }
             break;
 
-        case FX_WET_DLY_1 ... FX_WET_DLY_OFF: // Delay Wet FX
+        case NOTE_FX_DLY_1 ... NOTE_FX_DLY_OFF: // Delay Wet FX
 
             bool fxState = processFXMidi(noteNum, velocity);
 
-            if (noteNum == FX_WET_DLY_OFF)
+            if (noteNum == NOTE_FX_DLY_OFF)
             {
                 stjorn.setFXWetOff(TYPE_FX_DLY);
             }
             else
             {
-                int fxNum = noteNum - FX_WET_DLY_1;
+                int fxNum = noteNum - NOTE_FX_DLY_1;
                 stjorn.setFXDly(fxNum, fxState);
             }
             break;
 
-        case FX_WET_VRB_1 ... FX_WET_VRB_OFF: // Reverb Wet FX
+        case NOTE_FX_VRB_1 ... NOTE_FX_VRB_OFF: // Reverb Wet FX
             bool fxState = processFXMidi(noteNum, velocity);
 
-            if (noteNum == FX_WET_VRB_OFF)
+            if (noteNum == NOTE_FX_VRB_OFF)
             {
                 stjorn.setFXWetOff(TYPE_FX_VRB);
             }
             else
             {
-                int fxNum = noteNum - FX_WET_VRB_1;
+                int fxNum = noteNum - NOTE_FX_VRB_1;
                 stjorn.setFXVrb(fxNum, fxState);
             }
             break;
