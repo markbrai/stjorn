@@ -175,7 +175,7 @@ enum StjornState
 #define LIVE_TAP 10
 
 // Note for Quick Actions
-#define NOTE_QA 26
+#define NOTE_QA 28
 
 // Transport MIDI from Live
 

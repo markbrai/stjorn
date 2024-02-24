@@ -74,9 +74,9 @@ void processNote(byte channel, byte noteNum, byte velocity)
             break;
 
         // FX
-        case 17 ... 26: // Added in note num for new Aux approach (26)
+        case 17 ... 28: // Added in note num for new Aux approach (26)
         {
-            if (noteNum == 20 || noteNum == 25)
+            if (noteNum == 20 || (noteNum >= 25 && noteNum <= 27))
             { // ignore tap tempo nad GP EXPR2 active
                 break;
             }
@@ -88,7 +88,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
             ////}
 
             int fxNum;
-            if (noteNum == 26)
+            if (noteNum == 28)
             {
                 fxNum = NUM_FX - 1; // This is for Quick action and is last index of NUM_FX
             }
