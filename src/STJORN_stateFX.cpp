@@ -58,7 +58,7 @@ void procFsFX(Bounce fs, int fsNum)
             stjorn.setState(ST_WETFX);
         }
         break;
-    case FX_TAP ... FS_ACT_MX:
+    case FX_TAP ... FX_DR1:
         if (fsNum == FX_TAP)
         // TODO: Remove hold to engage
         {
@@ -79,7 +79,7 @@ void procFsFX(Bounce fs, int fsNum)
         {
             if (fs.fell())
             {
-                note = fsNum + 17;
+                note = fsNum + NOTE_FX1;
             }
         }
         break;

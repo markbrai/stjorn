@@ -56,6 +56,20 @@ void procFsWetFx(Bounce fs, int fsNum)
         - If already active, send MIDI to switch off
         - Different MIDI for Mod, Delay, Verb
         */
+       if (fs.fell()){
+        switch (stjorn.wet_fx_page())
+        {
+            case TYPE_FX_MOD:
+                procWetFxMod(fsNum);
+                break;
+            case TYPE_FX_DLY:
+                procWetFxDly(fsNum);
+                break;
+            case TYPE_FX_VRB:
+                procWetFxVrb(fsNum);
+                break;
+        }
+       }
         break;
     // bottom row
     case FX_FLT ... FX_DR1:
@@ -78,6 +92,29 @@ void procFsWetFx(Bounce fs, int fsNum)
     {
         usbMIDI.sendNoteOn(note, 127, ch);
     }
+}
+
+void procWetFxMod(int fsNum)
+{
+    // Get fx array at fsNum index
+
+    if (stjorn.fx_mod(fsNum) == false) {
+    // If 0 then send MIDI to turn on
+
+    } else {
+    // if 1 then send MIDI to turn off
+    }
+
+}
+
+void procWetFxDly(int fsNum)
+{
+
+}
+
+void procWetFxVrb(int fsNUm)
+{
+
 }
 
 void procLedWetFx()

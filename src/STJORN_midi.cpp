@@ -64,6 +64,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
 
     if (channel == MIDI_CH_GP)
     {
+        bool fxState;
         switch (noteNum)
         {
 
@@ -98,7 +99,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
                 fxNum = noteNum - NOTE_FX1; // rebase FX number to 0 for indexes 0-7
             }
 
-            bool fxState = processFXMidi(noteNum, velocity);
+            fxState = processFXMidi(noteNum, velocity);
             stjorn.setFX(fxNum, fxState);
             break;
         }
@@ -106,7 +107,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
         // WET FX
         case NOTE_FX_MOD_1 ... NOTE_FX_MOD_OFF: // Mod Wet FX
 
-            bool fxState = processFXMidi(noteNum, velocity);
+            fxState = processFXMidi(noteNum, velocity);
 
             if (noteNum == NOTE_FX_MOD_OFF)
             {
@@ -121,7 +122,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
 
         case NOTE_FX_DLY_1 ... NOTE_FX_DLY_OFF: // Delay Wet FX
 
-            bool fxState = processFXMidi(noteNum, velocity);
+            fxState = processFXMidi(noteNum, velocity);
 
             if (noteNum == NOTE_FX_DLY_OFF)
             {
@@ -135,7 +136,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
             break;
 
         case NOTE_FX_VRB_1 ... NOTE_FX_VRB_OFF: // Reverb Wet FX
-            bool fxState = processFXMidi(noteNum, velocity);
+            fxState = processFXMidi(noteNum, velocity);
 
             if (noteNum == NOTE_FX_VRB_OFF)
             {
