@@ -26,11 +26,13 @@ void stateWetFx(Bounce *fs);
 
 void procFsWetFx(Bounce fs, int fsnum);
 
-void procWetFxMod(int fsNum);
+int procWetFxFs(bool state, int fsNum, int noteAdd);
 
-void procWetFxDly(int fsNum);
+int procWetFxMod(int fsNum);
 
-void procWetFxVrb(int fsNum);
+int procWetFxDly(int fsNum);
+
+int procWetFxVrb(int fsNum);
 
 void procLedWetFx();
 

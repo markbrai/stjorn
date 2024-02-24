@@ -60,13 +60,13 @@ void procFsWetFx(Bounce fs, int fsNum)
         switch (stjorn.wet_fx_page())
         {
             case TYPE_FX_MOD:
-                procWetFxMod(fsNum);
+                note = procWetFxMod(fsNum);
                 break;
             case TYPE_FX_DLY:
-                procWetFxDly(fsNum);
+                note = procWetFxDly(fsNum);
                 break;
             case TYPE_FX_VRB:
-                procWetFxVrb(fsNum);
+                note = procWetFxVrb(fsNum);
                 break;
         }
        }
@@ -94,26 +94,47 @@ void procFsWetFx(Bounce fs, int fsNum)
     }
 }
 
-void procWetFxMod(int fsNum)
+int procWetFxFs(bool state, int fsNum, int noteAdd)
+{
+    int note;
+    if (state == false) {
+    // If 0 then send MIDI to turn on
+        note = fsNum + noteAdd;
+    } else {
+    // if 1 then send MIDI to turn off
+        note = noteAdd + 4;
+    }
+
+    return note;
+}
+
+int procWetFxMod(int fsNum)
 {
     // Get fx array at fsNum index
 
-    if (stjorn.fx_mod(fsNum) == false) {
-    // If 0 then send MIDI to turn on
+    bool state = stjorn.fx_mod(fsNum);
+    int note = procWetFxFs(state, fsNum, NOTE_FX_MOD_1);
 
-    } else {
-    // if 1 then send MIDI to turn off
-    }
+    return note;
 
 }
 
-void procWetFxDly(int fsNum)
+int procWetFxDly(int fsNum)
 {
+
+    bool state = stjorn.fx_dly(fsNum);
+    int note = procWetFxFs(state, fsNum, NOTE_FX_DLY_1);
+
+    return note;
 
 }
 
-void procWetFxVrb(int fsNUm)
+int procWetFxVrb(int fsNum)
 {
+    bool state = stjorn.fx_vrb(fsNum);
+    int note = procWetFxFs(state, fsNum, NOTE_FX_VRB_1);
+
+    return note;
 
 }
 
