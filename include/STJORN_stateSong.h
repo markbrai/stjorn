@@ -11,25 +11,24 @@
  * 
  */
 
-/* ------------ STATE - PATCH --------------
-*  Functions for selecting patches and controlling state
+/* ------------ STATE - SONG --------------
+*  Functions for selecting songs and controlling state
 *  ---------------------------------------- */
 
-#ifndef STJORN_STATEPATCH_H
-#define STJORN_STATEPATCH_H
+#ifndef STJORN_STATESONG_H
+#define STJORN_STATESONG_H
 
 #include <Arduino.h>
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
 
-void statePatch(Bounce *fs);
+void stateSong(Bounce *fs);
+void procFsSong(Bounce fs, int fsnum);
+void procExprSong();
+void procLedSong();
+void procDisplaySong();
 
-void procFsPatch(Bounce fs, int fsNum);
 
-void procLedPatch();
 
-void procDisplayPatch();
-
-void procExprPatch();
 
 #endif

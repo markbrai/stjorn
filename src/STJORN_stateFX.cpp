@@ -11,68 +11,79 @@
  *
  */
 
-/* ------------ STATE - PATCH --------------
- *  Functions for selecting patches and controlling state
+/* ------------ STATE - FX --------------
+ *  Functions for selecting FX and controlling state
  *  ---------------------------------------- */
 
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
-#include "STJORN_statePatch.h"
+#include "STJORN_stateFX.h"
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
 
-#define AM 0
-#define R2 1
-#define D2 2
-#define L2 3
-#define CL 4
-#define R1 5
-#define D1 6
-#define L1 7
-
-void statePatch(Bounce *fs)
+void stateFX(Bounce *fs)
 {
 
     // Process footswitch inputs
     for (int i = 0; i < NUM_FS; i++)
     {
-        procFsPatch(fs[i], i);
+        procFsFX(fs[i], i);
     }
 
-    procExprPatch();
+    procExprFX();
 
-    procLedPatch();
+    procLedFX();
 
-    procDisplayPatch();
+    procDisplayFX();
 
     // reset 'changed' state flag if just changed to this state
-    stjorn.confirmState(ST_PATCH);
+    stjorn.confirmState(ST_FX);
 }
 
-void procFsPatch(Bounce fs, int fsNum)
+void procFsFX(Bounce fs, int fsNum)
 {
 
     int note = -1;
-    int ch = 1;
+    int ch = MIDI_CH_GP;
     int press = 0;
 
     switch (fsNum)
     {
-    case FS_ACT_MN ... FS_ACT_MX:
-
-        ch = MIDI_CH_GP;
-        if (fs.fell() && stjorn.patch() != fsNum)
+    case FX_MOD ... FX_VRB:
+        press = fsShortLong(fs, fsNum);
+        if (press == PRESS_SHORT)
         {
-            note = fsNum + 1;
-            stjorn.selectPatch(fsNum);
+            note = fsNum + 17;
         }
-        else if (fs.fell() && stjorn.patch() == fsNum)
+        else if (press == PRESS_LONG)
         {
-            // Updated this to send out specific note for QA
-            note = NOTE_QA;
-            // stjorn.setAux();
+            note = fsNum + 25;
+        }
+        break;
+    case FX_TAP ... FS_ACT_MX:
+        if (fsNum == FX_TAP)
+        {
+            bool tapEngaged = fsTapEngage(fs, fsNum);
+            if (tapEngaged)
+            {
+                if (fs.fell())
+                {
+                    stjorn.sendTap(true);
+                }
+                else if (fs.rose())
+                {
+                    stjorn.sendTap(false);
+                }
+            }
+        }
+        else
+        {
+            if (fs.fell())
+            {
+                note = fsNum + 17;
+            }
         }
         break;
 
@@ -84,16 +95,16 @@ void procFsPatch(Bounce fs, int fsNum)
         break;
 
     case FS_ST_RIG:
-        // TODO: Move this to a function for reuse in other states
+        // TODO: Move to function from _statePatch
         press = fsShortLong(fs, fsNum);
         if (press == PRESS_SHORT)
         {
-            stjorn.setState(ST_FX);
+            stjorn.setState(ST_PATCH);
         }
         else if (press == PRESS_LONG)
         {
-            // TODO: Add access to Rig select mode
         }
+
         break;
 
     case FS_ST_LOOP:
@@ -105,11 +116,10 @@ void procFsPatch(Bounce fs, int fsNum)
 
     case FS_ST_NEXT:
         press = fsShortLong(fs, fsNum);
-        if (press != NOT_PRESSED)
+        if (press != 0)
         {
             stjorn.setNext(press, -1);
         }
-        break;
 
     case FS_RELAY:
         processRelay(fs);
@@ -122,9 +132,6 @@ void procFsPatch(Bounce fs, int fsNum)
     case FS_OS_MX:
 
         break;
-
-    default:
-        break;
     }
 
     if (note != -1)
@@ -133,37 +140,34 @@ void procFsPatch(Bounce fs, int fsNum)
     }
 }
 
-void procLedPatch()
+void procLedFX()
 {
-    int colour = PURPLE;
 
-    // selected patch LED
-    for (int i = 0; i < NUM_PATCH; i++)
+    // set FX LEDs
+    int fxLedCol[NUM_FX] = {BLUE, GREEN, ORANGE, WHITE, PINK, YELLOW, RED, RED}; // colour of each FX
+
+    // Updated this to i < (NUM_FX -1) so that auxFX ([8]) is not included
+    for (int i = 0; i < NUM_FX - 1; i++)
     {
-        bool state = false;
-        if (stjorn.patch() == i)
+        int colour = DARK;
+        if (stjorn.fx(i) == true)
         {
-            state = true;
+            colour = fxLedCol[i];
         }
-        // Updated this to look at stjorn.fx[LAST] to see if aux is ON
-        if (stjorn.fx(NUM_FX - 1) == true)
-        {
-            colour = BLUE;
-        }
-        stjorn.setLed(ACTION, i, state, colour);
+        stjorn.setLed(ACTION, i, stjorn.fx(i), colour);
     }
 
-    // next LED
+    // set next LED
     stjorn.setLed(NEXT, LED_NEXT, false, DARK);
 }
 
-void procDisplayPatch()
+void procDisplayFX()
 {
 
     setDisplayMain();
 }
 
-void procExprPatch()
+void procExprFX()
 {
 
     if (stjorn.exprType() != EXPR_GTR_CC)

@@ -11,25 +11,20 @@
  * 
  */
 
-/* ------------ STATE - PATCH --------------
-*  Functions for selecting patches and controlling state
+/* ------------ MIC SWITCHER --------------
+*  Functions for controlling mic switcher relay
 *  ---------------------------------------- */
 
-#ifndef STJORN_STATEPATCH_H
-#define STJORN_STATEPATCH_H
+#ifndef STJORN_MICSWITCHER_H
+#define STJORN_MICSWITCHER_H
 
 #include <Arduino.h>
-#include <Bounce2.h>
 #include "STJORN_definitions.h"
+#include <Bounce2.h>
 
-void statePatch(Bounce *fs);
+void processRelay(Bounce fs);
 
-void procFsPatch(Bounce fs, int fsNum);
+void triggerRelay(bool state);
 
-void procLedPatch();
 
-void procDisplayPatch();
-
-void procExprPatch();
-
-#endif
+#endif 

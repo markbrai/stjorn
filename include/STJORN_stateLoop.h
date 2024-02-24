@@ -11,25 +11,23 @@
  * 
  */
 
-/* ------------ STATE - PATCH --------------
-*  Functions for selecting patches and controlling state
+/* ------------ STATE - LOOP --------------
+*  Functions for controlling Looper
 *  ---------------------------------------- */
 
-#ifndef STJORN_STATEPATCH_H
-#define STJORN_STATEPATCH_H
+#ifndef STJORN_STATELOOP_H
+#define STJORN_STATELOOP_H
 
 #include <Arduino.h>
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
 
-void statePatch(Bounce *fs);
-
-void procFsPatch(Bounce fs, int fsNum);
-
-void procLedPatch();
-
-void procDisplayPatch();
-
-void procExprPatch();
+void stateLoop(Bounce *fs);
+void procFsLoop(Bounce fs, int fsNum);
+void procLoopControl(int fsNum, int press);
+void procExprLoop();
+void procLedLoop();
+void procDisplayLoop();
+void procLoopStateled();
 
 #endif

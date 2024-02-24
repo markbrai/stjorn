@@ -11,25 +11,23 @@
  * 
  */
 
-/* ------------ STATE - PATCH --------------
-*  Functions for selecting patches and controlling state
+/* ------------ STATE - TRACKS --------------
+*  Functions for controlling Ableton Live Tracks
 *  ---------------------------------------- */
 
-#ifndef STJORN_STATEPATCH_H
-#define STJORN_STATEPATCH_H
+#ifndef STJORN_STATETRACKS_H
+#define STJORN_STATETRACKS_H
 
 #include <Arduino.h>
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
 
-void statePatch(Bounce *fs);
+void tracksControls(int *arrCC, int fsNum, Bounce fs);
+void stateTracks(Bounce *fs);
+void procFsTracks(Bounce fs, int fsNum);
+void procExprTracks();
+void procLedTracks();
+void procDisplayTracks();
 
-void procFsPatch(Bounce fs, int fsNum);
-
-void procLedPatch();
-
-void procDisplayPatch();
-
-void procExprPatch();
 
 #endif

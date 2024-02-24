@@ -11,25 +11,26 @@
  * 
  */
 
-/* ------------ STATE - PATCH --------------
-*  Functions for selecting patches and controlling state
+/* ------------ STATE - FX --------------
+*  Functions for selecting FX and controlling state
 *  ---------------------------------------- */
 
-#ifndef STJORN_STATEPATCH_H
-#define STJORN_STATEPATCH_H
+#ifndef STJORN_STATEFX_H
+#define STJORN_STATEFX_H
 
 #include <Arduino.h>
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
 
-void statePatch(Bounce *fs);
+void stateFX(Bounce *fs);
 
-void procFsPatch(Bounce fs, int fsNum);
+void procFsFX(Bounce fs, int fsNum);
 
-void procLedPatch();
+void procLedFX();
 
-void procDisplayPatch();
+void procDisplayFX();
 
-void procExprPatch();
+void procExprFX();
+
 
 #endif

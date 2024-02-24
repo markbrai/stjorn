@@ -21,8 +21,14 @@
 #include <Bounce2.h>
 
 void updateFootswitches(Bounce *fs);
- 
 
+int fsShortLong(Bounce fs, int fsNum);
+
+bool fsTapEngage(Bounce fs, int fsNum);
+
+void updateExpression(int prox);
+
+void sendExpression();
 
 #endif 
 
