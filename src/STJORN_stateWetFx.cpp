@@ -225,6 +225,7 @@ void procLedWetFx()
             }
         } else {
             colour = fxLedCol[i];
+            wet_fx = true;
         }
 
         stjorn.setLed(ACTION, i, wet_fx, colour);

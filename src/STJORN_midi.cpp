@@ -109,7 +109,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
 
             fxState = processFXMidi(noteNum, velocity);
 
-            if (noteNum == NOTE_FX_MOD_OFF)
+            if (noteNum == NOTE_FX_MOD_OFF && fxState == true)
             {
                 stjorn.setFXWetOff(TYPE_FX_MOD);
             }
@@ -124,7 +124,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
 
             fxState = processFXMidi(noteNum, velocity);
 
-            if (noteNum == NOTE_FX_DLY_OFF)
+            if (noteNum == NOTE_FX_DLY_OFF && fxState == true)
             {
                 stjorn.setFXWetOff(TYPE_FX_DLY);
             }
@@ -138,7 +138,7 @@ void processNote(byte channel, byte noteNum, byte velocity)
         case NOTE_FX_VRB_1 ... NOTE_FX_VRB_OFF: // Reverb Wet FX
             fxState = processFXMidi(noteNum, velocity);
 
-            if (noteNum == NOTE_FX_VRB_OFF)
+            if (noteNum == NOTE_FX_VRB_OFF && fxState == true)
             {
                 stjorn.setFXWetOff(TYPE_FX_VRB);
             }
