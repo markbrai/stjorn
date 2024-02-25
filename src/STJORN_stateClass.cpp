@@ -484,6 +484,7 @@ int Stjorn::getStateLed(int state)
         ledNum = LED_SONG;
         break;
     case ST_PATCH ... ST_FX:
+    case ST_WETFX:
         ledNum = LED_RIG;
         break;
     case ST_LOOP ... ST_PADS:

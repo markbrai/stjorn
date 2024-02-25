@@ -56,9 +56,10 @@ void procFsWetFx(Bounce fs, int fsNum)
         - If already active, send MIDI to switch off
         - Different MIDI for Mod, Delay, Verb
         */
-       if (fs.fell()){
-        switch (stjorn.wet_fx_page())
+        if (fs.fell())
         {
+            switch (stjorn.wet_fx_page())
+            {
             case TYPE_FX_MOD:
                 note = procWetFxMod(fsNum);
                 break;
@@ -68,23 +69,69 @@ void procFsWetFx(Bounce fs, int fsNum)
             case TYPE_FX_VRB:
                 note = procWetFxVrb(fsNum);
                 break;
+            }
         }
-       }
         break;
     // bottom row
     case FX_FLT ... FX_DR1:
+        if (fs.fell()){
+        if (fsNum == FX_DR1)
+        {
+            // Exit back to FX page
+            stjorn.setState(ST_FX);
+        }
+        else
+        {
+            // Change 'page' to specified wet fx
+            stjorn.setFXWetPage(fsNum - 3);
+        }
         break;
+        }
+
     case FS_ST_SONG:
+        if (fs.fell())
+        {
+            stjorn.setState(ST_TRACKS);
+        }
         break;
+
     case FS_ST_RIG:
+        // TODO: Move to function from _statePatch
+        press = fsShortLong(fs, fsNum);
+        if (press == PRESS_SHORT)
+        {
+            stjorn.setState(ST_PATCH);
+        }
+        else if (press == PRESS_LONG)
+        {
+        }
+
         break;
+
     case FS_ST_LOOP:
+        if (fs.fell())
+        {
+            stjorn.setState(ST_LOOP);
+        }
         break;
+
+    case FS_ST_NEXT:
+        press = fsShortLong(fs, fsNum);
+        if (press != 0)
+        {
+            stjorn.setNext(press, -1);
+        }
+
     case FS_RELAY:
+        processRelay(fs);
         break;
+
     case FS_OS_MN:
+
         break;
+
     case FS_OS_MX:
+
         break;
     }
 
@@ -97,11 +144,14 @@ void procFsWetFx(Bounce fs, int fsNum)
 int procWetFxFs(bool state, int fsNum, int noteAdd)
 {
     int note;
-    if (state == false) {
-    // If 0 then send MIDI to turn on
+    if (state == false)
+    {
+        // If 0 then send MIDI to turn on
         note = fsNum + noteAdd;
-    } else {
-    // if 1 then send MIDI to turn off
+    }
+    else
+    {
+        // if 1 then send MIDI to turn off
         note = noteAdd + 4;
     }
 
@@ -116,7 +166,6 @@ int procWetFxMod(int fsNum)
     int note = procWetFxFs(state, fsNum, NOTE_FX_MOD_1);
 
     return note;
-
 }
 
 int procWetFxDly(int fsNum)
@@ -126,7 +175,6 @@ int procWetFxDly(int fsNum)
     int note = procWetFxFs(state, fsNum, NOTE_FX_DLY_1);
 
     return note;
-
 }
 
 int procWetFxVrb(int fsNum)
@@ -135,15 +183,58 @@ int procWetFxVrb(int fsNum)
     int note = procWetFxFs(state, fsNum, NOTE_FX_VRB_1);
 
     return note;
-
 }
 
 void procLedWetFx()
 {
+    int led_color = DARK;
+    switch (stjorn.wet_fx_page())
+    {
+    case TYPE_FX_MOD:
+        led_color = BLUE;
+        break;
+    case TYPE_FX_DLY:
+        led_color = GREEN;
+        break;
+    case TYPE_FX_VRB:
+        led_color = ORANGE;
+        break;
+    }
+
+    int fxLedCol[NUM_FX - 1] = {led_color, led_color, led_color, led_color, BLUE, GREEN, ORANGE, WHITE};
+    for (int i = 0; i < NUM_FX -1; i++)
+    {
+        int colour = DARK;
+        if (i < 4){
+            bool wet_fx = false;
+            switch (stjorn.wet_fx_page())
+            {
+            case TYPE_FX_MOD:
+                wet_fx = stjorn.fx_mod(i);
+                break;
+            case TYPE_FX_DLY:
+                wet_fx = stjorn.fx_dly(i);
+                break;
+            case TYPE_FX_VRB:
+                wet_fx = stjorn.fx_vrb(i);
+                break;
+            }
+            if (wet_fx == true){
+                colour = fxLedCol[i];
+            }
+        } else {
+            colour = fxLedCol[i];
+        }
+
+        stjorn.setLed(ACTION, i, stjorn.fx(i), colour);
+    }
+
+    stjorn.setLed(NEXT, LED_NEXT, false, DARK);
 }
 
 void procDisplayWetFx()
 {
+    setDisplayMain();
 }
 
 void procExprWetFx()
