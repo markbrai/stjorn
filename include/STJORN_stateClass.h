@@ -57,6 +57,7 @@ private:
     bool m_auxPressed{false};
     bool m_tap{false};
     int m_wet_fx_page{};
+    bool m_wet_fx_active[3];
     bool m_fx_mod[4];
     bool m_fx_dly[4];
     bool m_fx_vrb[4];
@@ -103,6 +104,7 @@ public:
     void setFXVrb(int fx, bool state);
     void setFXWetOff(int type);
     void setFXWetPage(int type);
+    void setFXWetActive(int fxNum, bool state);
     void setAux();
     void setAux(bool state);
     void setAuxFX(int aux);
@@ -139,6 +141,7 @@ public:
     bool fx_dly(int fx);
     bool fx_vrb(int fx);
     int wet_fx_page() { return m_wet_fx_page; }
+    bool wet_fx_active(int fx);
     int aux() { return m_aux; }
     int auxFX() { return m_fxAux; }
     bool next() { return m_nextSong; }

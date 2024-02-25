@@ -144,14 +144,22 @@ void procLedFX()
     int fxLedCol[NUM_FX-1] = {BLUE, GREEN, ORANGE, WHITE, PINK, YELLOW, RED, RED}; // colour of each FX
 
     // Updated this to i < (NUM_FX -1) so that auxFX ([8]) is not included
+    
     for (int i = 0; i < NUM_FX - 1; i++)
     {
         int colour = DARK;
-        if (stjorn.fx(i) == true)
+        if (i < 3) // Wet FX
         {
-            colour = fxLedCol[i];
+
         }
-        stjorn.setLed(ACTION, i, stjorn.fx(i), colour);
+        else // Tap and all other FX
+        {
+            if (stjorn.fx(i) == true)
+            {
+                colour = fxLedCol[i];
+            }
+            stjorn.setLed(ACTION, i, stjorn.fx(i), colour);
+        }
     }
 
     // set next LED

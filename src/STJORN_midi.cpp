@@ -109,11 +109,12 @@ void processNote(byte channel, byte noteNum, byte velocity)
 
             fxState = processFXMidi(noteNum, velocity);
 
-            if (noteNum == NOTE_FX_MOD_OFF && fxState == true)
+            if (noteNum == NOTE_FX_MOD_OFF)
             {
-                stjorn.setFXWetOff(TYPE_FX_MOD);
+                processWetFxActive(fxState, TYPE_FX_MOD);
             }
             else
+            
             {
                 int fxNum = noteNum - NOTE_FX_MOD_1;
                 stjorn.setFXMod(fxNum, fxState);
@@ -124,9 +125,9 @@ void processNote(byte channel, byte noteNum, byte velocity)
 
             fxState = processFXMidi(noteNum, velocity);
 
-            if (noteNum == NOTE_FX_DLY_OFF && fxState == true)
+            if (noteNum == NOTE_FX_DLY_OFF)
             {
-                stjorn.setFXWetOff(TYPE_FX_DLY);
+                processWetFxActive(fxState, TYPE_FX_DLY);
             }
             else
             {
@@ -138,9 +139,9 @@ void processNote(byte channel, byte noteNum, byte velocity)
         case NOTE_FX_VRB_1 ... NOTE_FX_VRB_OFF: // Reverb Wet FX
             fxState = processFXMidi(noteNum, velocity);
 
-            if (noteNum == NOTE_FX_VRB_OFF && fxState == true)
+            if (noteNum == NOTE_FX_VRB_OFF)
             {
-                stjorn.setFXWetOff(TYPE_FX_VRB);
+                processWetFxActive(fxState, TYPE_FX_VRB);
             }
             else
             {
@@ -152,6 +153,18 @@ void processNote(byte channel, byte noteNum, byte velocity)
         default:
             break;
         }
+    }
+}
+
+void processWetFxActive(bool fxState, int fxNum)
+{
+    if (fxState == true)
+    {
+        stjorn.setFXWetOff(fxNum);
+        stjorn.setFXWetActive(fxNum -1, false);
+    } else 
+    {
+        stjorn.setFXWetActive(fxNum -1, true);                    
     }
 }
 

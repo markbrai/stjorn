@@ -144,6 +144,11 @@ void Stjorn::setFXWetOff(int type)
     }
 }
 
+void Stjorn::setFXWetActive(int fxNum, bool state)
+{
+    m_wet_fx_active[fxNum] = state;
+}
+
 void Stjorn::setFXWetPage(int type)
 {
     m_wet_fx_page = type;
@@ -397,6 +402,11 @@ bool Stjorn::fx_dly(int fx)
 bool Stjorn::fx_vrb(int fx)
 {
     return m_fx_vrb[fx];
+}
+
+bool Stjorn::wet_fx_active(int fx)
+{
+    return m_wet_fx_active[fx];
 }
 
 char Stjorn::ascii(int blk, int digit)
