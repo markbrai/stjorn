@@ -56,38 +56,41 @@ bool fsTapEngage(Bounce fs, int fsNum){
 
     //static bool tapEngage = LOCKED;
 
-    if (stjorn.stateChange()){      // reset tapEngage status when state changes
-        //tapEngage = LOCKED;
-        stjorn.setTap(LOCKED);
-    }
+    // if (stjorn.stateChange()){      // reset tapEngage status when state changes
+    //     //tapEngage = LOCKED;
+    //     stjorn.setTap(LOCKED);
+    // }
     
-    if (fs.fell() ){
-        stjorn.setPressed(fsNum,PRESSED);
-        if (stjorn.tap() == ENGAGED){
-            return true;
-        }
-    } else if (fs.rose() && stjorn.isPressed(fsNum) ){
-        stjorn.setPressed(fsNum,NOT_PRESSED);
-        if (stjorn.tap() == ENGAGED){
-            return true;
-        }
-    }
+    // if (fs.fell() ){
+    //     stjorn.setPressed(fsNum,PRESSED);
+    //     if (stjorn.tap() == ENGAGED){
+    //         return true;
+    //     }
+    // } else if (fs.rose() && stjorn.isPressed(fsNum) ){
+    //     stjorn.setPressed(fsNum,NOT_PRESSED);
+    //     if (stjorn.tap() == ENGAGED){
+    //         return true;
+    //     }
+    // }
 
-    if (stjorn.isPressed(fsNum) ){
-        if (fs.duration() >= LONGPRESS){
-            stjorn.setPressed(fsNum,NOT_PRESSED);
-            //tapEngage = ENGAGED;
-            stjorn.setTap(ENGAGED);
-        }
-    }
+    // if (stjorn.isPressed(fsNum) ){
+    //     if (fs.duration() >= LONGPRESS){
+    //         stjorn.setPressed(fsNum,NOT_PRESSED);
+    //         //tapEngage = ENGAGED;
+    //         stjorn.setTap(ENGAGED);
+    //     }
+    // }
 
-    if (!stjorn.isPressed(fsNum) && stjorn.tap() == ENGAGED){
-        if (fs.duration() >= TAP_TIMEOUT){
-            stjorn.setTap(LOCKED);
-        }
-    }
+    // if (!stjorn.isPressed(fsNum) && stjorn.tap() == ENGAGED){
+    //     if (fs.duration() >= TAP_TIMEOUT){
+    //         stjorn.setTap(LOCKED);
+    //     }
+    // }
 
-    return false;
+    stjorn.setTap(ENGAGED);
+
+    // return false;
+    return true;
 }
 
 void updateExpression(int prox){
