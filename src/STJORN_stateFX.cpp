@@ -148,18 +148,32 @@ void procLedFX()
     for (int i = 0; i < NUM_FX - 1; i++)
     {
         int colour = DARK;
+        bool fxState = false;
         if (i < 3) // Wet FX
         {
-
+            switch (i + 1)
+            {
+                case TYPE_FX_MOD:
+                fxState = stjorn.wet_fx_active(TYPE_FX_MOD - 1);
+                    break;
+                case TYPE_FX_DLY:
+                fxState = stjorn.wet_fx_active(TYPE_FX_DLY - 1);
+                    break;
+                case TYPE_FX_VRB:
+                fxState = stjorn.wet_fx_active(TYPE_FX_VRB - 1);
+                    break;
+            }
         }
         else // Tap and all other FX
         {
-            if (stjorn.fx(i) == true)
-            {
-                colour = fxLedCol[i];
-            }
-            stjorn.setLed(ACTION, i, stjorn.fx(i), colour);
+            fxState = stjorn.fx(i);
         }
+
+        if (fxState == true)
+        {
+            colour = fxLedCol[i];
+        }
+        stjorn.setLed(ACTION, i, fxState, colour);
     }
 
     // set next LED
