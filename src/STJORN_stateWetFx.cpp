@@ -205,8 +205,9 @@ void procLedWetFx()
     for (int i = 0; i < NUM_FX -1; i++)
     {
         int colour = DARK;
+        bool wet_fx = false;
         if (i < 4){
-            bool wet_fx = false;
+
             switch (stjorn.wet_fx_page())
             {
             case TYPE_FX_MOD:
@@ -226,7 +227,7 @@ void procLedWetFx()
             colour = fxLedCol[i];
         }
 
-        stjorn.setLed(ACTION, i, stjorn.fx(i), colour);
+        stjorn.setLed(ACTION, i, wet_fx, colour);
     }
 
     stjorn.setLed(NEXT, LED_NEXT, false, DARK);
