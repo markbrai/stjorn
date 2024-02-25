@@ -1,19 +1,19 @@
 /* ------------ STJORN controller --------------
  *  Code written for Teensy 3.2 micro-controller
- *  Teensy USB Type should be set to 'MIDI' 
- * 
- * https://github.com/markbrai/stjorn 
+ *  Teensy USB Type should be set to 'MIDI'
+ *
+ * https://github.com/markbrai/stjorn
  * https://hackaday.io/project/162616-stjrn
- * 
+ *
  * https://www.gigperformer.com
- * 
+ *
  * Mark Braithwaite, 2020
- * 
+ *
  */
 
 /* ------------ STATE CLASS --------------
-*  Main class to hold all STJORN data to pass between states
-*  ---------------------------------------- */
+ *  Main class to hold all STJORN data to pass between states
+ *  ---------------------------------------- */
 
 #include <Arduino.h>
 #include "STJORN_definitions.h"
@@ -27,15 +27,14 @@ int ledNum;
 Stjorn::Stjorn()
 {
     // initialise both states to 0
-    m_stCurr = ST_PATCH;        
+    m_stCurr = ST_PATCH;
     m_stPrev = ST_PATCH;
 
     // set state LED to starting state
-    setLed(STATE,getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);    // intialise state LED
+    setLed(STATE, getStateLed(m_stCurr), true, m_stLedCol[m_stCurr]); // intialise state LED
 
     // set song number to initial (01)
     setSongDigits(m_currSong);
-
 }
 
 // SET FUNCTIONS *********************
@@ -43,23 +42,23 @@ Stjorn::Stjorn()
 void Stjorn::setState(int stNew)
 {
     m_stPrev = m_stCurr;
-        setLed(STATE,getStateLed(m_stPrev),false,DARK);
+    setLed(STATE, getStateLed(m_stPrev), false, DARK);
     m_stCurr = stNew;
-        setLed(STATE,getStateLed(m_stCurr),true,m_stLedCol[m_stCurr]);
+    setLed(STATE, getStateLed(m_stCurr), true, m_stLedCol[m_stCurr]);
     m_stChange = true;
 
-    if (m_stCurr == ST_SONG){
-        m_songPage = false;     // reset song page
+    if (m_stCurr == ST_SONG)
+    {
+        m_songPage = false; // reset song page
     }
-
 }
 
 void Stjorn::confirmState(int state)
 {
-    if (m_stChange == true && state == m_stCurr){
-        m_stChange = false;          // return true to set LED
+    if (m_stChange == true && state == m_stCurr)
+    {
+        m_stChange = false; // return true to set LED
     }
-
 }
 
 void Stjorn::setPressed(int btn, bool state)
@@ -71,31 +70,30 @@ void Stjorn::setLed(int type, int num, bool state, int colour)
 {
     int led = -1;
 
-    switch (type){
-        case ACTION:
-            led = m_ledNumAction[num];
-            break;
-        case STATE:
-            led = num;
-            break;
-        case NEXT:
-            led = num;
-            break;
-        case MIC:
-            led = num;
-            break;
-        case TRANSPORT:
-            led = num;
-            break;
-        default:
-            break;
+    switch (type)
+    {
+    case ACTION:
+        led = m_ledNumAction[num];
+        break;
+    case STATE:
+        led = num;
+        break;
+    case NEXT:
+        led = num;
+        break;
+    case MIC:
+        led = num;
+        break;
+    case TRANSPORT:
+        led = num;
+        break;
+    default:
+        break;
     }
-
 
     m_ledState[led] = state;
     m_ledColour[led] = colour;
 }
-
 
 void Stjorn::selectPatch(int patch)
 {
@@ -112,13 +110,57 @@ void Stjorn::setFX(int fx, bool state)
     m_fx[fx] = state;
 }
 
+void Stjorn::setFXDly(int fx, bool state)
+{
+    m_fx_dly[fx] = state;
+}
+
+void Stjorn::setFXVrb(int fx, bool state)
+{
+    m_fx_vrb[fx] = state;
+}
+
+void Stjorn::setFXMod(int fx, bool state)
+{
+    m_fx_mod[fx] = state;
+}
+
+void Stjorn::setFXWetOff(int type)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        switch (type)
+        {
+        case TYPE_FX_MOD:
+            m_fx_mod[i] = false;
+            break;
+        case TYPE_FX_DLY:
+            m_fx_dly[i] = false;
+            break;
+        case TYPE_FX_VRB:
+            m_fx_vrb[i] = false;
+            break;
+        }
+    }
+}
+
+void Stjorn::setFXWetActive(int fxNum, bool state)
+{
+    m_wet_fx_active[fxNum] = state;
+}
+
+void Stjorn::setFXWetPage(int type)
+{
+    m_wet_fx_page = type;
+}
+
 void Stjorn::setAux()
 {
     m_aux = !m_aux;
-    if (!m_auxPressed){
+    if (!m_auxPressed)
+    {
         m_auxPressed = true;
     }
-
 }
 
 void Stjorn::setAux(bool state)
@@ -133,18 +175,20 @@ void Stjorn::setAuxFX(int aux)
 }
 
 void Stjorn::sendTap(bool state)
-{ int ccVal = 0;
+{
+    int ccVal = 0;
 
-    if (state){
+    if (state)
+    {
         ccVal = 127;
     }
 
-    usbMIDI.sendControlChange(LIVE_TAP,ccVal,MIDI_CH_LIVE);
+    usbMIDI.sendControlChange(LIVE_TAP, ccVal, MIDI_CH_LIVE);
 }
 
 void Stjorn::saveSongVar()
 {
-    usbMIDI.sendControlChange(1,127,MIDI_CH_GP);
+    usbMIDI.sendControlChange(1, 127, MIDI_CH_GP);
 }
 
 void Stjorn::setSong(int song)
@@ -162,16 +206,19 @@ void Stjorn::setSong(int press, int song)
 
 void Stjorn::setNext(int press, int song)
 {
-    if (m_nextSong == false){
-        if (song == -1) {            // triggered from 'next'
+    if (m_nextSong == false)
+    {
+        if (song == -1)
+        { // triggered from 'next'
             setSong(m_currSong + 1);
-        } else {
+        }
+        else
+        {
             setSong(song);
         }
     }
 
-    sendSong(press,m_currSong);
-
+    sendSong(press, m_currSong);
 }
 
 void Stjorn::setSongPage(bool page)
@@ -179,34 +226,35 @@ void Stjorn::setSongPage(bool page)
     m_songPage = page;
 }
 
-
-
-
 void Stjorn::setDisplay(int block, int digit, char ascii)
 {
-    switch (block){
-        case BLK_SONG:
-            m_dispSong[digit] = ascii;
-            break;
-        case BLK_CURR:
-            m_dispCurr[digit] = ascii;
-            break;
-        case BLK_NEXT:
-            m_dispNext[digit] = ascii;
-            break;
-        case BLK_RIG:
-            m_dispRig[digit] = ascii;
-            break;
-        default:
-            break;
+    switch (block)
+    {
+    case BLK_SONG:
+        m_dispSong[digit] = ascii;
+        break;
+    case BLK_CURR:
+        m_dispCurr[digit] = ascii;
+        break;
+    case BLK_NEXT:
+        m_dispNext[digit] = ascii;
+        break;
+    case BLK_RIG:
+        m_dispRig[digit] = ascii;
+        break;
+    default:
+        break;
     }
 }
 
 void Stjorn::setProx(int prox)
 {
-    if (prox == m_exprProxPrev){
+    if (prox == m_exprProxPrev)
+    {
         m_exprChanged = false;
-    } else {
+    }
+    else
+    {
         m_exprProxPrev = m_exprProx;
         m_exprProx = prox;
         m_exprChanged = true;
@@ -219,7 +267,6 @@ void Stjorn::setTap(bool state)
     m_fx[FX_TAP] = m_tap;
 }
 
-
 void Stjorn::setLooper(int state)
 {
     m_looperState = state;
@@ -231,66 +278,68 @@ void Stjorn::setExprType(int type)
 }
 
 void Stjorn::setScenes(int byteNum, byte charVal)
-{ int idx = 0;
+{
+    int idx = 0;
 
-    if (byteNum >= SYS_BYTE_CURR){
-        switch (byteNum){
-            case SYS_BYTE_CURR ... SYS_BYTE_CURR+3:
-                idx = byteNum - SYS_BYTE_CURR;
-                m_sceneCurr[idx] = charVal;
-                break;
-            case SYS_BYTE_G1 ... SYS_BYTE_G1+3:
-                idx = byteNum - SYS_BYTE_G1;
-                m_sceneGoto1[idx] = charVal;
-                break;
-            case SYS_BYTE_G2 ... SYS_BYTE_G2+3:
-                idx = byteNum - SYS_BYTE_G2;
-                m_sceneGoto2[idx] = charVal;
-                break;
-            case SYS_BYTE_G3 ... SYS_BYTE_G3+3:
-                idx = byteNum - SYS_BYTE_G3;
-                m_sceneGoto3[idx] = charVal;
-                break;
-            case SYS_BYTE_G4 ... SYS_BYTE_G4+3:
-                idx = byteNum - SYS_BYTE_G4;
-                m_sceneGoto4[idx] = charVal;
-                break;
-            case SYS_BYTE_NEXT ... SYS_BYTE_NEXT+3:
-                idx = byteNum - SYS_BYTE_NEXT;
-                m_sceneNext[idx] = charVal;
-                break;
-            default:
-                break;
-
+    if (byteNum >= SYS_BYTE_CURR)
+    {
+        switch (byteNum)
+        {
+        case SYS_BYTE_CURR ... SYS_BYTE_CURR + 3:
+            idx = byteNum - SYS_BYTE_CURR;
+            m_sceneCurr[idx] = charVal;
+            break;
+        case SYS_BYTE_G1 ... SYS_BYTE_G1 + 3:
+            idx = byteNum - SYS_BYTE_G1;
+            m_sceneGoto1[idx] = charVal;
+            break;
+        case SYS_BYTE_G2 ... SYS_BYTE_G2 + 3:
+            idx = byteNum - SYS_BYTE_G2;
+            m_sceneGoto2[idx] = charVal;
+            break;
+        case SYS_BYTE_G3 ... SYS_BYTE_G3 + 3:
+            idx = byteNum - SYS_BYTE_G3;
+            m_sceneGoto3[idx] = charVal;
+            break;
+        case SYS_BYTE_G4 ... SYS_BYTE_G4 + 3:
+            idx = byteNum - SYS_BYTE_G4;
+            m_sceneGoto4[idx] = charVal;
+            break;
+        case SYS_BYTE_NEXT ... SYS_BYTE_NEXT + 3:
+            idx = byteNum - SYS_BYTE_NEXT;
+            m_sceneNext[idx] = charVal;
+            break;
+        default:
+            break;
         }
     }
-
 }
 
 void Stjorn::setTransport(int state)
-{ int color = DARK;
+{
+    int color = DARK;
 
     m_transport = state;
 
-    switch (m_transport){
-        case TRAN_STOP:
-            color = RED;
-            break;
-        case TRAN_PLAY:
-            color = GREEN;
-            break;
-        case TRAN_CYCLE:
-            color = YELLOW;
-            break;
-        case TRAN_GOTO:
-            color = PURPLE;
-            break;
-        default:   
-            break;
+    switch (m_transport)
+    {
+    case TRAN_STOP:
+        color = RED;
+        break;
+    case TRAN_PLAY:
+        color = GREEN;
+        break;
+    case TRAN_CYCLE:
+        color = YELLOW;
+        break;
+    case TRAN_GOTO:
+        color = PURPLE;
+        break;
+    default:
+        break;
     }
 
-    setLed(TRANSPORT,LED_TRANSPORT,true,color);
-    
+    setLed(TRANSPORT, LED_TRANSPORT, true, color);
 }
 
 void Stjorn::setClickOnly(bool state)
@@ -318,7 +367,6 @@ void Stjorn::setCueMute(bool state)
     m_cueMute = state;
 }
 
-
 // GET FUNCTIONS *********************
 
 bool Stjorn::isPressed(int btn)
@@ -341,128 +389,155 @@ bool Stjorn::fx(int fx)
     return m_fx[fx];
 }
 
+bool Stjorn::fx_mod(int fx)
+{
+    return m_fx_mod[fx];
+}
+
+bool Stjorn::fx_dly(int fx)
+{
+    return m_fx_dly[fx];
+}
+
+bool Stjorn::fx_vrb(int fx)
+{
+    return m_fx_vrb[fx];
+}
+
+bool Stjorn::wet_fx_active(int fx)
+{
+    return m_wet_fx_active[fx];
+}
+
 char Stjorn::ascii(int blk, int digit)
 {
     char ascii = ' ';
 
-    switch (blk){
-        case BLK_SONG:
-            ascii = m_dispSong[digit];
-            break;
-        case BLK_CURR:
-            ascii = m_dispCurr[digit];
-            break;
-        case BLK_NEXT:
-            ascii = m_dispNext[digit];
-            break;
-        case BLK_RIG:
-            ascii = m_dispRig[digit];
-            break;
-        default:
-            break;
+    switch (blk)
+    {
+    case BLK_SONG:
+        ascii = m_dispSong[digit];
+        break;
+    case BLK_CURR:
+        ascii = m_dispCurr[digit];
+        break;
+    case BLK_NEXT:
+        ascii = m_dispNext[digit];
+        break;
+    case BLK_RIG:
+        ascii = m_dispRig[digit];
+        break;
+    default:
+        break;
     }
 
     return ascii;
 }
 
-char Stjorn::songDigit(int digit){
-/*char _m_songDigit;
+char Stjorn::songDigit(int digit)
+{
+    /*char _m_songDigit;
 
-    _m_songDigit = m_songDigits[digit];
+        _m_songDigit = m_songDigits[digit];
 
-    return _m_songDigit;*/
+        return _m_songDigit;*/
 
     return m_songDigits[digit];
-
 }
 
-char Stjorn::scene(int scene, int digit){
+char Stjorn::scene(int scene, int digit)
+{
 
-char ascii = 0;
+    char ascii = 0;
 
-    switch (scene){
-        case SCENE_CURR:
-            ascii = m_sceneCurr[digit];
-            break;
+    switch (scene)
+    {
+    case SCENE_CURR:
+        ascii = m_sceneCurr[digit];
+        break;
 
-        case SCENE_G1:
-            ascii = m_sceneGoto1[digit];
-            break;
+    case SCENE_G1:
+        ascii = m_sceneGoto1[digit];
+        break;
 
-        case SCENE_G2:
-            ascii = m_sceneGoto2[digit];
-            break;
+    case SCENE_G2:
+        ascii = m_sceneGoto2[digit];
+        break;
 
-        case SCENE_G3:
-            ascii = m_sceneGoto3[digit];
-            break;
+    case SCENE_G3:
+        ascii = m_sceneGoto3[digit];
+        break;
 
-        case SCENE_G4:
-            ascii = m_sceneGoto4[digit];
-            break;
-        
-        case SCENE_NEXT:
-            ascii = m_sceneNext[digit];
-            break;
+    case SCENE_G4:
+        ascii = m_sceneGoto4[digit];
+        break;
 
-        default:
-            break;
+    case SCENE_NEXT:
+        ascii = m_sceneNext[digit];
+        break;
+
+    default:
+        break;
     }
 
     return ascii;
-
 }
-
-
 
 // PRIVATE FUNCTIONS
 
 int Stjorn::getStateLed(int state)
 {
 
-    switch (state){
-        case ST_TRACKS ... ST_SONG:
-            ledNum = LED_SONG;
-            break;
-        case ST_PATCH ... ST_FX:
-            ledNum = LED_RIG;
-            break;
-        case ST_LOOP ... ST_PADS:
-            ledNum = LED_LOOP;
-            break;
-        default:
-            break;
+    switch (state)
+    {
+    case ST_TRACKS ... ST_SONG:
+        ledNum = LED_SONG;
+        break;
+    case ST_PATCH ... ST_FX:
+    case ST_WETFX:
+        ledNum = LED_RIG;
+        break;
+    case ST_LOOP ... ST_PADS:
+        ledNum = LED_LOOP;
+        break;
+    default:
+        break;
     }
 
     return ledNum;
-
 }
 
 void Stjorn::setSongDigits(int song)
 {
     int _m_songDisplay = song + 1;
-    int _m_digit = _m_songDisplay % 10;     // get lowest digit
+    int _m_digit = _m_songDisplay % 10; // get lowest digit
     m_songDigits[1] = _m_digit + '0';
-    //setDisplay(BLK_SONG,1,_m_digit + '0');
-    _m_songDisplay /= 10;    // remove lowest digit
-    _m_digit = _m_songDisplay % 10;     // get digit
+    // setDisplay(BLK_SONG,1,_m_digit + '0');
+    _m_songDisplay /= 10;           // remove lowest digit
+    _m_digit = _m_songDisplay % 10; // get digit
     m_songDigits[0] = _m_digit + '0';
-    //setDisplay(BLK_SONG,0,_m_digit + '0');
-
+    // setDisplay(BLK_SONG,0,_m_digit + '0');
 }
 
-void Stjorn::sendSong(int press, int song){
+void Stjorn::sendSong(int press, int song)
+{
 
-    if (press == PRESS_SHORT){
-        if (m_nextSong == false){        // immediate next GP & LIVE
-            usbMIDI.sendProgramChange(m_currSong,MIDI_CH_LIVE);
-            usbMIDI.sendProgramChange(m_currSong,2);
-        } else {                        // next GP
-            usbMIDI.sendProgramChange(m_currSong,2);
+    if (press == PRESS_SHORT)
+    {
+        if (m_nextSong == false)
+        { // immediate next GP & LIVE
+            usbMIDI.sendProgramChange(m_currSong, MIDI_CH_LIVE);
+            usbMIDI.sendProgramChange(m_currSong, 2);
+        }
+        else
+        { // next GP
+            usbMIDI.sendProgramChange(m_currSong, 2);
             m_nextSong = false;
         }
-    } else if (press == PRESS_LONG){    // next LIVE only
-        usbMIDI.sendProgramChange(m_currSong,MIDI_CH_LIVE);
+    }
+    else if (press == PRESS_LONG)
+    { // next LIVE only
+        usbMIDI.sendProgramChange(m_currSong, MIDI_CH_LIVE);
         m_nextSong = true;
     }
 }

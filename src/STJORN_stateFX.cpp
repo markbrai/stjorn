@@ -52,18 +52,15 @@ void procFsFX(Bounce fs, int fsNum)
     switch (fsNum)
     {
     case FX_MOD ... FX_VRB:
-        press = fsShortLong(fs, fsNum);
-        if (press == PRESS_SHORT)
+        if (fs.fell())
         {
-            note = fsNum + 17;
-        }
-        else if (press == PRESS_LONG)
-        {
-            note = fsNum + 25;
+            stjorn.setFXWetPage(fsNum + 1);
+            stjorn.setState(ST_WETFX);
         }
         break;
-    case FX_TAP ... FS_ACT_MX:
+    case FX_TAP ... FX_DR1:
         if (fsNum == FX_TAP)
+        // TODO: Remove hold to engage
         {
             bool tapEngaged = fsTapEngage(fs, fsNum);
             if (tapEngaged)
@@ -82,7 +79,7 @@ void procFsFX(Bounce fs, int fsNum)
         {
             if (fs.fell())
             {
-                note = fsNum + 17;
+                note = fsNum + NOTE_FX1;
             }
         }
         break;
@@ -144,17 +141,39 @@ void procLedFX()
 {
 
     // set FX LEDs
-    int fxLedCol[NUM_FX] = {BLUE, GREEN, ORANGE, WHITE, PINK, YELLOW, RED, RED}; // colour of each FX
+    int fxLedCol[NUM_FX-1] = {BLUE, GREEN, ORANGE, WHITE, PINK, YELLOW, RED, RED}; // colour of each FX
 
     // Updated this to i < (NUM_FX -1) so that auxFX ([8]) is not included
+    
     for (int i = 0; i < NUM_FX - 1; i++)
     {
         int colour = DARK;
-        if (stjorn.fx(i) == true)
+        bool fxState = false;
+        if (i < 3) // Wet FX
+        {
+            switch (i + 1)
+            {
+                case TYPE_FX_MOD:
+                fxState = stjorn.wet_fx_active(TYPE_FX_MOD - 1);
+                    break;
+                case TYPE_FX_DLY:
+                fxState = stjorn.wet_fx_active(TYPE_FX_DLY - 1);
+                    break;
+                case TYPE_FX_VRB:
+                fxState = stjorn.wet_fx_active(TYPE_FX_VRB - 1);
+                    break;
+            }
+        }
+        else // Tap and all other FX
+        {
+            fxState = stjorn.fx(i);
+        }
+
+        if (fxState == true)
         {
             colour = fxLedCol[i];
         }
-        stjorn.setLed(ACTION, i, stjorn.fx(i), colour);
+        stjorn.setLed(ACTION, i, fxState, colour);
     }
 
     // set next LED

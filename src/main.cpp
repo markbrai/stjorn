@@ -28,6 +28,7 @@
 #include "STJORN_stateSong.h"
 #include "STJORN_stateLoop.h"
 #include "STJORN_stateTracks.h"
+#include "STJORN_stateWetFX.h"
 #include "STJORN_midi.h"
 
 // Instantiate encoder
@@ -245,6 +246,9 @@ void loop()
   case ST_PADS:
 
     break;
+
+  case ST_WETFX:
+    stateWetFx(fs);
 
   default:
     break;

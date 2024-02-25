@@ -127,8 +127,12 @@
 
 #define CC_AUXFX 3
 
+#define TYPE_FX_MOD 1
+#define TYPE_FX_DLY 2
+#define TYPE_FX_VRB 3
+
 // define STJORN states
-#define NUM_STATES 6
+#define NUM_STATES 7
 
 enum StjornState
 {
@@ -138,6 +142,7 @@ enum StjornState
   ST_FX,     // 3
   ST_LOOP,   // 4
   ST_PADS,   // 5
+  ST_WETFX,  // 6
 };
 
 // define some general parameters
@@ -174,8 +179,48 @@ enum StjornState
 
 #define LIVE_TAP 10
 
+// NOTES FOR PATCHES
+#define NOTE_PATCH1 1
+#define NOTE_PATCH2 2
+#define NOTE_PATCH3 3
+#define NOTE_PATCH4 4
+#define NOTE_PATCH5 5
+#define NOTE_PATCH6 6
+#define NOTE_PATCH7 7
+#define NOTE_PATCH8 8
+
+// NOTES FOR FX
+#define NOTE_FX1 17
+#define NOTE_FX2 18
+#define NOTE_FX3 19
+#define NOTE_TAP 20
+#define NOTE_FX5 21
+#define NOTE_FX6 22
+#define NOTE_FX7 23
+#define NOTE_FX8 24
+
 // Note for Quick Actions
 #define NOTE_QA 28
+
+
+// NOTE FOR WET FX SELECT
+#define NOTE_FX_MOD_1 29
+#define NOTE_FX_MOD_2 30
+#define NOTE_FX_MOD_3 31
+#define NOTE_FX_MOD_4 32
+#define NOTE_FX_MOD_OFF 33
+
+#define NOTE_FX_DLY_1 34
+#define NOTE_FX_DLY_2 35
+#define NOTE_FX_DLY_3 36
+#define NOTE_FX_DLY_4 37
+#define NOTE_FX_DLY_OFF 38
+
+#define NOTE_FX_VRB_1 39
+#define NOTE_FX_VRB_2 40
+#define NOTE_FX_VRB_3 41
+#define NOTE_FX_VRB_4 42
+#define NOTE_FX_VRB_OFF 43
 
 // Transport MIDI from Live
 
