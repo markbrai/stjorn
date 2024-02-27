@@ -135,7 +135,7 @@ void procFsPatch(Bounce fs, int fsNum)
 
 void procLedPatch()
 {
-    int colour = PURPLE;
+    int colour = I_PURPLE;
 
     // selected patch LED
     for (int i = 0; i < NUM_PATCH; i++)
@@ -148,9 +148,13 @@ void procLedPatch()
         // Updated this to look at stjorn.fx[LAST] to see if aux is ON
         if (stjorn.fx(NUM_FX - 1) == true)
         {
-            colour = BLUE;
+            colour = I_BLUE;
         }
-        stjorn.setLed(ACTION, i, state, colour);
+
+        int colour_led = setLedColour(colour, state);
+        
+        // state is always true for the LED to show dim colours
+        stjorn.setLed(ACTION, i, true, colour_led);
     }
 
     // next LED

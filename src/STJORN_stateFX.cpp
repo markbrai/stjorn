@@ -177,7 +177,8 @@ void procLedFX()
 
         int colour_led = setLedColour(colour, fxState);
 
-        stjorn.setLed(ACTION, i, fxState, colour_led);
+        // state is always true for the LED to show dim colours
+        stjorn.setLed(ACTION, i, true, colour_led);
     }
 
     // set next LED

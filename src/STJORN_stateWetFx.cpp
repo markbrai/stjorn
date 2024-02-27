@@ -74,18 +74,19 @@ void procFsWetFx(Bounce fs, int fsNum)
         break;
     // bottom row
     case FX_FLT ... FX_DR1:
-        if (fs.fell()){
-        if (fsNum == FX_DR1)
+        if (fs.fell())
         {
-            // Exit back to FX page
-            stjorn.setState(ST_FX);
-        }
-        else
-        {
-            // Change 'page' to specified wet fx
-            stjorn.setFXWetPage(fsNum - 3);
-        }
-        break;
+            if (fsNum == FX_DR1)
+            {
+                // Exit back to FX page
+                stjorn.setState(ST_FX);
+            }
+            else
+            {
+                // Change 'page' to specified wet fx
+                stjorn.setFXWetPage(fsNum - 3);
+            }
+            break;
         }
 
     case FS_ST_SONG:
@@ -191,22 +192,23 @@ void procLedWetFx()
     switch (stjorn.wet_fx_page())
     {
     case TYPE_FX_MOD:
-        led_color = BLUE;
+        led_color = I_BLUE;
         break;
     case TYPE_FX_DLY:
-        led_color = GREEN;
+        led_color = I_GREEN;
         break;
     case TYPE_FX_VRB:
-        led_color = ORANGE;
+        led_color = I_ORANGE;
         break;
     }
 
-    int fxLedCol[NUM_FX - 1] = {led_color, led_color, led_color, led_color, BLUE, GREEN, ORANGE, WHITE};
-    for (int i = 0; i < NUM_FX -1; i++)
+    int fxLedCol[NUM_FX - 1] = {led_color, led_color, led_color, led_color, I_BLUE, I_GREEN, I_ORANGE, I_WHITE};
+    for (int i = 0; i < NUM_FX - 1; i++)
     {
-        int colour = DARK;
+        int colour = I_DARK;
         bool wet_fx = false;
-        if (i < 4){
+        if (i < 4)
+        {
 
             switch (stjorn.wet_fx_page())
             {
@@ -220,15 +222,19 @@ void procLedWetFx()
                 wet_fx = stjorn.fx_vrb(i);
                 break;
             }
-            if (wet_fx == true){
+            if (wet_fx == true)
+            {
                 colour = fxLedCol[i];
             }
-        } else {
+        }
+        else
+        {
             colour = fxLedCol[i];
             wet_fx = true;
         }
 
-        stjorn.setLed(ACTION, i, wet_fx, colour);
+        int colour_led = setLedColour(colour, wet_fx);
+        stjorn.setLed(ACTION, i, true, colour);
     }
 
     stjorn.setLed(NEXT, LED_NEXT, false, DARK);
