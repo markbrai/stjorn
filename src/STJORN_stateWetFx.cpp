@@ -186,6 +186,11 @@ int procWetFxVrb(int fsNum)
     return note;
 }
 
+const int I_MOD_COLOUR = 4;
+const int I_DLY_COLOUR = 5;
+const int I_VRB_COLOUR = 6;
+const int I_EXIT_COLOUR = 7;
+
 void procLedWetFx()
 {
     int led_color = DARK;
@@ -229,8 +234,31 @@ void procLedWetFx()
         }
         else
         {
+            switch (i)
+            {
+            case I_MOD_COLOUR:
+                if (stjorn.wet_fx_page() == TYPE_FX_MOD)
+                {
+                    wet_fx = true;
+                }
+                break;
+            case I_DLY_COLOUR:
+                if (stjorn.wet_fx_page() == TYPE_FX_DLY)
+                {
+                    wet_fx = true;
+                }
+                break;
+            case I_VRB_COLOUR:
+                if (stjorn.wet_fx_page() == TYPE_FX_VRB)
+                {
+                    wet_fx = true;
+                }
+                break;
+            case I_EXIT_COLOUR:
+                wet_fx = true;
+                break;
+            }
             colour = fxLedCol[i];
-            wet_fx = true;
         }
 
         int colour_led = setLedColour(colour, wet_fx);
