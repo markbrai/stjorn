@@ -27,6 +27,7 @@ void setDisplayPatch();
 void setDisplaySong();
 void setDisplayCurr();
 void setDisplayNext();
+int_fast16_t setLedColour(int colour_idx, bool state);
 
 
 

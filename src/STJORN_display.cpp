@@ -125,3 +125,41 @@ void setDisplayNext()
         stjorn.setDisplay(BLK_NEXT, i, ascii);
     }
 }
+
+const int coloursBright[10] = {RED,
+                               BLUE,
+                               GREEN,
+                               YELLOW,
+                               ORANGE,
+                               WHITE,
+                               PINK,
+                               PURPLE,
+                               CYAN,
+                               DARK};
+
+const int coloursDim[10] = {RED_DIM,
+                            BLUE_DIM,
+                            GREEN_DIM,
+                            YELLOW_DIM,
+                            ORANGE_DIM,
+                            WHITE_DIM,
+                            PINK_DIM,
+                            PURPLE_DIM,
+                            CYAN_DIM,
+                            DARK};
+
+int setLedColour(int colour_idx, bool state)
+{
+
+    int colour;
+    if (state == true)
+    {
+        colour = coloursBright[colour_idx];
+    }
+    else
+    {
+        colour = coloursDim[colour_idx];
+    }
+
+    return colour;
+}

@@ -68,21 +68,45 @@
 #define EXPR_WAH_CC 2
 
 // define some stuff for LEDs
-
+// Colours
 #define RED 0xFF0000
+#define RED_DIM 0xA00000
 #define BLUE 0x0000FF
+#define BLUE_DIM 0x0000A0
 #define GREEN 0x00FF00
+#define GREEN_DIM 0x00A000
 #define YELLOW 0xFFFF00
+#define YELLOW_DIM 0xA0A000
 #define ORANGE 0xFF7700
+#define ORANGE_DIM 0xA04700
 #define WHITE 0xFFFFFF
+#define WHITE_DIM 0xA0A0A0
 #define PINK 0xD4005C
+#define PINK_DIM 0x7F0037
 #define PURPLE 0x8029CC
+#define PURPLE_DIM 0x4D197A
 #define CYAN 0x42DAF5
-#define DARK 0x000000
+#define CYAN_DIM 0x288393
+#define DARK 0x000000160
+
+// Colour Indexes
+#define I_RED 0
+#define I_BLUE 1
+#define I_GREEN 2
+#define I_YELLOW 3
+#define I_ORANGE 4
+#define I_WHITE 5
+#define I_PINK 6
+#define I_PURPLE 7
+#define I_CYAN 8
+#define I_DARK 9
+
+// LED brightoness
 #define LED_VDIM 16
 #define LED_DIM 32
 #define LED_BRT 64
 
+// LED Numbers
 #define LED_SONG 6
 #define LED_RIG 5
 #define LED_LOOP 4

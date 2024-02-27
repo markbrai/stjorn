@@ -141,10 +141,11 @@ void procLedFX()
 {
 
     // set FX LEDs
-    int fxLedCol[NUM_FX-1] = {BLUE, GREEN, ORANGE, WHITE, PINK, YELLOW, RED, RED}; // colour of each FX
+    // int fxLedCol[NUM_FX-1] = {BLUE, GREEN, ORANGE, WHITE, PINK, YELLOW, RED, RED}; // colour of each FX
+    int fxLedCol[NUM_FX - 1] = {I_BLUE, I_GREEN, I_ORANGE, I_WHITE, I_PINK, I_YELLOW, I_RED, I_RED}; // colour of each FX
 
     // Updated this to i < (NUM_FX -1) so that auxFX ([8]) is not included
-    
+
     for (int i = 0; i < NUM_FX - 1; i++)
     {
         int colour = DARK;
@@ -153,15 +154,15 @@ void procLedFX()
         {
             switch (i + 1)
             {
-                case TYPE_FX_MOD:
+            case TYPE_FX_MOD:
                 fxState = stjorn.wet_fx_active(TYPE_FX_MOD - 1);
-                    break;
-                case TYPE_FX_DLY:
+                break;
+            case TYPE_FX_DLY:
                 fxState = stjorn.wet_fx_active(TYPE_FX_DLY - 1);
-                    break;
-                case TYPE_FX_VRB:
+                break;
+            case TYPE_FX_VRB:
                 fxState = stjorn.wet_fx_active(TYPE_FX_VRB - 1);
-                    break;
+                break;
             }
         }
         else // Tap and all other FX
@@ -173,7 +174,10 @@ void procLedFX()
         {
             colour = fxLedCol[i];
         }
-        stjorn.setLed(ACTION, i, fxState, colour);
+
+        int colour_led = setLedColour(colour, fxState);
+
+        stjorn.setLed(ACTION, i, fxState, colour_led);
     }
 
     // set next LED
