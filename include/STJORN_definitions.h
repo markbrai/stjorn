@@ -87,7 +87,7 @@
 #define PURPLE_DIM 0x4D197A
 #define CYAN 0x42DAF5
 #define CYAN_DIM 0x288393
-#define DARK 0x000000160
+#define DARK 0x000000
 
 // Colour Indexes
 #define I_RED 0
@@ -225,7 +225,6 @@ enum StjornState
 
 // Note for Quick Actions
 #define NOTE_QA 28
-
 
 // NOTE FOR WET FX SELECT
 #define NOTE_FX_MOD_1 29
