@@ -142,11 +142,11 @@ void procLedFX()
 
     // set FX LEDs
     // int fxLedCol[NUM_FX-1] = {BLUE, GREEN, ORANGE, WHITE, PINK, YELLOW, RED, RED}; // colour of each FX
-    int fxLedCol[NUM_FX - 1] = {I_BLUE, I_GREEN, I_ORANGE, I_WHITE, I_PINK, I_YELLOW, I_RED, I_RED}; // colour of each FX
+    int fxLedCol[NUM_ACTION] = {I_BLUE, I_GREEN, I_ORANGE, I_WHITE, I_PINK, I_YELLOW, I_RED, I_RED}; // colour of each FX
 
     // Updated this to i < (NUM_FX -1) so that auxFX ([8]) is not included
 
-    for (int i = 0; i < NUM_FX - 1; i++)
+    for (int i = 0; i < NUM_ACTION; i++)
     {
         int colour = DARK;
         bool fxState = false;

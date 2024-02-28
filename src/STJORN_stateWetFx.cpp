@@ -207,8 +207,8 @@ void procLedWetFx()
         break;
     }
 
-    int fxLedCol[NUM_FX - 1] = {led_color, led_color, led_color, led_color, I_BLUE, I_GREEN, I_ORANGE, I_WHITE};
-    for (int i = 0; i < NUM_FX - 1; i++)
+    int fxLedCol[NUM_ACTION] = {led_color, led_color, led_color, led_color, I_BLUE, I_GREEN, I_ORANGE, I_WHITE};
+    for (int i = 0; i < NUM_ACTION; i++)
     {
         int colour = I_DARK;
         bool wet_fx = false;
