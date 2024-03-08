@@ -275,4 +275,9 @@ void procDisplayWetFx()
 
 void procExprWetFx()
 {
+    if (stjorn.exprType() != EXPR_GTR_CC)
+    {
+        stjorn.setExprType(EXPR_GTR_CC);
+    }
+    sendExpression();
 }
