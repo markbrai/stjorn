@@ -78,11 +78,14 @@ void procFsLoop(Bounce fs, int fsNum)
 
     case FS_ST_RIG:
         // TODO: Move to function from _statePatch
-        if (fs.fell())
+        press = fsShortLong(fs, fsNum);
+        if (press == PRESS_SHORT)
         {
             stjorn.setState(ST_PATCH);
         }
-        break;
+        else if (press == PRESS_LONG)
+        {
+        }
 
     case FS_ST_LOOP:
 

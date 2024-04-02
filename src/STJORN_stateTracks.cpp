@@ -92,9 +92,13 @@ void procFsTracks(Bounce fs, int fsNum)
 
     case FS_ST_RIG:
         // TODO: Move to function from _statePatch
-        if (fs.fell())
+        press = fsShortLong(fs, fsNum);
+        if (press == PRESS_SHORT)
         {
             stjorn.setState(ST_PATCH);
+        }
+        else if (press == PRESS_LONG)
+        {
         }
         break;
 
