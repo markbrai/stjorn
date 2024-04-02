@@ -74,18 +74,19 @@ void procFsWetFx(Bounce fs, int fsNum)
         break;
     // bottom row
     case FX_FLT ... FX_DR1:
-        if (fs.fell()){
-        if (fsNum == FX_DR1)
+        if (fs.fell())
         {
-            // Exit back to FX page
-            stjorn.setState(ST_FX);
-        }
-        else
-        {
-            // Change 'page' to specified wet fx
-            stjorn.setFXWetPage(fsNum - 3);
-        }
-        break;
+            if (fsNum == FX_DR1)
+            {
+                // Exit back to FX page
+                stjorn.setState(ST_FX);
+            }
+            else
+            {
+                // Change 'page' to specified wet fx
+                stjorn.setFXWetPage(fsNum - 3);
+            }
+            break;
         }
 
     case FS_ST_SONG:
@@ -202,11 +203,12 @@ void procLedWetFx()
     }
 
     int fxLedCol[NUM_FX - 1] = {led_color, led_color, led_color, led_color, BLUE, GREEN, ORANGE, WHITE};
-    for (int i = 0; i < NUM_FX -1; i++)
+    for (int i = 0; i < NUM_FX - 1; i++)
     {
         int colour = DARK;
         bool wet_fx = false;
-        if (i < 4){
+        if (i < 4)
+        {
 
             switch (stjorn.wet_fx_page())
             {
@@ -220,10 +222,13 @@ void procLedWetFx()
                 wet_fx = stjorn.fx_vrb(i);
                 break;
             }
-            if (wet_fx == true){
+            if (wet_fx == true)
+            {
                 colour = fxLedCol[i];
             }
-        } else {
+        }
+        else
+        {
             colour = fxLedCol[i];
             wet_fx = true;
         }
@@ -241,4 +246,9 @@ void procDisplayWetFx()
 
 void procExprWetFx()
 {
+    if (stjorn.exprType() != EXPR_GTR_CC)
+    {
+        stjorn.setExprType(EXPR_GTR_CC);
+    }
+    sendExpression();
 }
