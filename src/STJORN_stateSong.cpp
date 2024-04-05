@@ -66,6 +66,11 @@ void procFsSong(Bounce fs, int fsNum)
             {
                 _songNum = fsNum;
             }
+            if (stjorn.songPageAmp())
+            {
+                // Shift programme change to 16-31
+                _songNum = _songNum + 16;
+            }
             stjorn.setSong(press, _songNum);
         }
         break;

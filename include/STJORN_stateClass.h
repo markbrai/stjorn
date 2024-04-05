@@ -154,6 +154,7 @@ public:
     int song() { return m_currSong; }
     char songDigit(int digit);
     bool songPage() { return m_songPage; }
+    bool songPageAmp() { return m_songPageAmps; }
     bool tap() { return m_tap; }
     int looper() { return m_looperState; }
     int exprType() { return m_exprType; }
