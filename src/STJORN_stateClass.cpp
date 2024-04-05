@@ -226,6 +226,11 @@ void Stjorn::setSongPage(bool page)
     m_songPage = page;
 }
 
+void Stjorn::setSongPageAmp(bool page)
+{
+    m_songPageAmps = page;
+}
+
 void Stjorn::setDisplay(int block, int digit, char ascii)
 {
     switch (block)

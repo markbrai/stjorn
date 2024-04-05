@@ -92,6 +92,7 @@ void procFsPatch(Bounce fs, int fsNum)
         }
         else if (press == PRESS_LONG)
         {
+            stjorn.setSongPageAmp(true);
             // TODO: Add access to Rig select mode
         }
         break;

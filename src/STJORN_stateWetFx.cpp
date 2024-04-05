@@ -105,6 +105,7 @@ void procFsWetFx(Bounce fs, int fsNum)
         }
         else if (press == PRESS_LONG)
         {
+            stjorn.setSongPageAmp(true);
         }
 
         break;

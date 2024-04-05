@@ -86,6 +86,7 @@ void procFsTracks(Bounce fs, int fsNum)
     case FS_ST_SONG:
         if (fs.fell())
         {
+            stjorn.setSongPageAmp(false);
             stjorn.setState(ST_SONG);
         }
         break;
@@ -95,10 +96,12 @@ void procFsTracks(Bounce fs, int fsNum)
         press = fsShortLong(fs, fsNum);
         if (press == PRESS_SHORT)
         {
+
             stjorn.setState(ST_PATCH);
         }
         else if (press == PRESS_LONG)
         {
+            stjorn.setSongPageAmp(true);
         }
         break;
 

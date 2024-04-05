@@ -85,6 +85,7 @@ void procFsLoop(Bounce fs, int fsNum)
         }
         else if (press == PRESS_LONG)
         {
+            stjorn.setSongPageAmp(true);
         }
 
     case FS_ST_LOOP:

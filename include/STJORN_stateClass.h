@@ -68,6 +68,8 @@ private:
     char m_songDigits[DIGIT_SONG] = {'0', '1'};
     void sendSong(int press, int song);
     bool m_songPage{false};
+    bool m_songPageAmps{false};
+
     // transport
     int m_transport{0}; // stop, play, cycle
     bool m_clickOnly{0};
@@ -116,6 +118,7 @@ public:
     void setDisplay(int block, int digit, char ascii);
     void setProx(int prox);
     void setSongPage(bool page); // true sets page 2
+    void setSongPageAmp(bool page);
     void setTap(bool state);
     void setLooper(int state);
     void setExprType(int type);
