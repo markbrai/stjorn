@@ -22,6 +22,7 @@
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
+#include "STJORN_tapClick.h"
 
 #define AM 0
 #define R2 1
@@ -117,11 +118,11 @@ void procFsPatch(Bounce fs, int fsNum)
 
     case FS_CLICK:
 
-        break;
+        processClick(fs);
 
     case FS_TAP:
 
-        break;
+        processTap(fs);
 
     default:
         break;

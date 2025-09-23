@@ -22,6 +22,7 @@
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
+#include "STJORN_tapClick.h"
 
 void stateFX(Bounce *fs)
 {
@@ -113,11 +114,11 @@ void procFsFX(Bounce fs, int fsNum)
 
     case FS_CLICK:
 
-        break;
+        processClick(fs);
 
     case FS_TAP:
 
-        break;
+        processTap(fs);
     }
 
     if (note != -1)
