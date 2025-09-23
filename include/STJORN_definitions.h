@@ -35,8 +35,8 @@
 #define FS_ST_LOOP 10
 #define FS_ST_NEXT 11
 #define FS_RELAY 12 // index of 'Relay' switch
-#define FS_OS_MN 13 // start of 'OnSong' switch range
-#define FS_OS_MX 14 // end of 'OnSong' switch range
+#define FS_CLICK 13 // start of 'OnSong' switch range
+#define FS_TAP 14 // end of 'OnSong' switch range
 
 #define PRESSED 1
 #define NOT_PRESSED 0
@@ -119,7 +119,7 @@
 #define FX_MOD 0
 #define FX_DLY 1
 #define FX_VRB 2
-#define FX_TAP 3
+#define FX_QA 3
 #define FX_FLT 4
 #define FX_CMP 5
 #define FX_DR2 6
@@ -178,6 +178,7 @@ enum StjornState
 // DEPRECATED - USED IN PREVIOUS MIDI processing
 
 #define LIVE_TAP 10
+#define NOTE_CLICK 44
 
 // NOTES FOR PATCHES
 #define NOTE_PATCH1 1

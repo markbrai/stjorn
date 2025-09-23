@@ -22,6 +22,7 @@
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
+#include "STJORN_tapClick.h"
 
 void stateWetFx(Bounce *fs)
 {
@@ -50,7 +51,7 @@ void procFsWetFx(Bounce fs, int fsNum)
     switch (fsNum)
     {
     // Top row buttons
-    case FX_MOD ... FX_TAP:
+    case FX_MOD ... FX_QA:
         /*
         - If not already active, send MIDI to activate
         - If already active, send MIDI to switch off
@@ -127,13 +128,13 @@ void procFsWetFx(Bounce fs, int fsNum)
         processRelay(fs);
         break;
 
-    case FS_OS_MN:
+    case FS_CLICK:
 
-        break;
+        processClick(fs);
 
-    case FS_OS_MX:
+    case FS_TAP:
 
-        break;
+        processTap(fs);
     }
 
     if (note != -1)

@@ -22,6 +22,7 @@
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
+#include "STJORN_tapClick.h"
 
 void stateFX(Bounce *fs)
 {
@@ -58,22 +59,11 @@ void procFsFX(Bounce fs, int fsNum)
             stjorn.setState(ST_WETFX);
         }
         break;
-    case FX_TAP ... FX_DR1:
-        if (fsNum == FX_TAP)
+    case FX_QA ... FX_DR1:
+        if (fsNum == FX_QA)
         // TODO: Remove hold to engage
         {
-            bool tapEngaged = fsTapEngage(fs, fsNum);
-            if (tapEngaged)
-            {
-                if (fs.fell())
-                {
-                    stjorn.sendTap(true);
-                }
-                else if (fs.rose())
-                {
-                    stjorn.sendTap(false);
-                }
-            }
+            note = NOTE_QA;
         }
         else
         {
@@ -122,13 +112,13 @@ void procFsFX(Bounce fs, int fsNum)
         processRelay(fs);
         break;
 
-    case FS_OS_MN:
+    case FS_CLICK:
 
-        break;
+        processClick(fs);
 
-    case FS_OS_MX:
+    case FS_TAP:
 
-        break;
+        processTap(fs);
     }
 
     if (note != -1)

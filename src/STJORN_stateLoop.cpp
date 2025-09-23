@@ -22,6 +22,7 @@
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
+#include "STJORN_tapClick.h"
 
 #define LOOP_CC_REC 51
 #define LOOP_CC_PLAY 52
@@ -100,13 +101,13 @@ void procFsLoop(Bounce fs, int fsNum)
         processRelay(fs);
         break;
 
-    case FS_OS_MN:
+    case FS_CLICK:
 
-        break;
+        processClick(fs);
 
-    case FS_OS_MX:
+    case FS_TAP:
 
-        break;
+        processTap(fs);
 
     default:
         break;

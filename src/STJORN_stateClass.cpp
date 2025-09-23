@@ -264,7 +264,7 @@ void Stjorn::setProx(int prox)
 void Stjorn::setTap(bool state)
 {
     m_tap = state;
-    m_fx[FX_TAP] = m_tap;
+    m_fx[FX_QA] = m_tap;
 }
 
 void Stjorn::setLooper(int state)
