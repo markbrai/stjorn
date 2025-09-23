@@ -58,22 +58,11 @@ void procFsFX(Bounce fs, int fsNum)
             stjorn.setState(ST_WETFX);
         }
         break;
-    case FX_TAP ... FX_DR1:
-        if (fsNum == FX_TAP)
+    case FX_QA ... FX_DR1:
+        if (fsNum == FX_QA)
         // TODO: Remove hold to engage
         {
-            bool tapEngaged = fsTapEngage(fs, fsNum);
-            if (tapEngaged)
-            {
-                if (fs.fell())
-                {
-                    stjorn.sendTap(true);
-                }
-                else if (fs.rose())
-                {
-                    stjorn.sendTap(false);
-                }
-            }
+            note = NOTE_QA;
         }
         else
         {

@@ -119,7 +119,7 @@
 #define FX_MOD 0
 #define FX_DLY 1
 #define FX_VRB 2
-#define FX_TAP 3
+#define FX_QA 3
 #define FX_FLT 4
 #define FX_CMP 5
 #define FX_DR2 6
