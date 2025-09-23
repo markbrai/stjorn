@@ -39,4 +39,6 @@ void processTap(Bounce fs){
 
 void processClick(Bounce fs){
 
+    usbMIDI.sendNoteOn(NOTE_CLICK, 127, MIDI_CH_GP);
+
 }

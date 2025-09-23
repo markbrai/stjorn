@@ -178,6 +178,7 @@ enum StjornState
 // DEPRECATED - USED IN PREVIOUS MIDI processing
 
 #define LIVE_TAP 10
+#define NOTE_CLICK 44
 
 // NOTES FOR PATCHES
 #define NOTE_PATCH1 1
