@@ -194,14 +194,11 @@ enum StjornState
 #define NOTE_FX1 17
 #define NOTE_FX2 18
 #define NOTE_FX3 19
-#define NOTE_TAP 20
+#define NOTE_QA 20
 #define NOTE_FX5 21
 #define NOTE_FX6 22
 #define NOTE_FX7 23
 #define NOTE_FX8 24
-
-// Note for Quick Actions
-#define NOTE_QA 25
 
 
 // NOTE FOR WET FX SELECT

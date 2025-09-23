@@ -76,7 +76,6 @@ void processNote(byte channel, byte noteNum, byte velocity)
 
         // FX
         case NOTE_FX1 ... NOTE_FX8: // Added in note num for new Aux approach (26)
-        case NOTE_QA:
         {
             // if (noteNum == NOTE_TAP)
             // { // ignore tap tempo nad GP EXPR2 active
