@@ -122,11 +122,11 @@ void procFsFX(Bounce fs, int fsNum)
         processRelay(fs);
         break;
 
-    case FS_OS_MN:
+    case FS_CLICK:
 
         break;
 
-    case FS_OS_MX:
+    case FS_TAP:
 
         break;
     }
