@@ -136,7 +136,7 @@ void procLedFX()
 
     // Updated this to i < (NUM_FX -1) so that auxFX ([8]) is not included
     
-    for (int i = 0; i < NUM_FX - 1; i++)
+    for (int i = 0; i < NUM_FX; i++)
     {
         int colour = DARK;
         bool fxState = false;

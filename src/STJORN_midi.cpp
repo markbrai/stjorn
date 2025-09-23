@@ -78,23 +78,23 @@ void processNote(byte channel, byte noteNum, byte velocity)
         case NOTE_FX1 ... NOTE_FX8: // Added in note num for new Aux approach (26)
         case NOTE_QA:
         {
-            if (noteNum == NOTE_TAP)
-            { // ignore tap tempo nad GP EXPR2 active
-                break;
-            }
+            // if (noteNum == NOTE_TAP)
+            // { // ignore tap tempo nad GP EXPR2 active
+            //     break;
+            // }
 
-            // DEL - not required with new aux approach
-            //// else if (noteNum == stjorn.auxFX())
-            ////{
-            ////stjorn.setAux();
-            ////}
+            // // DEL - not required with new aux approach
+            // //// else if (noteNum == stjorn.auxFX())
+            // ////{
+            // ////stjorn.setAux();
+            // ////}
 
             int fxNum;
-            if (noteNum == NOTE_QA)
-            {
-                fxNum = NUM_FX - 1; // This is for Quick action and is last index of NUM_FX
-            }
-            else
+            // if (noteNum == NOTE_QA)
+            // {
+            //     fxNum = NUM_FX - 1; // This is for Quick action and is last index of NUM_FX
+            // }
+            // else
             {
                 fxNum = noteNum - NOTE_FX1; // rebase FX number to 0 for indexes 0-7
             }

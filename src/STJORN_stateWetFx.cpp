@@ -18,7 +18,7 @@
 #include <Bounce2.h>
 #include "STJORN_definitions.h"
 #include "STJORN_stateClass.h"
-#include "STJORN_stateWetFx.h"
+#include "STJORN_stateWetFX.h"
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"

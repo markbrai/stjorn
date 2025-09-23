@@ -201,7 +201,7 @@ enum StjornState
 #define NOTE_FX8 24
 
 // Note for Quick Actions
-#define NOTE_QA 28
+#define NOTE_QA 25
 
 
 // NOTE FOR WET FX SELECT
