@@ -23,17 +23,13 @@
 
 
 void processTap(Bounce fs){
-    bool tapEngaged = fsTapEngage(fs, FS_TAP);
-    if (tapEngaged)
+    if (fs.fell())
     {
-        if (fs.fell())
-        {
-            stjorn.sendTap(true);
-        }
-        else if (fs.rose())
-        {
-            stjorn.sendTap(false);
-        }
+        stjorn.sendTap(true);
+    }
+    else if (fs.rose())
+    {
+        stjorn.sendTap(false);
     }
 };
 

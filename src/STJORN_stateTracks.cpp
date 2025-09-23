@@ -64,18 +64,7 @@ void procFsTracks(Bounce fs, int fsNum)
     case FS_ACT_MN ... FS_ACT_MX:
         if (fsNum == FS_TAP_TRACKS)
         {
-            bool tapEngaged = fsTapEngage(fs, fsNum);
-            if (tapEngaged)
-            {
-                if (fs.fell())
-                {
-                    stjorn.sendTap(true);
-                }
-                else if (fs.rose())
-                {
-                    stjorn.sendTap(false);
-                }
-            }
+            break;
         }
         else
         {
