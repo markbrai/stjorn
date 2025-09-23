@@ -61,9 +61,10 @@ void procFsFX(Bounce fs, int fsNum)
         break;
     case FX_QA ... FX_DR1:
         if (fsNum == FX_QA)
-        // TODO: Remove hold to engage
         {
-            note = NOTE_QA;
+            if (fs.fell()){
+                note = NOTE_QA;
+            }
         }
         else
         {
