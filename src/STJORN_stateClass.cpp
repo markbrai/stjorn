@@ -183,7 +183,8 @@ void Stjorn::sendTap(bool state)
         ccVal = 127;
     }
 
-    usbMIDI.sendControlChange(LIVE_TAP, ccVal, MIDI_CH_LIVE);
+    // usbMIDI.sendControlChange(LIVE_TAP, ccVal, MIDI_CH_LIVE);
+    usbMIDI.sendNoteOn(LIVE_TAP, ccVal, MIDI_CH_GP);
 }
 
 void Stjorn::saveSongVar()

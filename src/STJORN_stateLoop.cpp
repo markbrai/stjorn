@@ -104,10 +104,12 @@ void procFsLoop(Bounce fs, int fsNum)
     case FS_CLICK:
 
         processClick(fs);
+        break;
 
     case FS_TAP:
 
         processTap(fs);
+        break;
 
     default:
         break;

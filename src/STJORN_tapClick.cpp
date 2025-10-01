@@ -31,6 +31,11 @@ void processTap(Bounce fs){
     {
         stjorn.sendTap(false);
     }
+
+    // if (fs.fell()){
+    //     usbMIDI.sendNoteOn(LIVE_TAP, 127, MIDI_CH_GP);
+    // }
+
 };
 
 void processClick(Bounce fs){
