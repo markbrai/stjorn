@@ -29,7 +29,7 @@
 #define FS_STOP 0
 #define FS_PLAY 1
 #define FS_CYCLE 2
-#define FS_TAP 3
+#define FS_TAP_TRACKS 3
 #define FS_G4 4
 #define FS_G3 5
 #define FS_G2 6
@@ -62,20 +62,9 @@ void procFsTracks(Bounce fs, int fsNum)
     switch (fsNum)
     {
     case FS_ACT_MN ... FS_ACT_MX:
-        if (fsNum == FS_TAP)
+        if (fsNum == FS_TAP_TRACKS)
         {
-            bool tapEngaged = fsTapEngage(fs, fsNum);
-            if (tapEngaged)
-            {
-                if (fs.fell())
-                {
-                    stjorn.sendTap(true);
-                }
-                else if (fs.rose())
-                {
-                    stjorn.sendTap(false);
-                }
-            }
+            break;
         }
         else
         {
@@ -117,11 +106,11 @@ void procFsTracks(Bounce fs, int fsNum)
         processRelay(fs);
         break;
 
-    case FS_OS_MN:
+    case FS_CLICK:
 
         break;
 
-    case FS_OS_MX:
+    case FS_TAP:
 
         break;
 

@@ -22,6 +22,7 @@
 #include "STJORN_micSwitcher.h"
 #include "STJORN_footswitches.h"
 #include "STJORN_display.h"
+#include "STJORN_tapClick.h"
 
 #define AM 0
 #define R2 1
@@ -115,13 +116,13 @@ void procFsPatch(Bounce fs, int fsNum)
         processRelay(fs);
         break;
 
-    case FS_OS_MN:
+    case FS_CLICK:
 
-        break;
+        processClick(fs);
 
-    case FS_OS_MX:
+    case FS_TAP:
 
-        break;
+        processTap(fs);
 
     default:
         break;
@@ -146,7 +147,7 @@ void procLedPatch()
             state = true;
         }
         // Updated this to look at stjorn.fx[LAST] to see if aux is ON
-        if (stjorn.fx(NUM_FX - 1) == true)
+        if (stjorn.fx(FX_QA) == true)
         {
             colour = BLUE;
         }
