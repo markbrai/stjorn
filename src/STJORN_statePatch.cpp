@@ -147,7 +147,7 @@ void procLedPatch()
             state = true;
         }
         // Updated this to look at stjorn.fx[LAST] to see if aux is ON
-        if (stjorn.fx(NUM_FX - 1) == true)
+        if (stjorn.fx(FX_QA) == true)
         {
             colour = BLUE;
         }
