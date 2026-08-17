@@ -78,7 +78,7 @@ void procFsFX(Bounce fs, int fsNum)
     case FS_ST_SONG:
         if (fs.fell())
         {
-            stjorn.setState(ST_TRACKS);
+            stjorn.setState(ST_SONG);
         }
         break;
 
