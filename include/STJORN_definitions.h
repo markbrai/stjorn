@@ -36,7 +36,7 @@
 #define FS_ST_NEXT 11
 #define FS_RELAY 12 // index of 'Relay' switch
 #define FS_CLICK 14 // start of 'OnSong' switch range
-#define FS_TAP 13 // end of 'OnSong' switch range
+#define FS_TAP 13   // end of 'OnSong' switch range
 
 #define PRESSED 1
 #define NOT_PRESSED 0
@@ -112,7 +112,8 @@
 #define DIGIT_RIG 2
 
 // define some things for FX and Patches
-#define NUM_FX 9 // updated to 9 for auxFX // actually only 7, but includes tap tempo button
+#define NUM_FX                                                                 \
+  9 // updated to 9 for auxFX // actually only 7, but includes tap tempo button
 #define NUM_PATCH 8
 #define NUM_ACTION 8 // number of 'action buttons'
 
@@ -134,8 +135,7 @@
 // define STJORN states
 #define NUM_STATES 7
 
-enum StjornState
-{
+enum StjornState {
   ST_TRACKS, // 0
   ST_SONG,   // 1
   ST_PATCH,  // 2
@@ -143,6 +143,7 @@ enum StjornState
   ST_LOOP,   // 4
   ST_PADS,   // 5
   ST_WETFX,  // 6
+  ST_MENU,   // 7
 };
 
 // define some general parameters
@@ -199,7 +200,6 @@ enum StjornState
 #define NOTE_FX6 22
 #define NOTE_FX7 23
 #define NOTE_FX8 24
-
 
 // NOTE FOR WET FX SELECT
 #define NOTE_FX_MOD_1 29

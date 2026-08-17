@@ -11,25 +11,26 @@
  *
  */
 
-#include <Arduino.h>
-#include "STJORN_definitions.h"                   // holds all STJORN definitions
-#include <SPI.h>                                  // required for PlatformIO build...
-#include "SparkFun_Qwiic_Twist_Arduino_Library.h" // for rotary encoder
-#include <Adafruit_GFX.h>                         // for quad alphanumeric
-#include "Adafruit_LEDBackpack.h"                 // for quad alphanumeric
-#include <WS2812Serial.h>                         // for neoPixels
-#include <Wire.h>                                 // for i2c comms
-#include <Bounce2.h>                              // for button debounce
-#include "Adafruit_VCNL4010.h"                    // for proximity sensor
-#include "STJORN_footswitches.h"                  // STJORN Footswitch functions
-#include "STJORN_stateClass.h"                    // STJORN main state variables
-#include "STJORN_statePatch.h"                    // STJORN state functions for PATCH
+#include "Adafruit_LEDBackpack.h" // for quad alphanumeric
+#include "Adafruit_VCNL4010.h"    // for proximity sensor
+#include "STJORN_definitions.h"   // holds all STJORN definitions
+#include "STJORN_footswitches.h"  // STJORN Footswitch functions
+#include "STJORN_midi.h"
+#include "STJORN_stateClass.h" // STJORN main state variables
 #include "STJORN_stateFX.h"
-#include "STJORN_stateSong.h"
 #include "STJORN_stateLoop.h"
+#include "STJORN_stateMenu.h"
+#include "STJORN_statePatch.h" // STJORN state functions for PATCH
+#include "STJORN_stateSong.h"
 #include "STJORN_stateTracks.h"
 #include "STJORN_stateWetFX.h"
-#include "STJORN_midi.h"
+#include "SparkFun_Qwiic_Twist_Arduino_Library.h" // for rotary encoder
+#include <Adafruit_GFX.h>                         // for quad alphanumeric
+#include <Arduino.h>
+#include <Bounce2.h>      // for button debounce
+#include <SPI.h>          // required for PlatformIO build...
+#include <WS2812Serial.h> // for neoPixels
+#include <Wire.h>         // for i2c comms
 
 // Instantiate encoder
 TWIST twist;
@@ -43,13 +44,15 @@ Adafruit_AlphaNum4 display3 = Adafruit_AlphaNum4(); // right display
 byte drawingMemory[NUM_LEDS * 3];
 DMAMEM byte displayMemory[NUM_LEDS * 12];
 
-WS2812Serial leds(NUM_LEDS, displayMemory, drawingMemory, PIN_WS2812, WS2812_RGB);
+WS2812Serial leds(NUM_LEDS, displayMemory, drawingMemory, PIN_WS2812,
+                  WS2812_RGB);
 
 // Instantiate button debouncers
 /* Button orders:
  *
  */
-const uint8_t FS_PINS[NUM_FS] = {33, 32, 31, 30, 20, 21, 22, 23, 15, 16, 17, 14, 27, 28, 26};
+const uint8_t FS_PINS[NUM_FS] = {33, 32, 31, 30, 20, 21, 22, 23,
+                                 15, 16, 17, 14, 27, 28, 26};
 Bounce *fs = new Bounce[NUM_FS];
 
 // Instantiate proximity sensor
@@ -58,8 +61,7 @@ elapsedMillis msExpr = 0;
 
 Stjorn stjorn;
 
-void setup()
-{
+void setup() {
 
   // TURN POWER LED ON
   pinMode(PIN_PWRLED, OUTPUT);
@@ -83,8 +85,7 @@ void setup()
   // LED SETUP
   leds.begin();
   leds.setBrightness(LED_VDIM);
-  for (int i = 0; i < NUM_LEDS; i++)
-  {
+  for (int i = 0; i < NUM_LEDS; i++) {
     leds.setPixel(i, RED);
   }
   leds.show();
@@ -93,10 +94,11 @@ void setup()
   pinMode(PIN_RELAY, OUTPUT);
 
   // SETUP FOOTSWITCHES
-  for (int i = 0; i < NUM_FS; i++)
-  {
-    fs[i].attach(FS_PINS[i], INPUT_PULLUP); // setup the bounce instance for the current button
-    fs[i].interval(5);                      // interval in ms
+  for (int i = 0; i < NUM_FS; i++) {
+    fs[i].attach(
+        FS_PINS[i],
+        INPUT_PULLUP); // setup the bounce instance for the current button
+    fs[i].interval(5); // interval in ms
   }
 
   // SETUP EXPRESSION PEDAL
@@ -120,8 +122,7 @@ void setup()
 
   delay(2000); // keep STJORN 'splash' on screen for a few seconds
 
-  for (int i = 0; i < NUM_LEDS; i++)
-  {
+  for (int i = 0; i < NUM_LEDS; i++) {
     leds.setPixel(i, DARK); // turn all LEDs 'off'
   }
   leds.show();
@@ -131,11 +132,9 @@ void setup()
   // clear screen buffers
   int digits[4] = {DIGIT_SONG, DIGIT_CURR, DIGIT_NEXT, DIGIT_RIG};
 
-  for (int blk = 0; blk < 4; blk++)
-  {
+  for (int blk = 0; blk < 4; blk++) {
     int numDigits = digits[blk];
-    for (int i = 0; i < numDigits; i++)
-    {
+    for (int i = 0; i < numDigits; i++) {
       stjorn.setDisplay(blk, i, ' ');
     }
   }
@@ -143,8 +142,7 @@ void setup()
   stjorn.setSong(stjorn.song()); // set default song as '0'
 }
 
-void loop()
-{
+void loop() {
 
   /* Control methodology
    * Controller sends out MIDI - or sets internal mode - on footswitch press
@@ -196,8 +194,7 @@ void loop()
 
   // UPDATE AND PROCESS MIDI
 
-  if (usbMIDI.read())
-  {
+  if (usbMIDI.read()) {
 
     processMidi();
   }
@@ -208,9 +205,8 @@ void loop()
 
   // UPDATE EXPRESSION PEDALS
 
-  if (msExpr >= 20)
-  {             // has 20ms passed since last check
-    msExpr = 0; // reset timer
+  if (msExpr >= 20) { // has 20ms passed since last check
+    msExpr = 0;       // reset timer
     updateExpression(vcnl.readProximity());
   }
 
@@ -221,8 +217,7 @@ void loop()
    * changes
    */
 
-  switch (stjorn.state())
-  {
+  switch (stjorn.state()) {
   case ST_TRACKS:
     stateTracks(fs);
     break;
@@ -249,31 +244,32 @@ void loop()
 
   case ST_WETFX:
     stateWetFx(fs);
+    break;
+
+  case ST_MENU:
+    stateMenu(fs);
+    break;
 
   default:
     break;
   }
 
   // Process TWIST
+  updateTwist();
   twist.setColor(0, 0, 0);
 
   // Set LEDs
 
-  if (stjorn.state() != ST_LOOP)
-  {
+  if (stjorn.state() != ST_LOOP) {
     // process looper state LED as required
     procLoopStateled();
   }
 
-  for (int i = 0; i < NUM_LEDS; i++)
-  {
+  for (int i = 0; i < NUM_LEDS; i++) {
     int colour;
-    if (stjorn.isLit(i))
-    {
+    if (stjorn.isLit(i)) {
       colour = stjorn.isColour(i);
-    }
-    else
-    {
+    } else {
       colour = DARK;
     }
     leds.setPixel(i, colour);
@@ -287,11 +283,9 @@ void loop()
   display1.writeDigitAscii(1, stjorn.ascii(BLK_SONG, 1));
 
   // CURRENT BLOCK
-  if (stjorn.transport() == TRAN_GOTO)
-  {
+  if (stjorn.transport() == TRAN_GOTO) {
     char gNum = '-';
-    switch (stjorn.follow())
-    {
+    switch (stjorn.follow()) {
     case FLW_GOTO1:
       gNum = '1';
       break;
@@ -311,9 +305,7 @@ void loop()
     display1.writeDigitAscii(3, gNum);
     display2.writeDigitRaw(0, 0xC0);  // --
     display2.writeDigitRaw(1, 0x9C0); // right facing arrow
-  }
-  else
-  {
+  } else {
     display1.writeDigitAscii(2, stjorn.ascii(BLK_CURR, 0));
     display1.writeDigitAscii(3, stjorn.ascii(BLK_CURR, 1));
     display2.writeDigitAscii(0, stjorn.ascii(BLK_CURR, 2));
@@ -321,22 +313,17 @@ void loop()
   }
 
   // NEXT BLOCK
-  if (stjorn.follow() == FLW_ONESHOT)
-  {
+  if (stjorn.follow() == FLW_ONESHOT) {
     display2.writeDigitRaw(2, 0x0);
     display2.writeDigitRaw(3, 0x24C0);
     display3.writeDigitRaw(0, 0xC0);
     display3.writeDigitRaw(1, 0x0);
-  }
-  else if (stjorn.follow() == FLW_CYCLE)
-  {
+  } else if (stjorn.follow() == FLW_CYCLE) {
     display2.writeDigitRaw(2, 0x0);
     display2.writeDigitRaw(3, 0x439);
     display3.writeDigitRaw(0, 0x80F);
     display3.writeDigitRaw(1, 0x0);
-  }
-  else
-  {
+  } else {
     display2.writeDigitAscii(2, stjorn.ascii(BLK_NEXT, 0));
     display2.writeDigitAscii(3, stjorn.ascii(BLK_NEXT, 1));
     display3.writeDigitAscii(0, stjorn.ascii(BLK_NEXT, 2));
